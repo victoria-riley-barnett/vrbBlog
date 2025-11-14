@@ -36,4 +36,24 @@ const { bioImgWidth = '100px', bioImgHeight = '100px', bioImgRadius = '50%' } = 
   p {
     font-size: 1.125rem;
   }
+
+  /* Stack bio on small screens */
+  @media (max-width: 520px) {
+    div {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    img {
+      margin-right: 0;
+      margin-bottom: 0.75rem;
+      width: calc(var(--bio-img-width) / 1.7);
+      height: auto;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
 </style>

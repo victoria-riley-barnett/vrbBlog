@@ -11,6 +11,7 @@ import ThemeToggleButton from './ThemeToggleButton.svelte';
     font-weight: 700;
     justify-content: flex-end;
     text-transform: uppercase;
+    position: relative;
   }
 
   a {
@@ -53,19 +54,136 @@ import ThemeToggleButton from './ThemeToggleButton.svelte';
     width: 75px;
   }
 
+  /* Center nav on small screens and hide the inline toggle (use FAB) */
   @media screen and (max-width: 520px) {
-    .theme-toggle-container {
-      margin-right: 1em;
+    nav {
+      justify-content: center;
+      width: 100%;
     }
+
+    a {
+      margin-left: 8px;
+      min-width: unset;
+      padding: 8px 6px;
+    }
+
+    .theme-toggle-container {
+      width: auto;
+      margin-left: 8px;
+      display: none !important; /* hide desktop toggle on mobile */
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  }
+
+  /* Mobile FAB */
+  .mobile-theme-fab {
+    display: none;
+    position: fixed;
+    right: 12px;
+    bottom: 14px;
+    z-index: 1400;
+    background: var(--background-secondary);
+    color: var(--text-main);
+    border: 1px solid var(--theme-code-inline-bg);
+    border-radius: 999px;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    cursor: pointer;
+  }
+
+  .mobile-drawer {
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 260px;
+    transform: translateX(100%);
+    transition: transform 220ms ease;
+    z-index: 1390;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-drawer.open {
+    transform: translateX(0);
+  }
+
+  .mobile-drawer-inner {
+    background: var(--background-secondary);
+    border-left: 1px solid var(--theme-code-inline-bg);
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* theme-aware colors */
+  :root[data-theme="dark"] .mobile-theme-fab {
+    background: var(--mantle);
+    color: var(--text-secondary);
+  }
+
+  @media screen and (max-width: 520px) {
+    .mobile-theme-fab { display: inline-flex; }
   }
 
 </style>
 
 <nav>
-  <a href='/'>home</a>
-  <a href='/about'>about</a>
-  <a href='/blog'>blog</a>
+  <a href="/">home</a>
+  <a href="/about">about</a>
+  <a href="/blog">blog</a>
   <div class="theme-toggle-container">
     <ThemeToggleButton client:load />
   </div>
+
+  <div id="mobile-theme-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="mobile-drawer-inner">
+      <ThemeToggleButton client:load />
+    </div>
+  </div>
 </nav>
+<script is:inline>
+  (function () {
+    const fab = document.getElementById('mobile-theme-fab');
+    const drawer = document.getElementById('mobile-theme-drawer');
+    if (!fab || !drawer) return;
+
+    function openDrawer() {
+      drawer.classList.add('open');
+      fab.setAttribute('aria-expanded', 'true');
+      drawer.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      fab.setAttribute('aria-expanded', 'false');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+
+    fab.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+    });
+
+    // Close when clicking outside the drawer
+    document.addEventListener('click', function (e) {
+      if (!drawer.classList.contains('open')) return;
+      if (!drawer.contains(e.target) && e.target !== fab) closeDrawer();
+    });
+
+    // Close on escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+  })();
+</script>

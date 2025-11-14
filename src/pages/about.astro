@@ -21,6 +21,13 @@ const permalink = `${Astro.site.href}about`;
     line-height: 1.6;
   }
 
+  /* Mobile: ensure bio/article stacks and removes floats */
+  @media (max-width: 520px) {
+    .about-image { float: none; margin: 0 0 1rem 0; display: block; }
+    .about { padding: 0 1rem; }
+    .about p { font-size: 1rem; }
+  }
+
 </style>
 
 <BaseLayout title={title} description={description} permalink={permalink}>

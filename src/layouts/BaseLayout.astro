@@ -55,6 +55,8 @@ const { title, description, permalink } = Astro.props;
     flex: 1;
     position: relative;
     width: 100%;
+    /* account for the fixed sidebar on the left */
+    margin-left: 280px;
   }
 
   .main-content-inner {
@@ -96,6 +98,21 @@ const { title, description, permalink } = Astro.props;
     
     .sidebar-title {
       display: none;
+    }
+    /* when sidebar narrows at medium sizes, reduce main margin */
+    .main-content {
+      margin-left: 50px;
+    }
+  }
+
+  /* on small screens hide sidebar and let content use full width */
+  @media (max-width: 520px) {
+    .main-content {
+      margin-left: 0 !important;
+    }
+    .main-content-inner {
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
   }
 </style>
