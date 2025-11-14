@@ -1,6 +1,5 @@
 ---
 import ThemeToggleButton from './ThemeToggleButton.svelte';
-const { current = '' } = Astro.props;
 ---
 
 <style>
@@ -63,9 +62,9 @@ const { current = '' } = Astro.props;
 </style>
 
 <nav>
-  <a class={current === "" ? "selected" : ""} href='/'>home</a>
-  <a class={current === "about" ? "selected" : ""} href='/about'>about</a>
-  <a class={current === "blog" ? "selected" : ""} href='/blog'>blog</a>
+  <a href='/'>home</a>
+  <a href='/about'>about</a>
+  <a href='/blog'>blog</a>
   <div class="theme-toggle-container">
     <ThemeToggleButton client:load />
   </div>

@@ -1,7 +1,7 @@
 <style>
   img {
     display: block;
-    width: 75px;
+    width: 50px;
   }
 
   @media screen and (max-width: 520px) {
@@ -12,5 +12,36 @@
 </style>
 
 <a href="/">
-  <img alt="Blog Logo" src="/assets/logo.webp" width="75" height="50" />
+  <img id="site-logo" alt="Blog Logo" src="/assets/logo-light.png" width="50" height="50" />
 </a>
+
+<script is:inline>
+  (function () {
+    try {
+      const root = document.documentElement;
+      const theme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = theme === 'dark' || (!theme && prefersDark) || root.classList.contains('theme-dark');
+      const logo = document.getElementById('site-logo');
+      if (logo) {
+        logo.src = isDark ? '/assets/logo-dark.png' : '/assets/logo-light.png';
+      }
+    } catch (e) {
+      // noop
+    }
+  })();
+  // Update logo when theme changes in another script or tab
+  try {
+    window.addEventListener('storage', (e) => {
+      try {
+        if (e.key === 'theme') {
+          const logo = document.getElementById('site-logo');
+          if (logo) {
+            const newTheme = e.newValue;
+            logo.src = newTheme === 'dark' ? '/assets/logo-dark.png' : '/assets/logo-light.png';
+          }
+        }
+      } catch (err) {}
+    });
+  } catch (e) {}
+</script>

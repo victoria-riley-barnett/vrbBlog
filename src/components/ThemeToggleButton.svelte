@@ -8,10 +8,26 @@
   } else if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     theme = 'dark';
   }
+  // Persist initial inferred theme so other inline scripts (Logo) can read it
+  // immediately on next navigation without relying on root class presence.
+  try {
+    if (typeof localStorage !== 'undefined' && !localStorage.getItem('theme') && theme) {
+      localStorage.setItem('theme', theme);
+    }
+  } catch (e) {}
 
   function handleChange(event) {
     theme = event.target.value;
     localStorage.setItem('theme', theme);
+    // update favicon and logo immediately so toggle feels instant
+    try {
+      const favicon = document.getElementById('favicon-default');
+      if (favicon) favicon.href = theme === 'dark' ? '/favicon-dark.ico' : '/favicon-light.ico';
+      const logo = document.getElementById('site-logo');
+      if (logo) logo.src = theme === 'dark' ? '/assets/logo-dark.png' : '/assets/logo-light.png';
+    } catch (e) {
+      // noop
+    }
   }
 
   $: if (rootEl && theme === 'light') {

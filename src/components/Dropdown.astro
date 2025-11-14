@@ -1,0 +1,133 @@
+---
+export interface Props {
+  title?: string
+  open?: boolean
+  id?: string
+  preview?: string
+}
+
+// Optional htmx attributes that can be passed through to the summary
+export interface Props {
+  title?: string
+  open?: boolean
+  id?: string
+  preview?: string
+  hxGet?: string
+  hxTarget?: string
+  hxSwap?: string
+  hxTrigger?: string
+}
+
+const {
+  title = 'Details',
+  open = false,
+  id,
+  preview,
+  hxGet,
+  hxTarget,
+  hxSwap,
+  hxTrigger
+} = Astro.props as Props
+---
+
+<details class="dropdown" {...(open ? { open: true } : {})} {...(id ? { id } : {})}>
+  <summary class="dropdown-summary" {...(hxGet ? { 'hx-get': hxGet } : {})} {...(hxTarget ? { 'hx-target': hxTarget } : {})} {...(hxSwap ? { 'hx-swap': hxSwap } : {})} {...(hxTrigger ? { 'hx-trigger': hxTrigger } : {})}>
+    <span class="dropdown-title">{title}</span>
+    {!open && preview && (
+      <span class="dropdown-preview-text">{preview}</span>
+    )}
+  </summary>
+  <div class="dropdown-body">
+    <slot />
+  </div>
+</details>
+
+<style>
+  .dropdown {
+    border: 1px solid var(--text-secondary, #e6e6e);
+    border-radius: 6px;
+    margin: 0.75rem 0;
+    padding: 0.25rem;
+    background-color: var(--background-secondary, #f9f9f9);
+    transition: all 0.2s ease;
+  }
+
+  .dropdown:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.5rem;
+    border-bottom: 4px solid rgba(0,0,0,0.03);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    text-decoration: none;
+    box-shadow: inset 0 -0.12em 0 var(--primary-color);
+    -webkit-transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .dropdown-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dropdown-title::before {
+    content: '▸';
+    font-size: 1rem;
+    opacity: 0.6;
+    margin-right: 0.5rem;
+  }
+
+  .dropdown[open] .dropdown-title::before {
+    content: '▾';
+  }
+
+  .dropdown-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .dropdown-summary::-moz-details-marker {
+    display: none;
+  }
+
+  .dropdown-summary::marker {
+    display: none;
+  }
+
+  .dropdown-preview-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    width: 100%;
+  }
+
+  .dropdown-summary:hover {
+    color: var(--primary-color);
+    box-shadow: inset 0 -0.25em 0 var(--primary-color);
+  }
+
+  .dropdown-summary:hover .dropdown-preview-text {
+    opacity: 1;
+  }
+
+  .dropdown[open] .dropdown-preview-text {
+    display: none;
+  }
+</style>

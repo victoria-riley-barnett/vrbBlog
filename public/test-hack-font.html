@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack Font Test</title>
+    <style>
+        @font-face {
+            font-family: 'Hack';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(/assets/fonts/hack-regular.woff2) format('woff2');
+        }
+        
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        
+        .hack-font {
+            font-family: 'Hack', monospace;
+            font-size: 16px;
+            font-variant-ligatures: contextual;
+            -webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+            font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+        }
+        
+        .ligature-test {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hack Font Ligature Test</h1>
+    
+    <div class="test-section">
+        <h2>Common Programming Ligatures</h2>
+        <div class="ligature-test hack-font">
+            <p>Arrow: -> →</p>
+            <p>Double arrow: => ⇒</p>
+            <p>Not equal: != ≠</p>
+            <p>Greater than or equal: >= ≥</p>
+            <p>Less than or equal: <= ≤</p>
+            <p>Triple equal: === ≡</p>
+            <p>Fat arrow: => ⇒</p>
+            <p>Lambda: => λ</p>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Code Block Test</h2>
+        <pre class="hack-font">
+function test() {
+    // Common operators that should show ligatures
+    const arrow = =>;
+    const notEqual = !=;
+    const greaterEqual = >=;
+    const lessEqual = <=;
+    const tripleEqual = ===;
+    
+    return {
+        arrow,
+        notEqual,
+        greaterEqual,
+        lessEqual,
+        tripleEqual
+    };
+}
+        </pre>
+    </div>
+    
+    <div class="test-section">
+        <h2>Font Loading Status</h2>
+        <div id="font-status">Checking font loading...</div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if Hack font is loaded
+            const hackTest = document.createElement('span');
+            hackTest.style.fontFamily = 'Hack, monospace';
+            hackTest.style.position = 'absolute';
+            hackTest.style.left = '-9999px';
+            hackTest.textContent = 'Hack Font Test';
+            document.body.appendChild(hackTest);
+            
+            setTimeout(() => {
+                const originalWidth = hackTest.offsetWidth;
+                hackTest.style.fontFamily = 'monospace';
+                setTimeout(() => {
+                    const fallbackWidth = hackTest.offsetWidth;
+                    const statusDiv = document.getElementById('font-status');
+                    
+                    if (originalWidth !== fallbackWidth) {
+                        statusDiv.innerHTML = '✅ Hack font is loaded and working!';
+                        statusDiv.style.color = 'green';
+                    } else {
+                        statusDiv.innerHTML = '❌ Hack font may not be loading properly. Check browser console for errors.';
+                        statusDiv.style.color = 'red';
+                    }
+                    
+                    document.body.removeChild(hackTest);
+                }, 100);
+            }, 100);
+        });
+    </script>
+</body>
+</html>

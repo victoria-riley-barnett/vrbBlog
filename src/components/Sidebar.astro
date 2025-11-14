@@ -1,0 +1,468 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+
+const pages = [
+  { title: 'Victoria', slug: 'about' },
+  { title: 'Resume', slug: 'about#resume' },
+  { title: 'Work History', slug: 'about#work-history' }
+];
+
+// Group posts by tags
+const postsByTag = {};
+allPosts.forEach(post => {
+  if (post.data.tags) {
+    post.data.tags.forEach(tag => {
+      if (!postsByTag[tag]) {
+        postsByTag[tag] = [];
+      }
+      postsByTag[tag].push(post);
+    });
+  }
+});
+
+// Sort tags alphabetically
+const sortedTags = Object.keys(postsByTag).sort();
+
+// Sort posts within each tag by publish date (newest first)
+sortedTags.forEach(tag => {
+  postsByTag[tag].sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+});
+---
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+  }
+
+  // No client-side session state or custom events here; when JS is
+  // available, sidebar links that target /about#id will use htmx via
+  // attributes (below) to request the about page and let the server
+  // decide which dropdown to render open. This keeps behavior simple and
+  // server-driven (AHA pattern).
+</script>
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h3 class="sidebar-title">Explorer</h3>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">
+      <span class="toggle-icon">≡</span>
+    </button>
+  </div>
+  
+  <div class="sidebar-content">
+    <div class="sidebar-section">
+      <div class="sidebar-folder-static">
+        <a href="/" class="sidebar-index-link">
+          index
+        </a>
+        <ul class="sidebar-sublist">
+          <li class="sidebar-subitem">
+            <details class="sidebar-folder" open>
+              <summary class="sidebar-folder-summary">
+                Pages
+                <span class="sidebar-count">({pages.length})</span>
+              </summary>
+              <ul class="sidebar-sublist">
+                {pages.map(page => (
+                  <li class="sidebar-subitem">
+                    {/* If the page slug includes a hash (e.g. about#resume), add
+                        htmx attributes so clicking the link will request the
+                        /about page server-side with a query param and swap the
+                        main content. Otherwise fall back to a normal link. */}
+                    {page.slug.includes('#') ? (
+                      (() => {
+                        const parts = page.slug.split('#');
+                        const path = `/${parts[0]}`;
+                        const id = parts[1];
+                        return (
+                          <a href={`${path}#${id}`} class="sidebar-sublink" hx-get={`/${parts[0]}?open=${id}`} hx-target=".main-content-inner" hx-swap="innerHTML" hx-push-url="true">
+                            {page.title}
+                          </a>
+                        );
+                      })()
+                    ) : (
+                      <a href={`/${page.slug}`} class="sidebar-sublink">
+                        {page.title}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          </li>
+          {sortedTags.length > 0 && (
+            <li class="sidebar-subitem">
+              <details class="sidebar-folder" open>
+                <summary class="sidebar-folder-summary">
+                  Tags
+                  <span class="sidebar-count">({sortedTags.length})</span>
+                </summary>
+                <ul class="sidebar-sublist">
+                  {sortedTags.map(tag => (
+                    <li class="sidebar-subitem">
+                      <details class="sidebar-folder">
+                        <summary class="sidebar-folder-summary">
+                          {tag}
+                          <span class="sidebar-count">({postsByTag[tag].length})</span>
+                        </summary>
+                        <ul class="sidebar-sublist">
+                          {postsByTag[tag].map(post => (
+                            <li class="sidebar-subitem">
+                              <a href={`/blog/${post.data.slug}`} class="sidebar-sublink">
+                                {post.data.title}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  details {
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary::-moz-details-marker {
+    display: none;
+  }
+
+  summary::marker {
+    display: none;
+  }
+  .sidebar {
+    width: 280px;
+    background: var(--background-secondary);
+    border-right: 1px solid var(--theme-code-inline-bg);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: width 0.3s ease;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+  }
+
+  .sidebar.collapsed {
+    width: 50px;
+  }
+
+  .sidebar.collapsed .sidebar-content {
+    display: none;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--theme-code-inline-bg);
+    background: var(--background-secondary);
+  }
+
+  .sidebar-title {
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-toggle:hover {
+    background: var(--primary-color);
+    color: var(--text-main);
+  }
+
+  .toggle-icon {
+    font-size: 1rem;
+  }
+
+  .sidebar-content {
+    padding: 1rem 1.5rem;
+  }
+
+  .sidebar-section {
+    margin-bottom: 1.5rem;
+  }
+
+  .sidebar-subtitle {
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar-item {
+    margin-bottom: 0.125rem;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 0.375rem 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  }
+
+  .sidebar-link:hover {
+    background: var(--theme-code-inline-bg);
+    color: var(--text-main);
+  }
+
+  .sidebar-folder {
+    margin: 0;
+  }
+
+  .sidebar-folder-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    list-style: none;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    position: relative;
+  }
+
+  /* Arrow for the SUMMARY that is a direct child of each DETAILS. Using the
+     child selector prevents an open parent DETAILS from affecting nested
+     summaries (which was causing nested category arrows to show the down
+     icon when only the parent was open). */
+  .sidebar-folder > .sidebar-folder-summary::before {
+    content: '▸';
+    font-size: 1rem;
+    opacity: 0.6;
+    margin-right: 0.5rem;
+  }
+
+  .sidebar-folder[open] > .sidebar-folder-summary::before {
+    content: '▾';
+  }
+
+  .sidebar-folder-summary:hover {
+    background: var(--theme-code-inline-bg);
+    color: var(--text-main);
+  }
+
+  .sidebar-folder-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sidebar-folder-summary::-moz-details-marker {
+    display: none;
+  }
+
+  .sidebar-folder-summary::marker {
+    display: none;
+  }
+
+  .sidebar-folder-static .sidebar-folder-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.375rem 0.75rem;
+    color: var(--text-secondary);
+    border-radius: 4px;
+    font-size: 0.85rem;
+    list-style: none;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    position: relative;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+
+  /* Only remove the arrow for the top-level static folder header (direct
+     child). Using the child selector avoids clearing arrows for nested
+     summaries inside this static area. */
+  .sidebar-folder-static > .sidebar-folder-summary::before {
+    content: '';
+    margin-right: 0.5rem;
+  }
+
+  .sidebar-index-link {
+    display: block;
+    padding: 0.375rem 0.75rem;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-weight: 600;
+    text-align: left;
+  }
+
+  .sidebar-index-link:hover {
+    background: var(--theme-code-inline-bg);
+    color: var(--text-main);
+  }
+
+  .sidebar-section .sidebar-sublist::before {
+    display: none;
+  }
+
+  .sidebar-section .sidebar-subitem::before {
+    display: none;
+  }
+
+  .sidebar-count {
+    margin-left: auto;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  }
+
+  .sidebar-sublist {
+    list-style: none;
+    padding: 0.25rem 0 0 1.5rem;
+    margin: 0;
+    position: relative;
+  }
+
+  .sidebar-sublist::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0.75rem;
+    width: 1px;
+    background: var(--theme-code-inline-bg);
+  }
+
+  .sidebar-subitem {
+    margin-bottom: 0.125rem;
+    position: relative;
+  }
+
+  .sidebar-subitem::before {
+    content: '';
+    position: absolute;
+    top: 0.75rem;
+    left: -0.75rem;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--theme-code-inline-bg);
+  }
+
+  .sidebar-subitem .sidebar-folder {
+    margin-left: 0;
+  }
+
+  .sidebar-subitem .sidebar-folder-summary {
+    padding-left: 0.75rem;
+  }
+
+  .sidebar-subitem .sidebar-sublist {
+    margin-left: 0;
+    padding-left: 1.5rem;
+  }
+
+  .sidebar-subitem .sidebar-sublist::before {
+    left: 0.75rem;
+  }
+
+  .sidebar-sublink {
+    display: block;
+    padding: 0.25rem 0.75rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    font-family: 'Hack', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    margin-left: 0.75rem;
+    position: relative;
+  }
+
+  .sidebar-sublink::before {
+    content: '';
+    position: absolute;
+    top: 0.5rem;
+    left: -0.75rem;
+    width: 0.5rem;
+    height: 1px;
+    background: var(--theme-code-inline-bg);
+  }
+
+  .sidebar-sublink:hover {
+    background: var(--theme-code-inline-bg);
+    color: var(--text-main);
+  }
+
+  .sidebar-sublink.active {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+  }
+
+  .sidebar-sublink.active:hover {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  @media (max-width: 1200px) {
+    .sidebar {
+      width: 50px;
+    }
+    
+    .sidebar-content {
+      display: none;
+    }
+    
+    .sidebar-header {
+      padding: 1rem;
+      justify-content: center;
+    }
+    
+    .sidebar-title {
+      display: none;
+    }
+  }
+</style>

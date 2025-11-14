@@ -52,3 +52,24 @@ const socialUrl = Astro.site.href + 'assets/social.png'
     root.classList.remove('theme-dark')
   }
 </script>
+<!-- Favicon setup for light/dark mode (support both .png and .ico variants) -->
+<link id="favicon-default" rel="icon" href="/favicon.ico" />
+<!-- light variants -->
+<link rel="icon" media="(prefers-color-scheme: light)" href="/favicon-light.png" />
+<link rel="icon" media="(prefers-color-scheme: light)" href="/favicon-light.ico" />
+<!-- dark variants -->
+<link rel="icon" media="(prefers-color-scheme: dark)" href="/favicon-dark.png" />
+<link rel="icon" media="(prefers-color-scheme: dark)" href="/favicon-dark.ico" />
+<script is:inline>
+  (function () {
+    const theme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = theme === 'dark' || (!theme && prefersDark);
+
+    // Prefer .ico for the default link (browsers commonly use .ico)
+    const defaultLink = document.getElementById('favicon-default');
+    if (defaultLink) {
+      defaultLink.href = isDark ? '/favicon-dark.ico' : '/favicon-light.ico';
+    }
+  })();
+</script>

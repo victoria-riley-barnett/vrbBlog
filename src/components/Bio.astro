@@ -1,10 +1,21 @@
+---
+export interface Props {
+  // Image dimensions
+  bioImgWidth?: string
+  bioImgHeight?: string
+  bioImgRadius?: string
+}
+
+const { bioImgWidth = '100px', bioImgHeight = '100px', bioImgRadius = '50%' } = Astro.props
+---
+
 <div>
-  <img src="/assets/profile-pic.webp" alt="Headshot of Maxi Ferreira">
+  <img src="/assets/profile-pic.jpeg" alt="Headshot of Victoria" style={`--bio-img-width: ${bioImgWidth}; --bio-img-height: ${bioImgHeight}; --bio-img-radius: ${bioImgRadius};`}/>
   <p>
-    Hi, I'm <strong>Maxi</strong>. I'm a software engineer and data scientist based in Los Angeles.
-    You can follow me on <a href="https://www.twitter.com/Charca" target="_blank">Twitter</a>,
-    see some of my work on <a href="https://www.github.com/Charca" target="_blank">GitHub</a>,
-    or read more about me on <a href="https://www.maxiferreira.com" target="_blank">my website</a>.
+    Hi, I'm <strong>Victoria</strong>. I'm a software engineer, open-source enthusiast, and community organizer based in San Francisco.
+    <br /> <br />
+    Follow me on <a href="https://www.linkedin.com/in/victoriabarnett0/" target="_blank">LinkedIn</a>,
+    or see some of my work on <a href="https://github.com/victoria-riley-barnett" target="_blank">GitHub</a>!
   </p>
 </div>
 
@@ -15,9 +26,9 @@
   }
 
   img {
-    width: 100px;
-    height: 100px;
-    border-radius: 100px;
+    width: var(--bio-img-width);
+    height: var(--bio-img-height);
+    border-radius: var(--bio-img-radius);
     display: block;
     margin-right: 20px;
   }

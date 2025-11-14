@@ -34,3 +34,36 @@
     U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
+
+/* Hack font for code blocks */
+@font-face {
+  font-family: 'Hack';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/hack-regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Hack';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/hack-bold.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Hack';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/hack-italic.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Hack';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/hack-bolditalic.woff2) format('woff2');
+}
