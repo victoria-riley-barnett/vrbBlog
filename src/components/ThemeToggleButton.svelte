@@ -8,8 +8,7 @@
   } else if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     theme = 'dark';
   }
-  // Persist initial inferred theme so other inline scripts (Logo) can read it
-  // immediately on next navigation without relying on root class presence.
+
   try {
     if (typeof localStorage !== 'undefined' && !localStorage.getItem('theme') && theme) {
       localStorage.setItem('theme', theme);
@@ -23,8 +22,6 @@
     try {
       const favicon = document.getElementById('favicon-default');
       if (favicon) favicon.href = theme === 'dark' ? '/favicon-dark.ico' : '/favicon-light.ico';
-      const logo = document.getElementById('site-logo');
-      if (logo) logo.src = theme === 'dark' ? '/assets/logo-dark.png' : '/assets/logo-light.png';
     } catch (e) {
       // noop
     }
@@ -32,8 +29,10 @@
 
   $: if (rootEl && theme === 'light') {
     rootEl.classList.remove('theme-dark');
+    try { rootEl.setAttribute('data-theme', 'light'); } catch (e) {}
   } else if (rootEl && theme === 'dark') {
     rootEl.classList.add('theme-dark');
+    try { rootEl.setAttribute('data-theme', 'dark'); } catch (e) {}
   }
 
   const icons = [

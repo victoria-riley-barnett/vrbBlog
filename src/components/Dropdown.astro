@@ -6,32 +6,11 @@ export interface Props {
   preview?: string
 }
 
-// Optional htmx attributes that can be passed through to the summary
-export interface Props {
-  title?: string
-  open?: boolean
-  id?: string
-  preview?: string
-  hxGet?: string
-  hxTarget?: string
-  hxSwap?: string
-  hxTrigger?: string
-}
-
-const {
-  title = 'Details',
-  open = false,
-  id,
-  preview,
-  hxGet,
-  hxTarget,
-  hxSwap,
-  hxTrigger
-} = Astro.props as Props
+const { title = 'Details', open = false, id, preview } = Astro.props
 ---
 
 <details class="dropdown" {...(open ? { open: true } : {})} {...(id ? { id } : {})}>
-  <summary class="dropdown-summary" {...(hxGet ? { 'hx-get': hxGet } : {})} {...(hxTarget ? { 'hx-target': hxTarget } : {})} {...(hxSwap ? { 'hx-swap': hxSwap } : {})} {...(hxTrigger ? { 'hx-trigger': hxTrigger } : {})}>
+  <summary class="dropdown-summary">
     <span class="dropdown-title">{title}</span>
     {!open && preview && (
       <span class="dropdown-preview-text">{preview}</span>
@@ -85,25 +64,13 @@ const {
 
   .dropdown-title::before {
     content: '▸';
-    font-size: 1rem;
+    font-size: 0.7rem;
     opacity: 0.6;
     margin-right: 0.5rem;
   }
 
   .dropdown[open] .dropdown-title::before {
     content: '▾';
-  }
-
-  .dropdown-summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .dropdown-summary::-moz-details-marker {
-    display: none;
-  }
-
-  .dropdown-summary::marker {
-    display: none;
   }
 
   .dropdown-preview-text {

@@ -8,9 +8,6 @@ import WorkHistory from '../content/work_history.md';
 const title = 'About';
 const description = 'About me';
 const permalink = `${Astro.site.href}about`;
-// Accept an optional server-side `open` query parameter so fetching
-// `/about?open=resume` will render the Resume dropdown open.
-const openParam = (Astro.url && Astro.url.searchParams && Astro.url.searchParams.get('open')) || (Astro.url && Astro.url.hash ? Astro.url.hash.replace('#', '') : null);
 ---
 
 <style>
@@ -34,15 +31,35 @@ const openParam = (Astro.url && Astro.url.searchParams && Astro.url.searchParams
         In my free time, I like reading, playing Paradox map games, going on walks around the city, and playing with my terminal.
       </p>
 
-      <Dropdown title="Resume" id="resume" open={openParam === 'resume'} hxGet="/_partials/resume" hxTarget="#resume .dropdown-body" hxSwap="innerHTML" hxTrigger="click once" preview="Motivated Computer Scientist and former U.S. Air Force munitions specialist transitioning into software engineering and systems work.">
+      <Dropdown title="Resume" id="resume" open={Astro.url.hash === '#resume'} preview="Motivated Computer Scientist and former U.S. Air Force munitions specialist transitioning into software engineering and systems work.">
         <Resume />
       </Dropdown>
 
-      <Dropdown title="Work History" id="work-history" open={openParam === 'work-history'} hxGet="/_partials/work-history" hxTarget="#work-history .dropdown-body" hxSwap="innerHTML" hxTrigger="click once" preview="Professional experience spanning IT consulting, military munitions systems, and service industry roles with transferable skills in leadership, systems thinking, and technical documentation.">
+      <Dropdown title="Work History" id="work-history" open={Astro.url.hash === '#work-history'} preview="Professional experience spanning IT consulting, military munitions systems, and service industry roles with transferable skills in leadership, systems thinking, and technical documentation.">
         <WorkHistory />
       </Dropdown>
     </article>
   </div>
 </BaseLayout>
 
-<!-- No client-side dropdown coordination needed when using server-driven htmx navigation. -->
+<script>
+  // Handle hash changes to open dropdowns
+  function handleHashChange() {
+    const hash = window.location.hash;
+    const resumeDropdown = document.getElementById('resume');
+    const workHistoryDropdown = document.getElementById('work-history');
+    
+    if (hash === '#resume' && resumeDropdown) {
+      (resumeDropdown as HTMLDetailsElement).open = true;
+    } else if (hash === '#work-history' && workHistoryDropdown) {
+      (workHistoryDropdown as HTMLDetailsElement).open = true;
+    }
+  }
+
+  // Check hash on page load with a small delay to ensure components are rendered
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(handleHashChange, 100);
+  });
+  // Listen for hash changes
+  window.addEventListener('hashchange', handleHashChange);
+</script>

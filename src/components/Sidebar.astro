@@ -37,11 +37,24 @@ sortedTags.forEach(tag => {
     sidebar.classList.toggle('collapsed');
   }
 
-  // No client-side session state or custom events here; when JS is
-  // available, sidebar links that target /about#id will use htmx via
-  // attributes (below) to request the about page and let the server
-  // decide which dropdown to render open. This keeps behavior simple and
-  // server-driven (AHA pattern).
+  // Auto-expand folders when page loads based on URL hash
+  document.addEventListener('DOMContentLoaded', () => {
+    const hash = window.location.hash;
+    if (hash) {
+      const targetElement = document.querySelector(hash);
+      if (targetElement) {
+        // Expand all parent details elements
+        let currentElement = targetElement.parentElement;
+        while (currentElement) {
+          if (currentElement.tagName === 'DETAILS') {
+            (currentElement as HTMLDetailsElement).open = true;
+          }
+          currentElement = currentElement.parentElement;
+        }
+      }
+    }
+  });
+  
 </script>
 
 <aside class="sidebar">
@@ -68,26 +81,9 @@ sortedTags.forEach(tag => {
               <ul class="sidebar-sublist">
                 {pages.map(page => (
                   <li class="sidebar-subitem">
-                    {/* If the page slug includes a hash (e.g. about#resume), add
-                        htmx attributes so clicking the link will request the
-                        /about page server-side with a query param and swap the
-                        main content. Otherwise fall back to a normal link. */}
-                    {page.slug.includes('#') ? (
-                      (() => {
-                        const parts = page.slug.split('#');
-                        const path = `/${parts[0]}`;
-                        const id = parts[1];
-                        return (
-                          <a href={`${path}#${id}`} class="sidebar-sublink" hx-get={`/${parts[0]}?open=${id}`} hx-target=".main-content-inner" hx-swap="innerHTML" hx-push-url="true">
-                            {page.title}
-                          </a>
-                        );
-                      })()
-                    ) : (
-                      <a href={`/${page.slug}`} class="sidebar-sublink">
-                        {page.title}
-                      </a>
-                    )}
+                    <a href={`/${page.slug}`} class="sidebar-sublink">
+                      {page.title}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -131,21 +127,6 @@ sortedTags.forEach(tag => {
 </aside>
 
 <style>
-  details {
-    list-style: none;
-  }
-
-  summary::-webkit-details-marker {
-    display: none;
-  }
-
-  summary::-moz-details-marker {
-    display: none;
-  }
-
-  summary::marker {
-    display: none;
-  }
   .sidebar {
     width: 280px;
     background: var(--background-secondary);
@@ -271,18 +252,14 @@ sortedTags.forEach(tag => {
     position: relative;
   }
 
-  /* Arrow for the SUMMARY that is a direct child of each DETAILS. Using the
-     child selector prevents an open parent DETAILS from affecting nested
-     summaries (which was causing nested category arrows to show the down
-     icon when only the parent was open). */
-  .sidebar-folder > .sidebar-folder-summary::before {
+  .sidebar-folder-summary::before {
     content: '▸';
-    font-size: 1rem;
+    font-size: 0.7rem;
     opacity: 0.6;
     margin-right: 0.5rem;
   }
 
-  .sidebar-folder[open] > .sidebar-folder-summary::before {
+  .sidebar-folder[open] .sidebar-folder-summary::before {
     content: '▾';
   }
 
@@ -292,14 +269,6 @@ sortedTags.forEach(tag => {
   }
 
   .sidebar-folder-summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .sidebar-folder-summary::-moz-details-marker {
-    display: none;
-  }
-
-  .sidebar-folder-summary::marker {
     display: none;
   }
 
@@ -318,10 +287,7 @@ sortedTags.forEach(tag => {
     color: var(--text-main);
   }
 
-  /* Only remove the arrow for the top-level static folder header (direct
-     child). Using the child selector avoids clearing arrows for nested
-     summaries inside this static area. */
-  .sidebar-folder-static > .sidebar-folder-summary::before {
+  .sidebar-folder-static .sidebar-folder-summary::before {
     content: '';
     margin-right: 0.5rem;
   }

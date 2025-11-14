@@ -3,7 +3,7 @@ title: i3 config
 slug: i3-config
 publishDate: 2023-02-11
 description: Link to the i3 configuration repository and notes about the i3 config file.
-tags: ["linux", "productivity", "configs"]
+tags: ["linux", "configs"]
 ---
 
 See my [Github - i3config](https://github.com/victoria-riley-barnett/i3config).
