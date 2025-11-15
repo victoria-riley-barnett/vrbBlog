@@ -1,17 +1,31 @@
 <footer>
-  <span>
-    &copy; {new Date().getFullYear()} Victoria Barnett
-  </span>
+  <div class="footer-inner">
+    <span>
+      &copy; {new Date().getFullYear()} Victoria Barnett
+    </span>
+  </div>
 </footer>
 
 <style>
   footer {
     color: var(--text-secondary);
     font-size: .8em;
-    margin: 1em auto;
-    max-width: 1400px;
-    padding: 1em 2em;
-    text-align: center;
     width: 100%;
+    background: transparent;
+  }
+
+  .footer-inner {
+    max-width: 800px; /* match .main-content-inner */
+    margin: 1em auto;
+    padding: 1em 1.8em;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  @media (max-width: 520px) {
+    .footer-inner {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
 </style>

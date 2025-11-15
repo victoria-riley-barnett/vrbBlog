@@ -31,13 +31,19 @@ const { title, description, permalink } = Astro.props;
 
     <Footer />
   </div>
-  </div>
     <!-- htmx for AHA-style partial requests (used by Dropdown lazy-loading) -->
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
   </body>
 </html>
 
 <style>
+  /* Shift the page content right by the fixed sidebar width so centering
+     calculations (auto margins) use the user's visible content area */
+  body {
+    padding-left: 280px;
+    box-sizing: border-box;
+  }
+
   .layout {
     display: flex;
     flex-direction: column;
@@ -55,8 +61,7 @@ const { title, description, permalink } = Astro.props;
     flex: 1;
     position: relative;
     width: 100%;
-    /* account for the fixed sidebar on the left */
-    margin-left: 280px;
+    /* no manual margin needed; body padding handles the offset */
   }
 
   .main-content-inner {
@@ -99,16 +104,16 @@ const { title, description, permalink } = Astro.props;
     .sidebar-title {
       display: none;
     }
-    /* when sidebar narrows at medium sizes, reduce main margin */
-    .main-content {
-      margin-left: 50px;
+    /* when sidebar narrows at medium sizes, reduce body padding */
+    body {
+      padding-left: 50px;
     }
   }
 
   /* on small screens hide sidebar and let content use full width */
   @media (max-width: 520px) {
-    .main-content {
-      margin-left: 0 !important;
+    body {
+      padding-left: 0 !important;
     }
     .main-content-inner {
       padding-left: 1rem;

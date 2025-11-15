@@ -336,6 +336,43 @@ td {
   margin: 0.45em 0;
 }
 
+/* Make tables inside dropdowns responsive and more compact on mobile
+   - allow horizontal scrolling when necessary
+   - reduce padding and stack rows on very small screens for readability */
+.dropdown .dropdown-body table {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dropdown .dropdown-body table th,
+.dropdown .dropdown-body table td {
+  padding: 0.35em 0.6em;
+  white-space: normal;
+  word-break: break-word;
+}
+
+@media (max-width: 480px) {
+  .dropdown .dropdown-body table {
+    font-size: 0.95rem;
+  }
+
+  .dropdown .dropdown-body table tr {
+    display: block;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .dropdown .dropdown-body table th,
+  .dropdown .dropdown-body table td {
+    display: block;
+    width: 100%;
+  }
+}
+
 .content h1 {
   font-size: 3em;
   margin: 1em 0;

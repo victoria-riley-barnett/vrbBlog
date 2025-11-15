@@ -6,10 +6,10 @@ import { getCollection } from 'astro:content';
 
 const latestPosts = (await getCollection('posts'))
   .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
-  .slice(0, 3);
+  .slice(0, 4);
 
-const title = 'My Astro Blog';
-const description = 'The perfect starter for your perfect blog.';
+const title = 'Victoria Barnett';
+const description = 'Victoria\'s personal website and blog.';
 const permalink = Astro.site.href;
 
 const githubStats = await getGitHubStats();
@@ -155,6 +155,9 @@ const githubStats = await getGitHubStats();
     position: relative;
     overflow: hidden;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .post-card::before {
@@ -201,6 +204,14 @@ const githubStats = await getGitHubStats();
     font-size: 0.95rem;
     line-height: 1.4;
     margin-bottom: 1rem;
+    /* Limit the description to a small number of lines for consistent card size */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    /* subtle fade at the bottom so truncated text feels graceful */
+    -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
+            mask-image: linear-gradient(180deg, rgba(0,0,0,1) 65%, rgba(0,0,0,0));
   }
 
   .post-card time {
@@ -210,6 +221,17 @@ const githubStats = await getGitHubStats();
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+
+  /* Make the link wrapper stretch so all cards in a row match height */
+  .post-card-link {
+    display: block;
+    height: 100%;
+  }
+
+  /* Keep the time at the bottom of the card for consistent layout */
+  .post-card time {
+    margin-top: auto;
   }
 
   /* Stats Section */
@@ -232,7 +254,7 @@ const githubStats = await getGitHubStats();
     }
     
     .stats-section {
-      justify-content: flex-start;
+      justify-content: center;
     }
   }
 </style>
