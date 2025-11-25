@@ -34,7 +34,7 @@ The model's feature importance reinforced this approach. Clinical assessments do
 
 The lesson that stayed with me is that technical excellence and ethical consideration aren't competing priorities—they're different dimensions of the same problem. Our recall-first approach wasn't a compromise on technical grounds; it was the most technically sound way to address the actual problem.
 
-If I were to revisit this work, I'd explore interpretability tools like [[SHAP]] to give clinicians more insight into the predictions. Because the goal isn't just accurate models—it's building tools that doctors can trust and understand.
+If I were to revisit this work, I'd explore interpretability tools like [SHAP](https://shap.readthedocs.io/en/latest/) to give clinicians more insight into the predictions. Because the goal isn't just accurate models—it's building tools that doctors can trust and understand.
 
 **What We Achieved:**
 | Metric | Value | Why It Matters |

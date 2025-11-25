@@ -1,72 +1,72 @@
 :root {
-  /* Catppuccin Latte: base / mantle / crust */
-  --base: #eff1f5;
-  --mantle: #e6e9ef;
-  --crust: #dce0e8;
+	/* Catppuccin Latte: base / mantle / crust */
+	--base: #eff1f5;
+	--mantle: #e6e9ef;
+	--crust: #dce0e8;
 
-  --background-body: var(--base);
-  --background-secondary: var(--mantle);
+	--background-body: var(--base);
+	--background-secondary: var(--mantle);
 
-  --text-main: #4c4f69;
-  --text-secondary: #5c5f77;
+	--text-main: #4c4f69;
+	--text-secondary: #5c5f77;
 
-  /* Latte accent: Mauve */
-  --primary-color: #8839ef;
-  --theme-accent: var(--primary-color);
+	/* Latte accent: Mauve */
+	--primary-color: #8839ef;
+	--theme-accent: var(--primary-color);
 
-  --theme-code-inline-bg: rgba(136,57,239,0.06);
-  --theme-code-inline-text: #4a4448;
-  --theme-code-block-bg: #464662;
+	--theme-code-inline-bg: rgba(136, 57, 239, 0.06);
+	--theme-code-inline-text: #8839ef;
+	--theme-code-block-bg: #464662;
 
-  --font-family-serif: Merriweather, serif;
-  --font-family-sans: 'Fira Sans', sans-serif;
+	--font-family-serif: Merriweather, serif;
+	--font-family-sans: 'Fira Sans', sans-serif;
 }
 
 :root.theme-dark {
-  /* Catppuccin Mocha: base / mantle / crust */
-  --base: #1e1e2e;
-  --mantle: #181825;
-  --crust: #11111b;
+	/* Catppuccin Mocha: base / mantle / crust */
+	--base: #1e1e2e;
+	--mantle: #181825;
+	--crust: #11111b;
 
-  --background-body: var(--base);
-  --background-secondary: var(--mantle);
+	--background-body: var(--base);
+	--background-secondary: var(--mantle);
 
-  --text-main: #cdd6f4;
-  --text-secondary: #bac2de;
+	--text-main: #cdd6f4;
+	--text-secondary: #bac2de;
 
-  /* Mocha accent: Maroon */
-  --primary-color: #eba0ac;
-  --theme-accent: var(--primary-color);
+	/* Mocha accent: Maroon */
+	--primary-color: #eba0ac;
+	--theme-accent: var(--primary-color);
 
-  --theme-code-inline-bg: rgba(205,214,244,0.03);
-  --theme-code-inline-text: #a6adc8;
-  --theme-code-block-bg: var(--crust);
+	--theme-code-inline-bg: rgba(205, 214, 244, 0.1);
+	--theme-code-inline-text: #dd7878;
+	--theme-code-block-bg: var(--crust);
 }
 
 html {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 @supports (scrollbar-gutter: stable) {
-  html {
-    overflow-y: auto;
-    scrollbar-gutter: stable;
-  }
+	html {
+		overflow-y: auto;
+		scrollbar-gutter: stable;
+	}
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: var(--font-family-serif);
-  font-size: 15px;
-  line-height: 1.4;
-  background-color: var(--background-body);
-  color: var(--text-main);
+	margin: 0;
+	font-family: var(--font-family-serif);
+	font-size: 15px;
+	line-height: 1.4;
+	background-color: var(--background-body);
+	color: var(--text-main);
 }
 
 h1,
@@ -75,127 +75,126 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-sans);
-  font-weight: 700;
-  line-height: 1.15;
-  margin: 0 0 0.4em 0;
+	font-family: var(--font-family-sans);
+	font-weight: 700;
+	line-height: 1.15;
+	margin: 0 0 0.4em 0;
 }
 
 h1 {
-  font-family: var(--font-family-serif);
-  font-size: 3.2em;
-  margin: 0 0 0.8em 0;
+	font-family: var(--font-family-serif);
+	font-size: 3.2em;
+	margin: 0 0 0.8em 0;
 }
 
 h2 {
-  margin: 1.2em 0 0 0;
-  font-size: 1.6em;
+	margin: 1.2em 0 0 0;
+	font-size: 1.6em;
 }
 
 h3 {
-  font-size: 1.3em;
+	font-size: 1.3em;
 }
 
 h4 {
-  font-size: 1.2em;
+	font-size: 1.2em;
 }
 
 h5 {
-  font-size: 1.1em;
+	font-size: 1.1em;
 }
 
 h6 {
-  font-size: 1.05em;
+	font-size: 1.05em;
 }
 
 p,
 ul,
 ol {
-  font-size: 0.95rem;
-  line-height: 1.35em;
-  margin: 0.8em 0;
+	font-size: 0.95rem;
+	line-height: 1.35em;
+	margin: 0.8em 0;
 }
 
 ol,
 ul {
-  padding-left: 1.5rem;
-  -webkit-padding-start: 4%;
-  -webkit-padding-end: 4%;
+	padding-left: 1.5rem;
+	-webkit-padding-start: 4%;
+	-webkit-padding-end: 4%;
 }
 
 li {
-  margin: 0.8rem 0;
+	margin: 0.8rem 0;
 }
 
 li p {
-  margin-bottom: 0.4rem;
-  margin-top: 0.4rem;
+	margin-bottom: 0.4rem;
+	margin-top: 0.4rem;
 }
 
 a {
-  color: inherit;
-  transition: color linear 0.15s;
+	color: inherit;
+	transition: color linear 0.15s;
 }
 
 a:hover {
-  color: var(--primary-color);
+	color: var(--primary-color);
 }
 
 p a,
 h1 a {
-  text-decoration: none;
-  box-shadow: inset 0 -0.12em 0 var(--primary-color);
-  -webkit-transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
-  transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+	text-decoration: none;
+	box-shadow: inset 0 -0.12em 0 var(--primary-color);
+	-webkit-transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
+	transition: box-shadow 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 p a:hover,
 h1 a:hover {
-  box-shadow: inset 0 -1.5em 0 var(--primary-color);
-  color: var(--background-body);
+	box-shadow: inset 0 -1.5em 0 var(--primary-color);
+	color: var(--background-body);
 }
 
 img {
-  max-width: 100%;
-  height: auto;
+	max-width: 100%;
+	height: auto;
 }
 
 hr {
-  padding: 0;
-  border: 0;
-  height: 8px;
-  margin: 30px auto;
-  background-image: url("data:image/svg+xml,%3csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%238839ef' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
-  background-repeat: repeat-x;
-  background-size: 100px 10px;
-  max-width: 350px;
+	padding: 0;
+	border: 0;
+	height: 8px;
+	margin: 30px auto;
+	background-image: url("data:image/svg+xml,%3csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%238839ef' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+	background-repeat: repeat-x;
+	background-size: 100px 10px;
+	max-width: 350px;
 }
 
 :root.theme-dark hr {
-  background-image: url("data:image/svg+xml,%3csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23eba0ac' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
+	background-image: url("data:image/svg+xml,%3csvg width='100' height='10' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M0,5 Q25,0 50,5 T100,5' stroke='%23eba0ac' stroke-width='2' fill='none' stroke-linecap='round'/%3e%3c/svg%3e");
 }
 
 code {
-  font-family: 'Hack', 'SF Mono', menlo, inconsolata, monospace;
-  font-size: calc(1em - 2px);
-  padding: 0.18em 0.42em;
-  border-radius: 6px;
-  color: var(--theme-code-inline-text);
-  border: 1px solid var(--theme-code-inline-bg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-variant-ligatures: contextual;
-  -webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  text-rendering: optimizeLegibility;
+	font-family: 'Hack', 'SF Mono', menlo, inconsolata, monospace;
+	font-size: calc(1em - 2px);
+	border-radius: 6px;
+	color: var(--theme-code-inline-text);
+	border: 1px solid var(--theme-code-inline-bg);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-variant-ligatures: contextual;
+	-webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	text-rendering: optimizeLegibility;
 }
 
 pre code {
-  font-family: 'Hack', 'SF Mono', menlo, inconsolata, monospace !important;
-  font-variant-ligatures: contextual;
-  -webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  text-rendering: optimizeLegibility;
+	font-family: 'Hack', 'SF Mono', menlo, inconsolata, monospace !important;
+	font-variant-ligatures: contextual;
+	-webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	text-rendering: optimizeLegibility;
 }
 
 /* Style code comments with italics */
@@ -209,7 +208,7 @@ code .line-comment,
 code .block-comment,
 code .doc-comment,
 code [class*="comment"] {
-  font-style: italic !important;
+	font-style: italic !important;
 }
 
 /* Also target Shiki syntax highlighting classes */
@@ -218,7 +217,7 @@ code [class*="comment"] {
 .shiki .block-comment,
 .shiki .doc-comment,
 .shiki [class*="comment"] {
-  font-style: italic !important;
+	font-style: italic !important;
 }
 
 /* Ensure comments are italicized in Catppuccin Mocha theme */
@@ -227,99 +226,100 @@ pre .line-comment,
 pre .block-comment,
 pre .doc-comment,
 pre [class*="comment"] {
-  font-style: italic !important;
+	font-style: italic !important;
 }
 
 pre {
-  border-radius: 8px !important;
-  margin: 1em 0 !important;
-  padding: 1em;
-  font-variant-ligatures: contextual;
-  -webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
-  text-rendering: optimizeLegibility;
-  font-kerning: normal;
-  -webkit-font-kerning: normal;
-  font-optical-sizing: auto;
-  border: 1px solid var(--theme-code-inline-bg);
-  background: var(--theme-code-block-bg) !important;
+	border-radius: 8px !important;
+	margin: 1em 0 !important;
+	padding: 1em;
+	font-variant-ligatures: contextual;
+	-webkit-font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	font-feature-settings: "calt" 1, "liga" 1, "dlig" 1;
+	text-rendering: optimizeLegibility;
+	font-kerning: normal;
+	-webkit-font-kerning: normal;
+	font-optical-sizing: auto;
+	border: 1px solid var(--theme-code-inline-bg);
+	background: var(--theme-code-block-bg) !important;
 }
 
 pre code {
-  padding: 0;
+	padding: 0;
 }
 
 blockquote {
-  border-left: 4px solid var(--text-secondary);
-  font-size: 1.2em;
-  font-style: italic;
-  margin: 1.5rem 0;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+	border-left: 4px solid var(--text-secondary);
+	font-size: 1.2em;
+	font-style: italic;
+	margin: 1.5rem 0;
+	padding-left: 1.5rem;
+	padding-right: 1.5rem;
 }
 
 blockquote p {
-  padding-bottom: 6px;
+	padding-bottom: 6px;
 }
 
 blockquote footer {
-  font-size: 1.1rem;
-  text-align: right;
+	font-size: 1.1rem;
+	text-align: right;
 }
 
 figure {
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
-  -webkit-margin-start: 0;
-  -webkit-margin-end: 0;
-  margin: 0 0 3em 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	-webkit-margin-start: 0;
+	-webkit-margin-end: 0;
+	margin: 0 0 3em 0;
 }
 
 table {
-  border-collapse: collapse;
-  font-family: var(--font-family-sans);
-  font-size: 0.95em;
-  margin: 1.5em 0;
+	border-collapse: collapse;
+	font-family: var(--font-family-sans);
+	font-size: 0.95em;
+	margin: 1.5em 0;
 }
 
 th {
-  border-bottom: 2px solid var(--text-secondary);
-  padding: 0.4em 0.8em;
+	border-bottom: 2px solid var(--text-secondary);
+	padding: 0.4em 0.8em;
 }
 
 td {
-  padding: 0.4em 0.8em;
-  word-break: break-word;
+	padding: 0.4em 0.8em;
+	word-break: break-word;
 }
 
 .latest-posts {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2em;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2em;
 }
 
 .post-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2em;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 2em;
 }
 
 .container {
-  margin: 0 auto;
-  max-width: 65em;
-  width: 100%;
+	margin: 0 auto;
+	max-width: 65em;
+	width: 100%;
 }
 
 /* Dropdown density adjustments */
 .dropdown .dropdown-body {
-  font-size: 0.95rem;
-  line-height: 1.25em;
-  padding: 0.5rem 0.75rem;
+	font-size: 0.95rem;
+	line-height: 1.25em;
+	padding: 0.5rem 0.75rem;
 }
+
 .dropdown .dropdown-summary {
-  padding: 0.4rem 0.5rem;
+	padding: 0.4rem 0.5rem;
 }
 
 /* Ensure paragraphs and lists inside dropdowns take the compact spacing
@@ -327,117 +327,117 @@ td {
 .dropdown .dropdown-body p,
 .dropdown .dropdown-body ul,
 .dropdown .dropdown-body ol {
-  font-size: 1rem;
-  line-height: 1.25em;
-  margin: 0.55em 0;
+	font-size: 1rem;
+	line-height: 1.25em;
+	margin: 0.55em 0;
 }
 
 .dropdown .dropdown-body li {
-  margin: 0.45em 0;
+	margin: 0.45em 0;
 }
 
 /* Make tables inside dropdowns responsive and more compact on mobile
    - allow horizontal scrolling when necessary
    - reduce padding and stack rows on very small screens for readability */
 .dropdown .dropdown-body table {
-  width: 100%;
-  max-width: 100%;
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+	width: 100%;
+	max-width: 100%;
+	display: block;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
 }
 
 .dropdown .dropdown-body table th,
 .dropdown .dropdown-body table td {
-  padding: 0.35em 0.6em;
-  white-space: normal;
+	padding: 0.35em 0.6em;
+	white-space: normal;
 }
 
 @media (max-width: 480px) {
-  .dropdown .dropdown-body table {
-    font-size: 0.95rem;
-  }
+	.dropdown .dropdown-body table {
+		font-size: 0.95rem;
+	}
 
-  .dropdown .dropdown-body table tr {
-    display: block;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    margin-bottom: 0.4rem;
-    padding-bottom: 0.4rem;
-  }
+	.dropdown .dropdown-body table tr {
+		display: block;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+		margin-bottom: 0.4rem;
+		padding-bottom: 0.4rem;
+	}
 
-  .dropdown .dropdown-body table th,
-  .dropdown .dropdown-body table td {
-    display: block;
-    width: 100%;
-  }
+	.dropdown .dropdown-body table th,
+	.dropdown .dropdown-body table td {
+		display: block;
+		width: 100%;
+	}
 }
 
 .content h1 {
-  font-size: 3em;
-  margin: 1em 0;
+	font-size: 3em;
+	margin: 1em 0;
 }
 
 .theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  height: 100%;
-  padding: 0.33em 0.67em;
-  padding-top: 8px;
-  margin-left: 10px;
-  gap: 0.6em;
-  border-radius: 99em;
-  background-color: var(--theme-code-inline-bg);
+	display: inline-flex;
+	align-items: center;
+	height: 100%;
+	padding: 0.33em 0.67em;
+	padding-top: 8px;
+	margin-left: 10px;
+	gap: 0.6em;
+	border-radius: 99em;
+	background-color: var(--theme-code-inline-bg);
 }
 
-.theme-toggle > label:focus-within {
-  outline: 2px solid transparent;
-  box-shadow: 0 0 0 0.08em var(--theme-accent), 0 0 0 0.12em white;
+.theme-toggle>label:focus-within {
+	outline: 2px solid transparent;
+	box-shadow: 0 0 0 0.08em var(--theme-accent), 0 0 0 0.12em white;
 }
 
-.theme-toggle > label {
-  color: var(--theme-code-inline-text);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.5;
-  cursor: pointer;
+.theme-toggle>label {
+	color: var(--theme-code-inline-text);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.5;
+	cursor: pointer;
 }
 
 .theme-toggle .checked {
-  color: var(--theme-accent);
-  opacity: 1;
+	color: var(--theme-accent);
+	opacity: 1;
 }
 
 input[name='theme-toggle'] {
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
+	position: absolute;
+	opacity: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
 }
 
 @media (max-width: 1020px) {
-  h1 {
-    font-size: 3em;
-  }
+	h1 {
+		font-size: 3em;
+	}
 
-  .content h1 {
-    font-size: 2.4em;
-  }
+	.content h1 {
+		font-size: 2.4em;
+	}
 }
 
 @media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
+	body {
+		font-size: 14px;
+	}
 
-  p,
-  ul,
-  ol {
-    font-size: 1.2rem;
-    margin: 1em 0;
-  }
+	p,
+	ul,
+	ol {
+		font-size: 1.2rem;
+		margin: 1em 0;
+	}
 }
