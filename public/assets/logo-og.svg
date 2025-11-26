@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Simple higher-resolution mark for OG images: rounded square with minimal 'V' -->
+  <rect x="0" y="0" width="512" height="512" rx="64" fill="#0f172a" />
+  <path d="M128 320 L240 192 L384 320" fill="none" stroke="#F8FAFC" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

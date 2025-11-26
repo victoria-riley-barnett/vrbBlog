@@ -10,7 +10,17 @@ export interface Props {
 }
 
 const { title, description, permalink } = Astro.props
-const socialUrl = Astro.site.href + 'assets/social.png'
+
+// Derive a slug from the permalink and point OG image to the
+// generated open-graph/png path created by `astro-og-canvas`.
+const siteHref = Astro.site ? Astro.site.href : '/';
+const relPath = permalink?.replace(siteHref, '') || '';
+const segments = relPath.split('/').filter(Boolean);
+const slug = segments.length ? segments[segments.length - 1] : 'index';
+
+// Use a relative path so `dev` servers (localhost) resolve the OG image locally.
+// Production will still serve `/open-graph/<slug>.png` from your deployed domain.
+const socialUrl = `/open-graph/${slug}.png`;
 ---
 
 <!-- Global Metadata -->
