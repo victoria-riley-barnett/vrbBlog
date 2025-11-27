@@ -2,6 +2,7 @@
 import { ClientRouter } from 'astro:transitions'
 import '../styles/fonts.css'
 import '../styles/global.css'
+import { getImagePath } from 'astro-opengraph-images'
 
 export interface Props {
   title: string
@@ -10,6 +11,7 @@ export interface Props {
 }
 
 const { title, description, permalink } = Astro.props
+const { url, site } = Astro
 
 // Derive a slug from the permalink and point OG image to the
 // generated open-graph/png path created by `astro-og-canvas`.
@@ -18,9 +20,8 @@ const relPath = permalink?.replace(siteHref, '') || '';
 const segments = relPath.split('/').filter(Boolean);
 const slug = segments.length ? segments[segments.length - 1] : 'index';
 
-// Use a relative path so `dev` servers (localhost) resolve the OG image locally.
-// Production will still serve `/open-graph/<slug>.png` from your deployed domain.
-const socialUrl = `/open-graph/${slug}.png`;
+// Use integration-provided image path which ensures a .png is generated next to the page.
+const socialUrl = getImagePath({ url, site });
 ---
 
 <!-- Global Metadata -->
