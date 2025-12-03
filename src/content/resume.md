@@ -15,39 +15,76 @@ th, td {
 }
 </style>
 
-Motivated Computer Scientist and former U.S. Air Force munitions specialist transitioning into software engineering and systems work. Seeking roles combining systems thinking, secure-process experience, and full‑stack web development skills.
+**Systems Engineer & Developer** with 5+ years of
+high-reliability systems experience. Data and infrastructure
+focused with emphasis on explainability, tooling, and clear
+technical communication.
 
-## Summary of Qualifications
+## Core Technical Competencies
 
-- 5+ years working in high‑reliability, security‑conscious environments in the U.S. Air Force.
-- Experience leading small teams, writing technical reports, and improving operational processes that reduced manual errors across interconnected databases.
-- Knowledge graphs, random forest, and data analysis experience from academic projects.
-- Practical full‑stack/web tooling experience: JavaScript, Python, C++, Rust, Jekyll, Flask, Docker, Git, Linux CLI.
-- Bachelor's in Computer Science: Data structures, algorithms, OOP, web development, and systems design.
+### **Systems Programming**
+- **Low-level Development**: C, C++, MIPS Assembly, memory
+management, pointer arithmetic
+- **Filesystems Experience**: VCB/FAT design, block
+allocation, directory structures, A/B partitioning
+- **Operating Systems**: Process scheduling, virtual memory,
+system calls, kernel-space concepts
 
-## Education & Certification
+### **Infrastructure & DevOps**
+- **Container Orchestration & IaC**: Docker, Docker Compose,
+multi-service deployment, Cloudflare Wrangler, Portainer
+- **Mobile & Embedded Systems**: Android Treble/GSI
+experimentation, Tailscale ARMv8 plugin development for
+KOReader, Meshtastic radio builds
+- **Linux/Unix Systems**: Bash scripting, systemd/launchd
+services, CLI tool development, package management
+- **Build Systems**: Make, CMake, custom toolchains, cross-
+compilation
 
-- B.S., Computer Science — San Francisco State University, San Francisco, CA (Expected Dec 2025)
-  - Relevant coursework: Data Structures & Algorithms, Object-Oriented Programming, Web Development, Systems Design
-  - GPA: 3.4
-- High School Diploma — Calvary Christian High School, Indianapolis, IN (2015)
-- USAF Specialty Training & Special Experience Identifier 836 — Munitions inspection and maintenance
+### **Data Engineering & Analysis**
+- **Geospatial Systems**: PostGIS, MapLibre, coordinate
+systems, spatial queries
+- **Statistical Analysis**: R, Python (pandas/scikit-learn),
+hypothesis testing, regression models (Random Forest
+specialization)
+- **Knowledge Graphs**: RDF/OWL semantics, SPARQL queries,
+entity relationship modeling
+- **Data Pipelines**: ETL design, batch processing, real-time
+streaming architectures
 
-## Technical Skills
+### **Communication & Administration**
+- **Access Control & Admin**: SELinux contexts, permission
+models, security boundaries; Google Workspace, Microsoft
+SharePoint, Auth0 administration experience
+- **Technical Documentation**: 120+ safety reports, operational
+procedures, system specifications written for the USAF
+- **Technical Blogging**: Clear communication of complex
+technical concepts and how I am learning/using them
 
-- Languages: JavaScript, Python, C++
-- Web: Jekyll, Flask, WordPress, HTML/CSS
-- Tools & DevOps: Git (GitHub/GitLab), Docker, Linux/CLI
-- Other: LaTeX/MathJax, A/V tech & broadcasting fundamentals
+## Education
+
+- **B.S., Computer Science** — San Francisco State University,
+San Francisco, CA (Expected Dec 2025)
+  - *Relevant Coursework*: Data Structures & Algorithms,
+Operating Systems, Computer Architecture, Database Systems
+  - *GPA*: 3.4/4.0
+- **U.S. Air Force Technical Training** — Munitions Systems
+(Special Experience Identifier 836)
 
 ## Selected Projects
 
-- **Serial PM** — Led a semester project to build a visual project management prototype. Responsibilities: design, coordination, frontend work, and deployment strategy. See blog post: /src/data/blog-posts/serial-project-management.md
-- **Containerization** — Intro experiments and best practices for containerizing apps. See: /src/data/blog-posts/starting-with-docker.md
-- **C++ Exercises** — Data structure and algorithms practice assignments. See: /src/data/blog-posts/cpp-exercises.md
+- **Serial PM** — Led development of visual project management
+prototype; handled design, coordination, frontend
+implementation, and deployment strategy
+- **LiveMD** - Created a tool that formats Markdown as your local LLM generates in, right in a CLI.
+- **Tailscale for KOreader** - Cross-compiled and wrote a Lua plugin for the open-source KOreader ereader application to seamlessly install and use Tailscale binaries.
+- **Clausewitz Engine modding** - Wrote a popular Europa Universalis V modification that implements an optimized education strategy (10,000+ users).
 
-## Achievements & Impact
+## Professional Impact
 
-- Authored and submitted 120+ technical reports and safety documents in a high‑risk operational environment.
-- Discovered and documented recurring explosive‑hazard tracking discrepancies across databases, contributing to a global technical data correction affecting high‑value munitions.
-- Improved administrative throughput by developing Access-based forms and interfaces to integrate with existing logistics systems.
+- Authored 120+ technical reports and safety documents in high-
+risk operational environments
+- Identified and documented critical database discrepancies,
+contributing to global technical data corrections
+- Built CLI tools and automation scripts that enhanced
+developer productivity, system reliability, and user experience.
