@@ -14,8 +14,6 @@ th, td {
   text-align: left;
 }
 </style>
-# Victoria Barnett
-
 **Software Engineer & Systems Specialist** with 5+ years of experience building high‑reliability systems. Skilled in creating explainable infrastructure and tools, with a strong background in technical communication and team coordination developed through technical projects and community organizing.
 
 ---
