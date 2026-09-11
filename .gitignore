@@ -21,4 +21,7 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# agent artifacts / scratch handoffs — not for a public repo
 .github/copilot-instructions.md
+CONSIDERATIONS.md
