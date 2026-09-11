@@ -35,12 +35,13 @@ See `CLAUDE.md` for the details.
 
 ## Deploy
 
-Cloudflare Pages, deployed by hand:
+Push to `main` — that's the whole deploy. The Cloudflare Pages project is git-connected and
+builds automatically:
 
 ```bash
-npm run build
-wrangler pages deploy dist
+git push origin main
 ```
 
+A failed build leaves the previous deploy live, so a bad push won't take the site down.
 `site` in `astro.config.mjs` is the single source for canonical and Open Graph URLs — set it
 there, not in individual pages.

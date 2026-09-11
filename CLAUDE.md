@@ -74,22 +74,44 @@ it in sync when the content changes.
 
 ## Deploy
 
-Cloudflare Pages, built by hand and pushed with wrangler. There is **no `wrangler.toml`** —
-the deploy is config-less, so nothing in the repo pins the Pages project name or the custom
-domain; both live in the Cloudflare dashboard. `wrangler` is global (`/Users/v/.npm-global/bin/wrangler`, v4.x).
+**`git push origin main` is the deploy.** The Cloudflare Pages project `vrbblog` is
+git-connected to `victoria-riley-barnett/vrbBlog` (production branch `main`), and Cloudflare
+builds it itself: `npm run build` → `dist`. Nothing is pushed by hand.
 
-Note `README.md` says `wrangler pages publish`; that subcommand is the deprecated alias for
-`wrangler pages deploy`.
+- Local `wrangler pages deploy` is **not** the mechanism — the project is git-connected, and
+  `dist/` is gitignored anyway. Earlier notes here and in `README.md` calling for wrangler
+  were wrong.
+- **A failed build does not change the live site.** The last successful deploy stays up, so a
+  bad push is safe to recover from — check the build status afterward.
+- `vb4r.com` is a custom domain on the project. Its DNS is a proxied
+  `CNAME vb4r.com -> vrbblog.pages.dev` in zone `7cee788e2c42617d37a95571f73bc678`.
+- The build runs in **Cloudflare's** environment, not yours — different Node and npm versions
+  than local. A build that passes locally can still fail there. Read the build log.
 
-The site is public and indexable — every change here lands on the live web. Confirm before
-deploying.
+The site is public and indexable — every push to `main` lands on the live web. Confirm before
+pushing.
 
-## Sandbox
+Two failure modes that have actually bitten:
 
-The Bash tool's sandbox has **no outbound network**. `npm run build` works; anything touching
-the network (`wrangler pages deploy`, `npm install`, Cloudflare MCP) does not. For those,
-Victoria runs `! <command>` in the session so it executes in her environment and the output
-lands in the conversation.
+- **Unquoted colons in post frontmatter break the build.** `title: Foo: bar` is invalid YAML
+  and fails the whole deploy. Quote the title. This silently blocked every deploy from July to
+  September 2026.
+- **A missing `404.html` makes Cloudflare Pages serve the homepage with HTTP 200 for every
+  unmatched route**, so deleted pages look like they still exist and bad URLs get soft-200s.
+  `src/pages/404.astro` is what prevents that — don't delete it.
+
+## Sandbox and network
+
+The Bash tool's sandbox has **no outbound network**. `npm run build` works; `npm install`,
+`git push`, `curl`, and `wrangler` do not.
+
+Two ways around it: Victoria runs `! <command>` so it executes in her environment and the
+output lands in the conversation, or the Bash tool is called with `dangerouslyDisableSandbox`
+for that specific command.
+
+**The Cloudflare MCP is not sandboxed** and is the right tool for Pages and DNS work — project
+config, deployment status, build logs, custom domains, and DNS records are all reachable
+through it. Prefer it over shelling out.
 
 ## Maintenance notes
 
