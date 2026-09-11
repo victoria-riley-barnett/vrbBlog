@@ -39,8 +39,16 @@ slug: my-post-slug        # drives the route: /blog/my-post-slug — set manuall
 publishDate: 2026-09-07
 description: One sentence, shown in the index.
 tags: ["optional"]
+draft: true               # optional — see Drafts below
 ---
 ```
+
+**Drafts.** `draft: true` keeps a post out of the production build while leaving it in the
+repo, so unreviewed writing can sit there without going live. Drafts still render under
+`npm run dev`, so they can be read locally before publishing. Every listing reads posts
+through `getPublishedPosts()` in `src/lib/posts.js`, which applies the draft filter and the
+sort (newest first, slug as tiebreaker). Route new post listings through that helper — calling
+`getCollection('posts')` directly will leak drafts onto the live site.
 
 **`src/content/*.md` are NOT a collection.** They are imported directly as Markdown
 components by `src/pages/about.astro`:
@@ -140,13 +148,11 @@ Upgraded to Astro 7 on 2026-09-11 (from 5.18.2; `@astrojs/mdx` 4→8, `@astrojs/
 Verified against a pre-upgrade golden build of `dist/`: every article body token-identical,
 OG images byte-identical, smart quotes/dashes/external-link targeting unchanged.
 
-The one visible difference: three posts share `publishDate: 2026-03-21`
-(`personal-agent-infrastructure`, `dispatch-agents`, `tailscale-koreader-plugin`). The
-`Sidebar` and blog index sort on date alone, so ties fall back to `getCollection()` iteration
-order — which Astro 7 changed. Two of those posts are both tagged `ai`, so they swapped. It is
-stable now, but the order is an implementation detail, not a decision. Adding a slug
-tiebreaker to the comparator in `src/components/Sidebar.astro:29` (and the equivalent sort in
-`blog/index.astro`) would pin it.
+The one visible difference: three posts shared `publishDate: 2026-03-21`
+(`personal-agent-infrastructure`, `dispatch-agents`, `tailscale-koreader-plugin`) — the
+date-only sort fell back to `getCollection()` iteration order, which Astro 7 changed, so two
+of them swapped. That is moot now (all three are drafts), but the sort is pinned regardless:
+`src/lib/posts.js` breaks date ties on slug, and every listing uses that one comparator.
 
 Keep the golden build around when upgrading again: `npm run build`, then compare `dist/`
 against it *after normalizing away* `data-astro-cid-*` hashes, asset hashes, and tag

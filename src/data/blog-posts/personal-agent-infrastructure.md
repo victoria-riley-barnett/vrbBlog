@@ -4,6 +4,7 @@ slug: 'personal-agent-infrastructure'
 publishDate: '2026-03-21'
 description: "A practical breakdown of the AI agent stack I use daily — Claude Code with MCP servers, Sophia memory system, dispatch-agents, and how they fit together."
 tags: ['ai', 'agents', 'infrastructure', 'claude', 'tools']
+draft: true
 ---
 
 My AI agent infrastructure tackles context loss, cost inefficiency, and isolated agents. It combines Claude Code with MCP servers, Sophia memory, and dispatch-agents for cheap task delegation.

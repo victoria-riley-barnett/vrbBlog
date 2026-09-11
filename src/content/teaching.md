@@ -19,4 +19,6 @@ Principles that shape the course:
 
 Before teaching this course I was an instructional assistant for CSC 511 (Protein Modeling with Deep Learning), leading recitations for life-science students building protein models in PyTorch and Lightning.
 
+<!-- Uncomment when the essay is published again (it is currently draft: true):
 The program's design, and the paper that documents it, are the subject of [an essay I wrote on teaching machine learning to interdisciplinary scientists](/blog/teaching-ml-interdisciplinary-scientists).
+-->

@@ -1,11 +1,12 @@
 ---
-import { getCollection, render } from 'astro:content'
+import { render } from 'astro:content'
 import readingTime from 'reading-time'
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Bio from '../../components/Bio.astro';
+import { getPublishedPosts } from '../../lib/posts.js';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('posts')
+	const posts = await getPublishedPosts()
   return posts.map(p => ({
     params: { slug: p.data.slug },
     props: { post: p },

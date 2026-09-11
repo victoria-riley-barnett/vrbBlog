@@ -1,7 +1,7 @@
 ---
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../lib/posts.js';
 
-const allPosts = await getCollection('posts');
+const allPosts = await getPublishedPosts();
 
 const pages = [
   { title: 'Victoria', slug: 'about' },
@@ -23,11 +23,6 @@ allPosts.forEach(post => {
 
 // Sort tags alphabetically
 const sortedTags = Object.keys(postsByTag).sort();
-
-// Sort posts within each tag by publish date (newest first)
-sortedTags.forEach(tag => {
-  postsByTag[tag].sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
-});
 ---
 
 <!-- Auto-expand folders when page loads based on URL hash -->
