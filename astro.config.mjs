@@ -4,8 +4,7 @@ import mdx from '@astrojs/mdx'
 import opengraphImages from 'astro-opengraph-images'
 import React from 'react'
 import * as fs from 'fs'
-import remarkGfm from 'remark-gfm'
-import remarkSmartypants from 'remark-smartypants'
+import { unified } from '@astrojs/markdown-remark'
 import rehypeExternalLinks from 'rehype-external-links'
 
 // https://astro.build/config
@@ -133,17 +132,20 @@ export default defineConfig({
     }),
   ],
   markdown: {
+    // `gfm` and `smartypants` both default to true under unified(), so the
+    // remark-gfm / remark-smartypants plugins Astro 5 needed are now built in.
+    processor: unified({
+      rehypePlugins: [
+        [
+          rehypeExternalLinks,
+          {
+            target: '_blank',
+          },
+        ],
+      ],
+    }),
     shikiConfig: {
       theme: 'catppuccin-mocha',
     },
-    remarkPlugins: [remarkGfm, remarkSmartypants],
-    rehypePlugins: [
-      [
-        rehypeExternalLinks,
-        {
-          target: '_blank',
-        },
-      ],
-    ],
   },
 })

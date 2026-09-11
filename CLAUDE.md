@@ -3,16 +3,16 @@
 Victoria Barnett's personal site: blog, about, resume, teaching, work history.
 Live at **https://vb4r.com** (Cloudflare Registrar, deployed to Cloudflare Pages).
 
-Astro 5 static site, forked from [Charca's astro-blog-template](https://github.com/Charca/astro-blog-template).
+Astro 7 static site, forked from [Charca's astro-blog-template](https://github.com/Charca/astro-blog-template).
 Content is prose — the writing is the point. Match the existing voice: declarative, concrete,
 no filler. Don't add marketing gloss to résumé or bio copy.
 
 ## Commands
 
 ```bash
-npm run dev      # dev server
+npm run dev      # dev server — daemonizes on Astro 7, returns immediately
+astro dev stop   # stop it        (also: astro dev status / astro dev logs)
 npm run build    # build to dist/
-wrangler pages deploy dist   # deploy (needs network — see Sandbox below)
 ```
 
 ## Layout
@@ -64,13 +64,29 @@ it in sync when the content changes.
 - OG images are generated at build time by `astro-opengraph-images` using a custom Satori
   renderer defined inline in `astro.config.mjs` (Catppuccin Mocha palette, logo + title +
   description). Each page emits a sibling `index.png`.
-- `astro-og-canvas` is still in `package.json` but is no longer wired up — leftover from a swap.
+- OG output is byte-stable across Astro versions — it survived the 5→7 upgrade unchanged.
 
 ## Markdown pipeline
 
-`remark-gfm` (tables, strikethrough), `remark-smartypants` (curly quotes and dashes in prose),
-`rehype-external-links` (all external links get `target="_blank"`). Shiki highlights with the
-`catppuccin-mocha` theme, matching the OG images.
+Astro 7 made **Sätteri** (a Rust pipeline) the default processor, so `markdown.remarkPlugins`
+and `markdown.rehypePlugins` at the top level are deprecated — plugins now go through
+`processor: unified({...})` from `@astrojs/markdown-remark`, which is a **required install**
+(not a dependency of `astro`). Without it the build hard-errors.
+
+```js
+import { unified } from '@astrojs/markdown-remark'
+
+markdown: {
+  processor: unified({ rehypePlugins: [[rehypeExternalLinks, { target: '_blank' }]] }),
+  shikiConfig: { theme: 'catppuccin-mocha' },
+}
+```
+
+`gfm` and `smartypants` both **default to `true`** under `unified()`, so the `remark-gfm` and
+`remark-smartypants` packages Astro 5 needed are no longer installed. Only
+`rehype-external-links` remains a real plugin. Shiki uses `catppuccin-mocha`, matching the OG
+images. `compressHTML: 'jsx'` is the new default, so built HTML is formatted differently than
+under Astro 5 — harmless, but it makes naive `diff` of `dist/` noisy.
 
 ## Deploy
 
@@ -120,5 +136,18 @@ Cleaned up 2026-09-10 (template leftovers removed: the demo Markdown cheat-sheet
 `.npmrc`). `.DS_Store` is gitignored — if `.DS_Store` files reappear in `public/` or `src/`
 they will be copied into the build, so sweep them before deploying.
 
-The project is on Astro 5; Astro 7 is current. A major upgrade is a standalone task, not a
-drive-by.
+Upgraded to Astro 7 on 2026-09-11 (from 5.18.2; `@astrojs/mdx` 4→8, `@astrojs/svelte` 7→9).
+Verified against a pre-upgrade golden build of `dist/`: every article body token-identical,
+OG images byte-identical, smart quotes/dashes/external-link targeting unchanged.
+
+The one visible difference: three posts share `publishDate: 2026-03-21`
+(`personal-agent-infrastructure`, `dispatch-agents`, `tailscale-koreader-plugin`). The
+`Sidebar` and blog index sort on date alone, so ties fall back to `getCollection()` iteration
+order — which Astro 7 changed. Two of those posts are both tagged `ai`, so they swapped. It is
+stable now, but the order is an implementation detail, not a decision. Adding a slug
+tiebreaker to the comparator in `src/components/Sidebar.astro:29` (and the equivalent sort in
+`blog/index.astro`) would pin it.
+
+Keep the golden build around when upgrading again: `npm run build`, then compare `dist/`
+against it *after normalizing away* `data-astro-cid-*` hashes, asset hashes, and tag
+whitespace — raw `diff` output is mostly noise.
