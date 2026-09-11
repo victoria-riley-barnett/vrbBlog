@@ -2,11 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import GitHubStats from '../components/GitHubStats.svelte';
 import { getGitHubStats } from '../lib/github.js';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../lib/posts.js';
 
-const latestPosts = (await getCollection('posts'))
-  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
-  .slice(0, 4);
+const latestPosts = (await getPublishedPosts()).slice(0, 4);
 
 const title = 'Victoria Barnett';
 const description = 'Victoria\'s personal website and blog.';

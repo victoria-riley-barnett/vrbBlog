@@ -4,6 +4,7 @@ slug: dispatch-agents
 publishDate: '2026-03-21'
 description: A Python tool for dispatching structured tasks to DeepSeek AI agents with typed output, scoped file access, and MCP notifications.
 tags: ['ai', 'agents', 'python', 'tools', 'deepseek']
+draft: true
 ---
 
 I've been using AI agents for coding and writing tasks for a while, but I kept hitting the same friction points. I'd pipe text to `aichat` sessions, copy-paste results, try to parse unstructured output, and manually check when long-running tasks finished. It worked, but it felt like using a Swiss Army knife as a screwdriver — possible, but not what it was designed for.

@@ -4,6 +4,7 @@ slug: teaching-ml-interdisciplinary-scientists
 publishDate: 2026-09-07
 description: The PINC program's design rules, seen from inside the machine learning course they built.
 tags: ["teaching", "machine learning"]
+draft: true
 ---
 
 In 2022, a group of San Francisco State faculty published "Ten simple rules for designing and running a computing minor for bio/chem students" in PLOS Computational Biology. It is the PINC program written down: the university's computing minor for biology, biochemistry, and chemistry students. It is an experience report, not an experiment. That is the rare kind of paper that ages well, because it documents decisions rather than results.

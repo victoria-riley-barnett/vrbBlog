@@ -5,6 +5,7 @@ publishDate: '2026-03-21'
 description: 'How I built a Tailscale VPN plugin for KOReader that runs on Kindles, Kobos, and PocketBooks — including the HTTP proxy fallback for devices without TUN support.'
 tags: ['tailscale', 'koreader', 'lua', 'networking', 'e-reader']
 author: 'Victoria Barnett'
+draft: true
 ---
 
 E-readers are weird little Linux computers. They run on slow ARM processors with 256-512MB of RAM, they have limited storage, and their filesystems are often FAT32 or read-only. But they're also perfect for running [KOReader](https://github.com/koreader/koreader), a feature-rich open-source reading app that supports plugins.

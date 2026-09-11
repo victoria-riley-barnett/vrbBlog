@@ -1,13 +1,12 @@
 ---
-import { getCollection } from 'astro:content'
+import { getPublishedPosts } from '../../lib/posts.js'
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const title = 'Blog';
 const description = 'Latest articles.';
 const permalink = `${Astro.site.href}blog`;
 
-let allPosts = await getCollection('posts')
-allPosts = allPosts.sort((a, b) => new Date(b.data.publishDate).valueOf() - new Date(a.data.publishDate).valueOf());
+const allPosts = await getPublishedPosts();
 ---
 
 <BaseLayout title={title} description={description} permalink={permalink}>
