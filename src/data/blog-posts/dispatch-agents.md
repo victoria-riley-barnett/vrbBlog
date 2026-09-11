@@ -1,5 +1,5 @@
 ---
-title: Building dispatch-agents: Structured AI task dispatch from the command line
+title: 'Building dispatch-agents: Structured AI task dispatch from the command line'
 slug: dispatch-agents
 publishDate: '2026-03-21'
 description: A Python tool for dispatching structured tasks to DeepSeek AI agents with typed output, scoped file access, and MCP notifications.

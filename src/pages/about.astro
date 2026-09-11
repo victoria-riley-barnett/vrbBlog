@@ -4,6 +4,7 @@ import Bio from '../components/Bio.astro';
 import Dropdown from '../components/Dropdown.astro';
 import Resume from '../content/resume.md';
 import WorkHistory from '../content/work_history.md';
+import Teaching from '../content/teaching.md';
 
 const title = 'About';
 const description = 'About me';
@@ -38,11 +39,15 @@ const permalink = `${Astro.site.href}about`;
         In my free time, I like reading, playing Paradox map games, going on walks around the city, and playing with my terminal.
       </p>
 
-      <Dropdown title="Resume" id="resume" open={Astro.url.hash === '#resume'} preview="Systems Engineer & Developer with 5+ years of high-reliability systems experience. Data and infrastructure focused with emphasis on explainability, tooling, and clear technical communication.">
+      <Dropdown title="Resume" id="resume" open={Astro.url.hash === '#resume'} preview="Machine learning practitioner and teacher: lecturer for CSC 411 (Intermediate Machine Learning) at San Francisco State University, after a year in R&D data operations for an AI/robotics company. B.S. Computer Science, SFSU; U.S. Air Force veteran.">
         <Resume />
       </Dropdown>
 
-      <Dropdown title="Work History" id="work-history" open={Astro.url.hash === '#work-history'} preview="Professional experience spanning IT consulting, military munitions systems, and service industry roles with transferable skills in leadership, systems thinking, and technical documentation.">
+      <Dropdown title="Teaching" id="teaching" open={Astro.url.hash === '#teaching'} preview="Lecturer for CSC 411 (Intermediate Machine Learning) in the PINC program at SFSU: teaching the first offering of the course I designed, from matrix multiplication to a from-scratch transformer encoder.">
+        <Teaching />
+      </Dropdown>
+
+      <Dropdown title="Work History" id="work-history" open={Astro.url.hash === '#work-history'} preview="Professional experience spanning university teaching, R&D data operations for an AI/robotics company, network contracting, volunteer technical leadership, and U.S. Air Force munitions systems.">
         <WorkHistory />
       </Dropdown>
     </article>
@@ -54,10 +59,13 @@ const permalink = `${Astro.site.href}about`;
   function handleHashChange() {
     const hash = window.location.hash;
     const resumeDropdown = document.getElementById('resume');
+    const teachingDropdown = document.getElementById('teaching');
     const workHistoryDropdown = document.getElementById('work-history');
     
     if (hash === '#resume' && resumeDropdown) {
       (resumeDropdown as HTMLDetailsElement).open = true;
+    } else if (hash === '#teaching' && teachingDropdown) {
+      (teachingDropdown as HTMLDetailsElement).open = true;
     } else if (hash === '#work-history' && workHistoryDropdown) {
       (workHistoryDropdown as HTMLDetailsElement).open = true;
     }
