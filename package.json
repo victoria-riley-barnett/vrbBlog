@@ -1,5 +1,5 @@
 {
-  "name": "users-v-code-web-vrbblog",
+  "name": "vrbblog",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
@@ -14,12 +14,17 @@
     "@fontsource/fira-sans": "^5.2.7",
     "@fontsource/merriweather": "^5.2.11",
     "astro": "^5.5.2",
-    "astro-og-canvas": "^0.7.2",
     "astro-opengraph-images": "^1.13.1",
     "react": "^19.2.0",
     "reading-time": "^1.5.0",
     "rehype-external-links": "^3.0.0",
     "remark-gfm": "^4.0.0",
     "remark-smartypants": "^2.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.27.7": true,
+    "esbuild@0.25.1": true,
+    "fsevents@2.3.3": true,
+    "sharp@0.34.5": true
   }
 }
