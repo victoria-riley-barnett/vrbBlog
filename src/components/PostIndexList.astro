@@ -13,7 +13,7 @@ const formatDate = (date: string | Date) =>
     <div class="post-item" data-tags={(post.data.tags || []).join(',')}>
       {index !== 0 && <hr />}
       <h3 class="post-item-title">
-        <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+        <a href={`/blog/${post.data.slug}/`}>{post.data.title}</a>
       </h3>
       <p class="post-item-description">{post.data.description}</p>
       <time class="post-item-date">{formatDate(post.data.publishDate)}</time>
