@@ -22,6 +22,20 @@ export const projects = [
     blurb: 'Front end of a project-management app with organisations, tasks, team management, and real-time chat. Built as a team capstone at SF State, which I led. The backend was removed for publication, so this is a front-end showcase (React, Vite, Tailwind).',
   },
   {
+    name: 'Auto Child Education',
+    href: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3607293096',
+    image: '/assets/projects/auto-child-education.jpg',
+    alt: 'Auto Child Education GitHub README',
+    blurb: 'A Europa Universalis V mod that assigns each child to the education that fits their strongest trait every month. I updated the original by victoriaposting for the 1.3.x game versions and maintain it; it\'s among the most-subscribed EU5 mods on the Steam Workshop, with about 25,000 subscribers.',
+  },
+  {
+    name: 'Alzheimer\'s Screening Classifier',
+    href: 'https://github.com/victoria-riley-barnett/r-alzheimers-rf',
+    image: '/assets/projects/alzheimers-rf.jpg',
+    alt: 'r-alzheimers-rf GitHub repository',
+    blurb: 'A Random Forest classifier in R for early Alzheimer\'s screening from widely available clinical data. I led a three-person team to tune for recall instead of accuracy: shifting the voting cutoff cut missed diagnoses by 68% for a 0.65-point accuracy cost.',
+  },
+  {
     name: 'geomat',
     href: 'https://github.com/victoria-riley-barnett/geomat',
     image: '/assets/projects/geomat.jpg',
