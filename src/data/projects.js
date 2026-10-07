@@ -5,7 +5,7 @@ export const projects = [
     href: 'https://github.com/victoria-riley-barnett/koreader-tailscale',
     image: '/assets/projects/koreader-tailscale.png',
     alt: 'Tailscale plugin menu in KOReader on an e-reader',
-    blurb: 'A KOReader plugin that puts an ARM e-reader on your Tailscale network, so OPDS catalogs, progress sync, and file sync work from anywhere. Seven releases, outside contributors, and 223 stars.',
+    blurb: 'A Lua plugin for KOReader that brings VPN support to Kindle and Kobo ARM e-ink devices. Paired with Syncthing and an iOS shortcut, it\'s my replacement for Calibre and Send to Kindle: my library stays backed up across my home server, laptop, and Paperwhite on any network. Seven releases, outside contributors, and 223 stars.',
   },
   {
     name: 'CSC 411: Intermediate Machine Learning',
