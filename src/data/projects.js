@@ -43,10 +43,9 @@ export const projects = [
     blurb: 'Interactive historical-geography explorer: a MapLibre map with a timeline from late feudalism to the Cold War, historical boundaries, and notes on how geography shaped each era\'s political economy.',
   },
   {
-    name: 'Cairn',
+    name: 'Cairn (in development)',
     image: '/assets/projects/cairn.png',
-    alt: 'Cairn interface',
-    blurb: 'TODO: one-line description.',
-    draft: true, // repo is private
+    alt: 'Cairn showing an org-style outline note with a command line below',
+    blurb: 'A desktop IDE and orchestration tool built around a small programming language, a graph-backed file system, and an experimental partial-evaluation engine. Org-mode documents and live program state are first-class, queryable data, and the dispatch, evaluation, and context-management tooling is meant for workflows that people and ML models share. Still in development; I\'ll link the repo at v1.',
   },
 ];
