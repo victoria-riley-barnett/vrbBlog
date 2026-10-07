@@ -1,0 +1,62 @@
+---
+export interface Props {
+  posts: any[];
+}
+const { posts } = Astro.props;
+
+const formatDate = (date: string | Date) =>
+  new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+
+<div class="post-index">
+  {posts.map((post, index) => (
+    <div class="post-item" data-tags={(post.data.tags || []).join(',')}>
+      {index !== 0 && <hr />}
+      <h3 class="post-item-title">
+        <a href={`/blog/${post.data.slug}`}>{post.data.title}</a>
+      </h3>
+      <p class="post-item-description">{post.data.description}</p>
+      <time class="post-item-date">{formatDate(post.data.publishDate)}</time>
+    </div>
+  ))}
+</div>
+
+<style>
+  .post-item {
+    padding: 0.25rem 0;
+  }
+
+  .post-item hr {
+    margin: 40px auto;
+  }
+
+  .post-item-title {
+    font-family: var(--font-family-sans);
+    font-size: 1.3rem;
+    margin: 0 0 0.4em 0;
+  }
+
+  .post-item-title a {
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .post-item-title a:hover {
+    color: var(--primary-color);
+  }
+
+  .post-item-description {
+    color: var(--text-secondary);
+    margin: 0 0 0.6em 0;
+  }
+
+  .post-item-date {
+    display: block;
+    color: var(--text-secondary);
+    font-family: var(--font-family-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+</style>
