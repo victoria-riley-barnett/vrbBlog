@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { projects } from '../data/projects.js';
+
+const title = 'Projects';
+const description = 'Things I have built.';
+const permalink = `${Astro.site.href}projects`;
+const visible = projects.filter(p => !p.draft);
+---
+
+<BaseLayout title={title} description={description} permalink={permalink}>
+  <div class="container">
+    <h1>Projects</h1>
+    {visible.map(p => (
+      <article class="project">
+        <img src={p.image} alt={p.alt} loading="lazy" />
+        <div>
+          <h2>{p.href ? <a href={p.href}>{p.name}</a> : p.name}</h2>
+          <p>{p.blurb}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .project {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+    align-items: start;
+    margin: 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--theme-code-inline-bg);
+  }
+  .project img { width: 100%; border-radius: 6px; border: 1px solid var(--theme-code-inline-bg); }
+  .project h2 { margin-top: 0; }
+  @media (max-width: 700px) { .project { grid-template-columns: 1fr; } }
+</style>
