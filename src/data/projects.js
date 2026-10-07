@@ -26,7 +26,7 @@ export const projects = [
     href: 'https://steamcommunity.com/sharedfiles/filedetails/?id=3607293096',
     image: '/assets/projects/auto-child-education.jpg',
     alt: 'Auto Child Education GitHub README',
-    blurb: 'A Europa Universalis V mod that assigns each child to the education that fits their strongest trait every month. I updated the original by victoriaposting for the 1.3.x game versions and maintain it; it\'s among the most-subscribed EU5 mods on the Steam Workshop, with about 25,000 subscribers.',
+    blurb: 'A Europa Universalis V mod that assigns each child to the education that fits their strongest trait every month. I picked it up when it needed an update for 1.3.x (original by victoriaposting), fixed trait detection with some logic borrowed from a Chinese-language version of the mod, and I\'m now merging community contributions. About 25,000 Steam Workshop subscribers.',
   },
   {
     name: 'Alzheimer\'s Screening Classifier',
@@ -40,7 +40,7 @@ export const projects = [
     href: 'https://github.com/victoria-riley-barnett/geomat',
     image: '/assets/projects/geomat.jpg',
     alt: 'geomat map showing Cold War division, 1980',
-    blurb: 'Interactive historical-geography explorer: a MapLibre map with a timeline from late feudalism to the Cold War, historical boundaries, and notes on how geography shaped each era\'s political economy.',
+    blurb: 'I wanted a better way to see the material side of history, so I built an interactive historical-geography explorer: a MapLibre map with a timeline from late feudalism to the Cold War, historical boundaries, and notes on how geography shaped each era\'s political economy.',
   },
   {
     name: 'Cairn (in development)',
