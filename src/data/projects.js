@@ -17,7 +17,7 @@ export const projects = [
   {
     name: 'SerialPM',
     href: 'https://github.com/victoria-riley-barnett/serialpm',
-    image: '/assets/projects/serialpm.png',
+    image: '/assets/projects/serialpm.jpg',
     alt: 'SerialPM project timeline view',
     blurb: 'Front end of a project-management app with organisations, tasks, team management, and real-time chat. Built as a team capstone at SF State, which I led. The backend was removed for publication, so this is a front-end showcase (React, Vite, Tailwind).',
   },
