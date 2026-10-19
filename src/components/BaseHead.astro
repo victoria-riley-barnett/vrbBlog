@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions'
 import '../styles/fonts.css'
 import '../styles/global.css'
 import { getImagePath } from 'astro-opengraph-images'
@@ -47,8 +46,6 @@ const socialUrl = getImagePath({ url, site });
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={socialUrl} />
-
-<ClientRouter />
 
 <!-- This is intentionally inlined to avoid FOUC -->
 <script is:inline>
