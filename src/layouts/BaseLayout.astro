@@ -27,7 +27,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <body>
     <header class="site-header">
       <a class="brand" href="/">Victoria Barnett</a>
-      <nav class="site-nav" aria-label="Site"><a href="/projects/">Projects</a><a href="/blog/">Writing</a><a href="/about/">About</a></nav>
+      <nav class="site-nav" aria-label="Site"><a href="/projects/">Projects</a><a href="/teaching/">Teaching</a><a href="/blog/">Writing</a><a href="/about/">About</a></nav>
       <div class="site-tools">
         <form class="site-search" role="search" method="get" action="/search/">
           <input class="site-search-input" type="search" name="q" placeholder="Search" aria-label="Search this site" autocomplete="off" spellcheck="false" />
@@ -48,7 +48,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
         <button type="button" class="tool-button js-only theme-toggle" aria-label="Theme: system" title="Theme: system">◐</button>
       </div>
     </header>
-    <main class:list={["wrap", Astro.props.wide && "wrap--wide"]} data-pagefind-body><slot /></main>
+    <main class="wrap" data-pagefind-body><slot /></main>
     <footer class="site-footer">
       <p>© {new Date().getFullYear()} Victoria Barnett</p>
       <p><a href="https://github.com/victoria-riley-barnett">GitHub</a> · <a href="https://www.linkedin.com/in/victoriabarnett0/">LinkedIn</a> · <a href="/feed.xml">RSS</a></p>

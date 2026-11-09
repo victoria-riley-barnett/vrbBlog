@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { getPublishedPosts } from '../lib/posts';
+import { site } from '../data/site';
+const chapters = (await getCollection('teaching')).filter((c) => !c.data.draft).sort((a, b) => a.data.order - b.data.order);
+const posts = (await getPublishedPosts()).filter((p) => p.data.kind === 'teaching' || p.data.tags?.includes('teaching'));
+const bookHref = (path?: string) => (site.bookUrl && path ? new URL(path, site.bookUrl).href : undefined);
+---
+<BaseLayout title="Teaching | Victoria Barnett" description="CSC 411, Intermediate Machine Learning at SF State: course design, the book, and teaching notes.">
+  <article class="page teaching">
+    <h1>Teaching</h1>
+    <p class="lede">I design and teach CSC 411, Intermediate Machine Learning, at San Francisco State for the PINC program. Lectures derive, labs build, and the course ends at a transformer encoder.</p>
+    <p class="links">
+      {site.bookUrl && <a href={site.bookUrl}>Read the book</a>}
+      {site.bookUrl && ' · '}
+      <a href={site.courseRepo}>Course materials</a>
+    </p>
+    <h2 id="book">The book</h2>
+    <ol class="chapter-list">
+      {chapters.map((c) => {
+        const href = bookHref(c.data.bookPath);
+        return <li class="chapter">
+          <span class="chapter-no">{c.data.chapter}</span>
+          {href ? <a href={href}>{c.data.title}</a> : <span class="chapter-title">{c.data.title}</span>}
+          <p class="chapter-summary">{c.data.summary}</p>
+        </li>;
+      })}
+    </ol>
+    {posts.length > 0 && <>
+      <h2 id="notes">Teaching notes</h2>
+      <PostList posts={posts} />
+    </>}
+  </article>
+</BaseLayout>

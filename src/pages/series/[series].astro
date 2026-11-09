@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts, tagSlug } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const names = [...new Set(posts.map((p) => p.data.series).filter(Boolean))] as string[];
+  return names.map((name) => ({
+    params: { series: tagSlug(name) },
+    props: { name, posts: posts.filter((p) => p.data.series === name).sort((a, b) => (a.data.seriesOrder ?? 0) - (b.data.seriesOrder ?? 0)) },
+  }));
+}
+const { name, posts } = Astro.props;
+---
+<BaseLayout title={`${name} | Victoria Barnett`} description={`Posts in the series ${name}.`}>
+  <h1>{name}</h1>
+  <p class="lede">A series, in reading order.</p>
+  <PostList posts={posts} />
+</BaseLayout>

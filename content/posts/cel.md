@@ -11,7 +11,7 @@ Unfortunately, I think I might have ruined someones day. I wanted to find an ext
 
 I generated a synthetic dataset of random DNA sequences, some of which had CG pairs and some of which did not. I then trained a simple neural network to classify the sequences based on the presence or absence of CG pairs, easy. Here's the generation code:
 
-```Python
+```python
 BASES = "ACGT"
 
 #0 no island, 1 island

@@ -4,6 +4,7 @@ slug: 'metablogging'
 publishDate: '2026-11-09'
 description: 'Most of programming, for me, is reading around a problem: the problem, its context, the tool, and how they relate.'
 tags: ['process']
+draft: true
 ---
 When I program, I often sit and don't write code at all. Like other engineers who have explained their workflows honestly, I spend most of my time reading about a few related junctions of thought around a problem.
 

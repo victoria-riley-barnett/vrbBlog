@@ -41,3 +41,8 @@ export async function getPublishedPosts() {
 export function formatDate(date: Date) {
   return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 }
+
+export function readingMinutes(post: Post) {
+  const words = (post.body || '').replace(/<!--[\s\S]*?-->/g, '').split(/\s+/).filter(Boolean).length;
+  return words < 150 ? 0 : Math.max(1, Math.round(words / 230));
+}

@@ -5,6 +5,7 @@ date: '2026-11-09'
 description: 'A student asked how I could trust labels I generated myself. The honest answer is that a label is already a model.'
 tags: ['machine learning', 'teaching', 'data quality']
 garden: 'doc-cel-d3608c958bf3'
+draft: true
 ---
 I wanted an extremely small case of sequence learning to show a group of life science students I teach. I picked CG pairs: a simple, well-known, and well-studied feature of DNA sequences.
 

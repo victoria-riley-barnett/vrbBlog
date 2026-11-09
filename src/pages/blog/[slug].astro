@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublishedPosts, isDraft, postDate, postSlug, postTitle, formatDate, tagSlug } from '../../lib/posts';
+import { getPublishedPosts, isDraft, postDate, postSlug, postTitle, formatDate, tagSlug, readingMinutes } from '../../lib/posts';
 
 export async function getStaticPaths() {
   return (await getPublishedPosts()).map((post) => ({ params: { slug: postSlug(post) }, props: { post } }));
@@ -10,11 +10,13 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const date = postDate(post);
 const tags = post.data.tags || [];
+const minutes = readingMinutes(post);
 ---
 <BaseLayout title={`${postTitle(post)} | Victoria Barnett`} description={post.data.description || ''}>
   <article class="post">
     <header>
-      <div class="post-meta">{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}{isDraft(post) ? ' · Draft' : ''}</div>
+      <div class="post-meta">{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}{minutes ? ` · ${minutes} min read` : ''}{isDraft(post) ? ' · Draft' : ''}</div>
+      {post.data.series && <p class="post-series">Series: <a href={`/series/${tagSlug(post.data.series)}/`}>{post.data.series}</a></p>}
       <h1>{postTitle(post)}</h1>
       {post.data.description && <p class="post-summary">{post.data.description}</p>}
     </header>

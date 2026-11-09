@@ -5,6 +5,7 @@ date: '2026-11-09'
 description: 'Representation, attention, and interpretability keep chasing each other. A short note on why.'
 tags: ['machine learning']
 garden: 'doc-dimensionally-speaking-78d410480b0d'
+draft: true
 ---
 Machine learning was always concerned with our most general linear and our most general non-linear ways to model things, and with combining the two coherently into *models*, along with a plan for how to judge the combination.
 
