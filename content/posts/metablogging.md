@@ -1,32 +1,23 @@
 ---
-title: 'Metablogging'
+title: 'Reading around a problem'
 slug: 'metablogging'
-publishDate: '2026-10-19'
+publishDate: '2026-11-09'
 description: 'Most of programming, for me, is reading around a problem: the problem, its context, the tool, and how they relate.'
 tags: ['process']
-draft: true
 ---
-When I program, I often find that I will sit and not write code at all. Like other engineers who have explained their workflows honestly, I find that I spend the majority of my time reading about a few related 'junctions' of thought about any given problem. 
+When I program, I often sit and don't write code at all. Like other engineers who have explained their workflows honestly, I spend most of my time reading about a few related junctions of thought around a problem.
 
-I choose junction here as an active term, as there is a kind of motion to this type of thinking: it is not only the case that I read the tool documentation and so on or only consider a formal object, but also that I am establishing what can roughly be thought of as a list:
+I say junction because there's motion to it. It isn't only that I read the tool's documentation, or only think about the formal object. I'm working through a list:
 
-## *Process*
 1. The problem I am trying to solve
 2. The context of the problem
 3. The context of the tool
-
 4. The relationship between the tool and the problem
 5. The relationship between the tool and the context
 6. The relationship between the problem and the context
 
-the above would be an undirected graph:
+The first three are things. The last three are the edges between them, and that's where most of the reading goes. While I'm reading about a tool, my thinking keeps casting off in other directions to resolve whatever is immediately in the way: back to the problem, out to the problem's context, over to the tool's.
 
-```{some drawing lang}
+<!-- V: one concrete example would make this land. A time this way of reading changed what you built, e.g. the KOReader plugin's TUN fallback, or a CSC 411 week. Add it here in your words. -->
 
-```
-
-that when I am reading about and considering some tool, my thinking is always casting itself in different directions in order to resolve some immediate problem. I am not only reading about the tool, but also about the problem, and about the context of the problem, and about the context of the tool, and so on. 
-
-Now, this is nothing but the skill of analysis, properly stated - it is simple to see that in some epistemology Y, we must have a set of axioms (these are assumptions we internalize in order to consider the various partial operations of such an epistemology), and from those axioms we can derive a set of theorems ~ namely, our understanding of then the mechanism of that epistemology. 
-
-It is obvious that the above entails a kind of contradiction, however, I'll note that the solution of *that* problem is not to be found here, but rather in the field of philosophy; I'll also note that philosophy, rather than engineer or analysis, is what lead and motivated my work.
+This is nothing but the skill of analysis, properly stated. I'll note that philosophy, rather than engineering, is what led me here and still motivates the work.

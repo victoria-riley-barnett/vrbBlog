@@ -13,16 +13,11 @@ We learned how to use Random Forest models, which are particularly well-suited f
 - Built by averaging the predictions of many such trees
 - Each tree is built from a random subset of its features, so the model is less likely to overfit to any one feature.
 
-
-
-
-missing an Alzheimer's diagnosis means someone might not get treatment until it's too late, while a false positive just means more testing is incumbent on the clinic. The technical question of which error matters more turned out to have an intractable and very human answer.
+In screening, missing an Alzheimer's diagnosis means someone might not get treatment until it's too late, while a false positive just means more testing is incumbent on the clinic. The technical question of which error matters more turned out to have an intractable and very human answer.
 
 ## Random Forest
 
-We settled on Random Forest in R because it aligned with what medical screening actually requires & the scope of our project:
-
-- The core idea of the Random Forest network is essentially attempting to take advantage of a 'nudge' across 
+We settled on Random Forest in R because it aligned with what medical screening actually requires & the scope of our project.
 
 Most optimization of this model chases balanced metrics, but we deliberately set our `cutoff` parameter to favor sensitivity after some experience with the problem. We tested dozens of configurations, but the question was always the same: "Does this help us catch more true cases?" rather than "Does this improve our overall score?"
 

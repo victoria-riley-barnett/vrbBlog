@@ -7,6 +7,7 @@ author: 'v@dailywar.net'
 category: 'Analysis'
 featured: true
 tags: ['Introduction', 'Marxism', 'Capitalism', 'Everyday Life', 'Social Analysis']
+draft: true
 ---
 
 You wake up to a notification: rent is due. That tension isn't just about money. It's about your home being conditional on a payment. This isn't nature; it's a transaction. It happens every month, enforced by law, backed by courts. Normalized until it feels like gravity.

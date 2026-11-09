@@ -7,6 +7,7 @@ featured: false
 title: 'The Missing Foundation: How Skipping Ideology Dooms Left Organizing'
 description: 'A look at the three overlapping stages needed to build a revolutionary party, and why the US left often stumbles at the first.'
 tags: ['ideology', 'organization', 'strategy', 'socialist-movement', 'dialectics']
+draft: true
 ---
 
 Last year, the East Bay DSA chapter tried to unionize tenants against a corporate landlord. They had the numbers and the energy. Their target was clear: a landlord raising rents in a housing crisis. But within months, the effort collapsed. It wasn't for lack of trying. The organizers couldn't agree on what they were building. Half saw it as a fight for rent control. The other half saw it as a fight against private property itself. Meetings turned into arguments about reform versus revolution. The campaign fizzled. Volunteers burned out. The landlord won.

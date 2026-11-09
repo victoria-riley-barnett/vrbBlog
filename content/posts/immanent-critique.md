@@ -7,6 +7,7 @@ featured: false
 tags: ['critique', 'ideology', 'dsa', 'us-left', 'consciousness']
 title: 'When the Chant Meets the Check: A Materialist Look at the 2026 DSA Convention'
 description: "The gap between what the US left claims to be and what it actually does reveals a middle-class radicalism struggling to connect with the working class it aims to represent."
+draft: true
 ---
 
 # When the Chant Meets the Check

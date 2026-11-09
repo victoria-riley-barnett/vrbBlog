@@ -1,0 +1,24 @@
+---
+import type { Project } from '../data/projects';
+const { project, full = false } = Astro.props as { project: Project; full?: boolean };
+const id = project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const external = (href: string) => /^https?:/.test(href);
+---
+<article class:list={['project-card', { 'project-card--full': full }]} id={id}>
+  <a class="project-thumb" href={project.href} tabindex="-1" aria-hidden="true">
+    <img src={project.image} alt="" loading={full ? "lazy" : "eager"} decoding="async" />
+  </a>
+  <div class="project-body">
+    <p class="project-kind">{project.kind}</p>
+    <h3><a href={project.href}>{project.title}</a></h3>
+    <p class="project-summary">{project.summary}</p>
+    {full && project.detail?.map((d) => <p class="project-detail">{d}</p>)}
+    {project.stat && <p class="project-stat">{project.stat}</p>}
+    <ul class="project-stack" aria-label="Built with">{project.stack.map((s) => <li>{s}</li>)}</ul>
+    {project.links.length > 0 && (
+      <p class="project-links">
+        {project.links.map((l, i) => <>{i > 0 && ' · '}<a href={l.href} rel={external(l.href) ? 'noopener' : undefined}>{l.label}{external(l.href) ? ' ↗' : ''}</a></>)}
+      </p>
+    )}
+  </div>
+</article>

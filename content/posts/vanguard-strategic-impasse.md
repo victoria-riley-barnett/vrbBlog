@@ -7,6 +7,7 @@ author: "v@dailywar.net"
 category: "Analysis"
 featured: true
 tags: ["vanguard", "strategy", "us-left", "ideology", "class"]
+draft: true
 ---
 
 The US left exists in a strategic impasse between labor reformism, Democratic Party realignment, and revolutionary focus. This impasse is not merely tactical but reflects a deeper ideological misleadership rooted in the middle-class character of its organized forces. Both labor and Democratic alignment strategies mistake themselves for oppositional projects while existing in an already-sublated state to capital—they operate within false distinctions that capital itself has superseded.
