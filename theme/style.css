@@ -1,0 +1,535 @@
+/* vrbBlog — technical, quiet, and readable.
+   Two themes via light-dark(), forced by html[data-theme]; reader settings set
+   data-font, data-size and data-width on the root. The header controls are
+   drawn by the generator and driven by site.js. */
+
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#f5f6f8, #0f1216);
+  --surface: light-dark(#ffffff, #171b20);
+  --surface-2: light-dark(#eef0f3, #1e242b);
+  --ink: light-dark(#16191d, #d8dee6);
+  --muted: light-dark(#535c66, #a0aab5);
+  --faint: light-dark(#66707b, #8b95a1);
+  --rule: light-dark(#dde2e8, #262d35);
+  --rule-strong: light-dark(#c3ccd6, #39434e);
+  --accent: light-dark(#1657a8, #79b0f2);
+  --accent-hover: light-dark(#0d3f80, #a8ccf8);
+  --accent-ink: light-dark(#ffffff, #0b1220);
+  --shadow: light-dark(0 12px 32px rgb(16 24 40 / 12%), 0 12px 32px rgb(0 0 0 / 45%));
+  --mark: light-dark(#d9e8fb, #2a4a72);
+
+  --font-ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --font-prose: var(--font-ui);
+  --size: 1rem;
+  --measure: 42rem;
+}
+
+/* Reader settings: typeface, size, and column width. */
+:root[data-font="serif"] { --font-prose: var(--font-serif); }
+:root[data-size="s"] { --size: 0.9375rem; }
+:root[data-size="l"] { --size: 1.125rem; }
+:root[data-width="narrow"] { --measure: 36rem; }
+:root[data-width="wide"] { --measure: 50rem; }
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-prose);
+  font-size: var(--size);
+  line-height: 1.62;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  text-decoration-color: color-mix(in srgb, var(--accent) 42%, transparent);
+}
+a:hover {
+  color: var(--accent-hover);
+  text-decoration-color: currentColor;
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); }
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.22; font-weight: 600; letter-spacing: -0.015em; }
+
+/* Without script the controls cannot work, so they stay out of the way. */
+html:not(.js) .js-only { display: none !important; }
+
+/* ---- header ------------------------------------------------------------ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  width: min(100% - 2rem, var(--measure));
+  margin: 0 auto;
+  padding: 0.7rem 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.brand {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.brand:hover { color: var(--accent); }
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+}
+.site-nav a { color: var(--muted); text-decoration: none; }
+.site-nav a:hover { color: var(--accent); }
+
+.site-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  margin-left: auto;
+}
+
+.tool-button {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0.34rem 0.45rem;
+  cursor: pointer;
+}
+.tool-button:hover,
+.tool-button[aria-expanded="true"] { color: var(--ink); background: var(--surface-2); }
+.theme-toggle { width: 1.9rem; padding-left: 0; padding-right: 0; font-size: 0.95rem; text-align: center; }
+
+.site-tool { position: relative; }
+
+.tool-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.4rem);
+  z-index: 40;
+  min-width: 12rem;
+  padding: 0.3rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.site-outline .tool-menu { right: 0; }
+.site-reader .tool-menu { right: 0; }
+.site-tool.is-open > .tool-menu,
+.site-outline:hover > .tool-menu,
+.site-outline:focus-within > .tool-menu { display: block; }
+
+.outline-menu a {
+  display: block;
+  padding: 0.28rem 0.45rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-decoration: none;
+}
+.outline-menu a:hover { color: var(--ink); background: var(--surface-2); }
+.outline-menu .outline-2 { color: var(--ink); font-weight: 600; }
+.outline-menu .outline-3 { padding-left: 1.2rem; }
+
+.reader-group { display: flex; align-items: center; gap: 0.15rem; padding: 0.15rem 0.3rem 0.25rem; }
+.reader-label {
+  flex: 0 0 3.2rem;
+  font-family: var(--font-ui);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.reader-menu button {
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 0.22rem 0.45rem;
+  cursor: pointer;
+}
+.reader-menu button:hover { color: var(--ink); background: var(--surface-2); }
+.reader-menu button[aria-pressed="true"] {
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ---- search ------------------------------------------------------------ */
+
+.site-search { position: relative; display: flex; }
+
+.site-search-input {
+  width: 8.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.32rem 0.5rem;
+  transition: width 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.site-search-input::placeholder { color: var(--faint); }
+.site-search-input::-webkit-search-cancel-button { cursor: pointer; }
+.site-search-input:focus {
+  width: 11rem;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  z-index: 40;
+  width: min(22rem, calc(100vw - 2rem));
+  padding: 0.3rem;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.search-results.open { display: block; }
+.search-result { display: block; padding: 0.45rem 0.55rem; border-radius: 6px; color: var(--ink); text-decoration: none; }
+.search-result:hover { background: var(--surface-2); }
+.search-title { display: block; font-size: 0.84rem; font-weight: 600; }
+.search-excerpt {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 0.1rem;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.search-empty { margin: 0; padding: 0.5rem 0.55rem; font-size: 0.8rem; color: var(--faint); }
+mark { background: var(--mark); color: inherit; }
+
+/* ---- page frame -------------------------------------------------------- */
+
+.wrap {
+  width: min(100% - 2rem, var(--measure));
+  margin: 0 auto;
+  padding: 2.25rem 0 3.5rem;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  width: min(100% - 2rem, var(--measure));
+  margin: 0 auto;
+  padding: 1.1rem 0 2.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  color: var(--faint);
+}
+.site-footer p { margin: 0.1rem 0; }
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent); text-decoration: underline; }
+
+/* ---- home -------------------------------------------------------------- */
+
+/* The header already says the name; keep the home h1 for structure only. */
+.intro h1 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.intro p { max-width: 38rem; margin: 0 0 0.85rem; color: var(--muted); }
+.intro .lede {
+  margin-bottom: 1rem;
+  font-size: clamp(1.3rem, 3vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.intro .links { margin-top: 1.1rem; font-family: var(--font-ui); font-size: 0.88rem; color: var(--faint); }
+
+.latest h2 {
+  margin: 2.6rem 0 0.6rem;
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ---- post index -------------------------------------------------------- */
+
+.post-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.post-item { padding: 0.9rem 0; border-bottom: 1px solid var(--rule); }
+.post-item > a {
+  display: inline-block;
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.post-item > a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 0.16em; }
+.post-meta { margin-top: 0.2rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--faint); }
+.post-summary { margin: 0.28rem 0 0; font-size: 0.9rem; color: var(--muted); }
+.empty { color: var(--muted); font-style: italic; }
+
+/* ---- article ----------------------------------------------------------- */
+
+.post > header { margin-bottom: 1.75rem; }
+.post > header .post-meta { margin: 0 0 0.5rem; }
+.post > header h1 { font-size: clamp(1.7rem, 4vw, 2.15rem); }
+.post > header .post-summary { margin-top: 0.55rem; font-size: 1.02rem; }
+.page > h1 { font-size: clamp(1.7rem, 4vw, 2.1rem); margin-bottom: 1.4rem; }
+
+.prose { line-height: 1.68; }
+.prose :is(h2, h3, h4) { scroll-margin-top: 4.25rem; }
+.prose > :first-child { margin-top: 0; }
+.prose p, .prose ul, .prose ol, .prose pre, .prose blockquote, .prose table, .prose figure { margin: 0 0 1.1rem; }
+.prose h2 {
+  margin: 2.2rem 0 0.75rem;
+  padding-bottom: 0.3rem;
+  font-size: 1.2rem;
+  border-bottom: 1px solid var(--rule);
+}
+.prose h3 { margin: 1.7rem 0 0.5rem; font-size: 1.02rem; }
+.prose h4 { margin: 1.3rem 0 0.4rem; font-size: 0.95rem; color: var(--muted); }
+.prose ul, .prose ol { padding-left: 1.25rem; }
+.prose li { margin: 0.2rem 0; }
+.prose li > ul, .prose li > ol { margin: 0.2rem 0; }
+.prose blockquote {
+  margin-left: 0;
+  padding: 0.05rem 0 0.05rem 1rem;
+  border-left: 2px solid var(--rule-strong);
+  color: var(--muted);
+}
+.prose hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+.prose img { max-width: 100%; height: auto; border: 1px solid var(--rule); border-radius: 6px; }
+.prose figure { margin-left: 0; margin-right: 0; }
+.prose figcaption { margin-top: 0.4rem; font-family: var(--font-ui); font-size: 0.78rem; color: var(--faint); }
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.06em 0.3em;
+}
+.prose pre {
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+.prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+
+/* Shiki writes both palettes as variables; follow the switch, not only the OS. */
+:root[data-theme="light"] .prose pre.shiki,
+:root[data-theme="light"] .prose pre.shiki span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+}
+:root[data-theme="dark"] .prose pre.shiki,
+:root[data-theme="dark"] .prose pre.shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.prose table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.prose th, .prose td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.prose th {
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 2rem 0 0; padding: 0; list-style: none; }
+.tags li {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--muted);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.12rem 0.55rem;
+}
+.tags a { color: inherit; text-decoration: none; }
+.tags a:hover { color: var(--accent); }
+
+/* ---- heading anchors, footnotes, math ---------------------------------- */
+
+.prose h2 .anchor, .prose h3 .anchor, .prose h4 .anchor {
+  margin-left: 0.35em;
+  font-size: 0.8em;
+  font-weight: 400;
+  color: var(--faint);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.prose h2:hover .anchor, .prose h3:hover .anchor, .prose h4:hover .anchor,
+.prose .anchor:focus-visible { opacity: 1; }
+
+.footnote-ref { font-family: var(--font-ui); font-size: 0.72em; line-height: 0; }
+.footnote-ref a { text-decoration: none; }
+.footnotes { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--rule); font-size: 0.9rem; }
+.footnotes h2 { margin: 0 0 0.5rem; border: 0; font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
+.footnotes ol { padding-left: 1.1rem; }
+.footnote-back { margin-left: 0.25rem; text-decoration: none; }
+
+.math-inline { font-family: var(--font-mono); font-size: 0.92em; white-space: nowrap; }
+.math-display {
+  margin: 1.5rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* ---- indexes and pager ------------------------------------------------- */
+
+.pager {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 2.25rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+}
+.pager-count { color: var(--faint); }
+
+.index { list-style: none; margin: 0 0 1.5rem; padding: 0; columns: 12rem; column-gap: 1.5rem; }
+.index li { break-inside: avoid; font-family: var(--font-ui); font-size: 0.88rem; padding: 0.1rem 0; }
+.index .count { color: var(--faint); font-size: 0.76rem; }
+h2.letter { margin: 1.8rem 0 0.5rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); border: 0; padding: 0; }
+
+/* ---- forms (the guestbook) --------------------------------------------- */
+
+main form { display: grid; gap: 0.4rem; margin: 1.5rem 0 2rem; max-width: 30rem; }
+main form label { margin-top: 0.5rem; font-family: var(--font-ui); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+main form input, main form textarea {
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+}
+main form textarea { min-height: 6rem; resize: vertical; }
+main form button {
+  justify-self: start;
+  margin-top: 0.6rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.42rem 0.9rem;
+  cursor: pointer;
+}
+main form button:hover { background: var(--accent-hover); }
+.error { font-family: var(--font-ui); font-size: 0.9rem; color: var(--accent); }
+.guestbook { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.guestbook li { padding: 0.6rem 0; border-bottom: 1px solid var(--rule); }
+.thanks { font-family: var(--font-ui); font-size: 0.9rem; color: var(--accent); }
+
+/* ---- pagefind (the /search/ page) -------------------------------------- */
+
+.pagefind-ui {
+  --pagefind-ui-primary: var(--accent);
+  --pagefind-ui-text: var(--ink);
+  --pagefind-ui-background: var(--surface);
+  --pagefind-ui-border: var(--rule);
+  --pagefind-ui-tag: var(--surface-2);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 6px;
+  --pagefind-ui-font: var(--font-ui);
+}
+.pagefind-ui .pagefind-ui__search-input { font-size: 0.95rem; color: var(--ink); background: var(--surface); }
+.pagefind-ui .pagefind-ui__results { padding: 0; margin: 0; list-style: none; }
+.pagefind-ui .pagefind-ui__result { display: block; padding: 0.9rem 0; border-bottom: 1px solid var(--rule); }
+.pagefind-ui .pagefind-ui__result-thumb { display: none; }
+.pagefind-ui .pagefind-ui__result-inner { margin: 0; padding: 0; }
+.pagefind-ui .pagefind-ui__result-title { margin: 0; font-size: 1rem; font-weight: 600; }
+.pagefind-ui .pagefind-ui__result-excerpt { margin: 0.3rem 0 0; font-size: 0.9rem; line-height: 1.55; color: var(--muted); }
+.pagefind-ui .pagefind-ui__result-link { color: var(--accent); }
+.pagefind-ui .pagefind-ui__result-excerpt mark { background: var(--mark); color: inherit; }
+
+/* ---- small screens ----------------------------------------------------- */
+
+@media (max-width: 34rem) {
+  body { line-height: 1.6; }
+  .wrap { padding-top: 1.6rem; }
+  .site-header { padding: 0.6rem 0 0.55rem; }
+  .brand { flex: 1 1 100%; }
+  .site-tools { width: 100%; flex-wrap: nowrap; justify-content: flex-end; }
+  .site-search { flex: 1 1 auto; }
+  .site-search-input, .site-search-input:focus { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

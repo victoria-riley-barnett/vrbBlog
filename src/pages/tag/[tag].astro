@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPublishedPosts, tagSlug, type Post } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const tags = new Map<string, { name: string; posts: Post[] }>();
+  for (const post of posts) {
+    for (const tag of post.data.tags || []) {
+      const slug = tagSlug(tag);
+      if (!tags.has(slug)) tags.set(slug, { name: tag, posts: [] });
+      tags.get(slug)!.posts.push(post);
+    }
+  }
+  return [...tags].map(([tag, props]) => ({ params: { tag }, props }));
+}
+const { name, posts } = Astro.props;
+---
+<BaseLayout title={`${name} | Victoria Barnett`} description={`Writing tagged ${name}.`}>
+  <h1>{name}</h1>
+  <PostList posts={posts} />
+  <p><a href="/tags/">All tags</a></p>
+</BaseLayout>

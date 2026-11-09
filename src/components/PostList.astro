@@ -1,0 +1,14 @@
+---
+import { formatDate, isDraft, postDate, postSlug, postTitle, type Post } from '../lib/posts';
+const { posts } = Astro.props as { posts: Post[] };
+---
+<ul class="post-list">
+  {posts.map((post) => {
+    const date = postDate(post);
+    return <li class="post-item">
+      <a href={`/blog/${postSlug(post)}/`}>{postTitle(post)}</a>
+      <div class="post-meta">{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}{isDraft(post) ? ' · Draft' : ''}</div>
+      {post.data.description && <p class="post-summary">{post.data.description}</p>}
+    </li>;
+  })}
+</ul>

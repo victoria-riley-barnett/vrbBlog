@@ -1,81 +1,56 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-
-export interface Props {
-  title: string;
-  description: string;
-  permalink: string;
-}
-const { title, description, permalink } = Astro.props;
+import '../../theme/style.css';
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
+<!doctype html>
 <html lang="en">
-<head>
-  <BaseHead title={title} description={description} permalink={permalink} />
-</head>
-<body>
-  <div class="layout">
-    <Header />
-    
-    <div class="main-container">
-      <main class="main-content">
-        <div class="main-content-inner">
-          <slot />
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Victoria Barnett" href="/feed.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="color-scheme" content="light dark" />
+    <script is:inline>
+      (function(){var d=document.documentElement;d.classList.add('js');try{var t=localStorage.getItem('theme');if(t)d.dataset.theme=t;var r=JSON.parse(localStorage.getItem('reader')||'{}');if(r.font)d.dataset.font=r.font;if(r.size)d.dataset.size=r.size;if(r.width)d.dataset.width=r.width}catch(e){}})();
+    </script>
+    <script is:inline src="/site.js" defer></script>
+    <slot name="head" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/">Victoria Barnett</a>
+      <div class="site-tools">
+        <form class="site-search" role="search" method="get" action="/search/">
+          <input class="site-search-input" type="search" name="q" placeholder="Search" aria-label="Search this site" autocomplete="off" spellcheck="false" />
+          <div class="search-results" aria-live="polite"></div>
+        </form>
+        <div class="site-tool site-outline">
+          <button type="button" class="tool-button js-only" aria-expanded="false" aria-controls="outline-menu">Contents</button>
+          <nav class="tool-menu outline-menu" id="outline-menu" aria-label="On this page"></nav>
         </div>
-      </main>
-    </div>
-
-    <Footer />
-  </div>
+        <div class="site-tool site-reader">
+          <button type="button" class="tool-button js-only" aria-expanded="false" aria-controls="reader-menu" aria-label="Reading settings" title="Reading settings">Aa</button>
+          <div class="tool-menu reader-menu" id="reader-menu">
+            <span class="reader-group" data-reader="font"><span class="reader-label">Type</span><button type="button" data-value="sans">Sans</button><button type="button" data-value="serif">Serif</button></span>
+            <span class="reader-group" data-reader="size"><span class="reader-label">Size</span><button type="button" data-value="s">S</button><button type="button" data-value="m">M</button><button type="button" data-value="l">L</button></span>
+            <span class="reader-group" data-reader="width"><span class="reader-label">Width</span><button type="button" data-value="narrow">Narrow</button><button type="button" data-value="normal">Normal</button><button type="button" data-value="wide">Wide</button></span>
+          </div>
+        </div>
+        <button type="button" class="tool-button js-only theme-toggle" aria-label="Theme: system" title="Theme: system">◐</button>
+      </div>
+    </header>
+    <main class="wrap" data-pagefind-body><slot /></main>
+    <footer class="site-footer">
+      <p>© {new Date().getFullYear()} Victoria Barnett</p>
+      <p><a href="https://github.com/victoria-riley-barnett">GitHub</a> · <a href="https://www.linkedin.com/in/victoriabarnett0/">LinkedIn</a> · <a href="/feed.xml">RSS</a></p>
+    </footer>
   </body>
 </html>
-
-<style>
-  .layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-    min-height: 100vh;
-  }
-
-  .main-container {
-    display: flex;
-    flex: 1;
-    position: relative;
-  }
-
-  .main-content {
-    flex: 1;
-    position: relative;
-    width: 100%;
-    /* no manual margin needed; body padding handles the offset */
-  }
-
-  .main-content-inner {
-    width: 100%;
-    max-width: 800px;
-    padding: 0.8em 1.8em;
-    box-sizing: border-box;
-    margin: 0 auto;
-  }
-
-  main {
-    flex: 1;
-    position: relative;
-    margin: 0 auto;
-    max-width: 1400px;
-    padding: 0.8em 1.8em;
-    box-sizing: border-box;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  @media (max-width: 520px) {
-    .main-content-inner {
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-  }
-</style>

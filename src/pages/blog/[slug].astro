@@ -1,58 +1,24 @@
 ---
-import { render } from 'astro:content'
-import readingTime from 'reading-time'
+import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Bio from '../../components/Bio.astro';
-import { getPublishedPosts } from '../../lib/posts.js';
+import { getPublishedPosts, isDraft, postDate, postSlug, postTitle, formatDate, tagSlug } from '../../lib/posts';
 
 export async function getStaticPaths() {
-	const posts = await getPublishedPosts()
-  return posts.map(p => ({
-    params: { slug: p.data.slug },
-    props: { post: p },
-  }));
+  return (await getPublishedPosts()).map((post) => ({ params: { slug: postSlug(post) }, props: { post } }));
 }
-
-const { post } = Astro.props
-const { title, slug, description, publishDate } = post.data;
-const readingTimeEstimate = readingTime(post.body).text
-const permalink = `${Astro.site.href}blog/${slug}`;
-const { Content } = await render(post)
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = postDate(post);
+const tags = post.data.tags || [];
 ---
-
-<BaseLayout title={title} description={description} permalink={permalink}>
-  <header>
-    <p>{publishDate} ~ {readingTimeEstimate}</p>
-    <h1>{title}</h1>
-    <hr />
-  </header>
-  <div class="container">
-    <article class="content">
-      <Content />
-    </article>
-    <hr />
-    <Bio />
-  </div>
+<BaseLayout title={`${postTitle(post)} | Victoria Barnett`} description={post.data.description || ''}>
+  <article class="post">
+    <header>
+      <div class="post-meta">{date && <time datetime={date.toISOString()}>{formatDate(date)}</time>}{isDraft(post) ? ' · Draft' : ''}</div>
+      <h1>{postTitle(post)}</h1>
+      {post.data.description && <p class="post-summary">{post.data.description}</p>}
+    </header>
+    <div class="prose"><Content /></div>
+    {tags.length > 0 && <ul class="tags">{tags.map((tag: string) => <li><a href={`/tag/${tagSlug(tag)}/`}>{tag}</a></li>)}</ul>}
+  </article>
 </BaseLayout>
-
-<style>
-  header {
-    text-align: center;
-  }
-
-  header h1 {
-    margin-bottom: 0.7em;
-  }
-
-  header p {
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-  }
-
-  header hr {
-    min-width: 100px;
-    width: 30%;
-  }
-</style>
