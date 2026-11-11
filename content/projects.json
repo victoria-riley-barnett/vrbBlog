@@ -112,7 +112,7 @@
     "slug": "dsa-planet-theme",
     "title": "DSA Planet",
     "repo": "dsa-planet-theme",
-    "summary": "A fork of a feed aggregator theme that combines many blogs into one site."
+    "summary": "A feed aggregator forked from Planet openSUSE, collecting posts from DSA chapters, working groups, and publications."
   },
   {
     "slug": "mia-reader",
