@@ -32,8 +32,8 @@
     "repo": "serialpm",
     "summary": "A project management app built around a visual timeline, developed as an SF State capstone.",
     "paragraphs": [
-      "SerialPM was our team capstone: a project management app that puts a visual timeline at the center instead of a flat task list. I led a team of five engineers through the full software lifecycle, from requirements to delivery.",
-      "The public repository is a React, Vite, and Tailwind frontend showcase covering task management, the timeline, and chat. The original backend ran on AWS resources that are no longer active, so it has been removed."
+      "SerialPM was my SFSU senior capstone: a project management app that composed visual timelines around each project's progress, with a focus on being flexible to many organizational, calendar, and agile structures. I led a team of five engineers through the full software development lifecycle, managed the hosting and deployment, synced with each engineer, and managed various staged levels of abstraction and complexity for engineer onboarding to the codebase.", 
+      "The original backend ran on AWS resources that i've since deprovisioned, but the frontend can be run locally with a mock API to showcase task & organization management, the timeline, and chat."
     ],
     "image": {
       "src": "/assets/projects/serialpm.jpg",
@@ -47,7 +47,7 @@
     "summary": "A random forest classifier on clinical data, evaluated with recall in mind.",
     "paragraphs": [
       "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
-      "In a screening setting, we determined a missed case has a far steeper cost than the model occasionally suggesting unneeded screenings."
+      "In an experimental screening setting, we determined a missed case has a far steeper human cost than the model occasionally suggesting unneeded screenings, and found a recall-optimized model that outperformed our literature review baseline."
     ],
     "image": {
       "src": "/assets/projects/alzheimers-rf.jpg",
