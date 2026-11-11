@@ -1,0 +1,60 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { mdxComponents } from '../../lib/mdx-components';
+import { formatDate, getDraftPosts, postDate, postSlug, postTitle } from '../../lib/posts';
+import { ATOMS_SLUG, atoms, type Atom as AtomData } from '../../lib/atoms';
+
+interface Props {
+  post?: CollectionEntry<'posts'>;
+  sheet?: AtomData[];
+}
+
+export async function getStaticPaths() {
+  // Drafts are a local editing surface: nothing is emitted for them in a production build.
+  if (!import.meta.env.DEV) return [];
+  const drafts = (await getDraftPosts()).map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+  return [{ params: { slug: ATOMS_SLUG }, props: { sheet: atoms } }, ...drafts];
+}
+
+const { post, sheet } = Astro.props;
+const Content = post ? (await render(post)).Content : null;
+const date = post ? postDate(post) : undefined;
+---
+<BaseLayout
+  title={post ? `Draft · ${postTitle(post)}` : 'Atoms'}
+  description={post?.data.description || 'Draft preview.'}
+  noindex
+>
+  <main class={sheet ? 'page-wide' : 'page-narrow'}>
+    <p class="entry-meta">Draft preview · <a href="/">back to the feed</a></p>
+    {sheet ? (
+      <>
+        <h1>Atoms</h1>
+        <p>
+          {sheet.length} HTML fragment{sheet.length === 1 ? '' : 's'} in <code>src/atoms</code>. Nothing
+          here is curated by hand — drop in a new file from the tooling and reload.
+        </p>
+        <ul class="atom-sheet">
+          {sheet.map((atom) => (
+            <li class="atom-card">
+              <div class="atom"><Fragment set:html={atom.html} /></div>
+              <p class="atom-meta"><code>src/atoms/{atom.name}.html</code></p>
+              <p class="atom-meta"><code>&lt;Atom name="{atom.name}" /&gt;</code></p>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : post && Content ? (
+      <>
+        <h1>{postTitle(post)}</h1>
+        {date && <p class="entry-meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>}
+        {post.data.description && <p class="entry-summary">{post.data.description}</p>}
+        <div class="prose"><Content components={mdxComponents} /></div>
+      </>
+    ) : null}
+  </main>
+</BaseLayout>

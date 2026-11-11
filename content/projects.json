@@ -14,19 +14,6 @@
     }
   },
   {
-    "slug": "intermediate-ml",
-    "title": "CSC 411: Intermediate Machine Learning",
-    "repo": "intermediate-ml",
-    "summary": "The materials for an interdisciplinary machine learning course, being prepared as a public book.",
-    "paragraphs": [
-      "I designed and teach this course at SF State. The book draws on course materials, including architecture day and its worked examples."
-    ],
-    "details": {
-      "href": "#post-ml-course",
-      "label": "Preview architecture day"
-    }
-  },
-  {
     "slug": "serialpm",
     "title": "SerialPM",
     "repo": "serialpm",

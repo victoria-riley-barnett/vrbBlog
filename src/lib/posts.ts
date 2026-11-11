@@ -38,6 +38,13 @@ export async function getPublishedPosts() {
     .sort((a, b) => (postDate(b)?.valueOf() || 0) - (postDate(a)?.valueOf() || 0) || postSlug(a).localeCompare(postSlug(b)));
 }
 
+export async function getDraftPosts() {
+  const posts: Post[] = await getCollection('posts');
+  return posts
+    .filter((post) => isDraft(post))
+    .sort((a, b) => postSlug(a).localeCompare(postSlug(b)));
+}
+
 export function formatDate(date: Date) {
   return new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' }).format(date);
 }
