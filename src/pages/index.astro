@@ -16,10 +16,11 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
   <a class="skip-link" href="#projects-and-writing">Skip to projects and writing</a>
   <div class="page-layout">
     <main id="projects-and-writing">
-      <h1>
-        <span id="feed-heading">Projects &amp; writing</span>
-        <span id="feed-filters" hidden><button type="button" data-filter="project" aria-pressed="false">Projects</button> &amp; <button type="button" data-filter="writing" aria-pressed="false">writing</button></span>
-      </h1>
+      <h1>Projects &amp; writing</h1>
+      <p class="feed-filters" id="feed-filters" hidden>
+        <button type="button" data-filter="project" aria-pressed="false">Projects</button>
+        <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
+      </p>
       <p class="about-link"><a href="#about">About &amp; links</a></p>
       {posts.map(({ post, Content }) => {
         const date = postDate(post);
@@ -70,7 +71,6 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
     </aside>
   </div>
   <script is:inline>
-    const feedHeading = document.getElementById('feed-heading');
     const feedFilters = document.getElementById('feed-filters');
     const filterButtons = feedFilters.querySelectorAll('button[data-filter]');
     const entries = document.querySelectorAll('.feed-entry[data-entry-type]');
@@ -126,7 +126,6 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
 
     const initialTarget = document.getElementById(location.hash.slice(1));
     if (revealTarget(initialTarget)) scrollToTarget(initialTarget);
-    feedHeading.hidden = true;
     feedFilters.hidden = false;
   </script>
 </BaseLayout>
