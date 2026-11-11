@@ -68,77 +68,55 @@ a {
 }
 
 .page-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 18rem) minmax(0, 44rem);
-  gap: clamp(1.5rem, 3vw, 3rem);
-  max-width: 65rem;
+  max-width: 44rem;
   margin: 0 auto;
   padding: clamp(1rem, 3vw, 2rem);
 }
 
-.page-layout main {
-  grid-column: 2;
-  grid-row: 1;
-  min-width: 0;
-}
-
-.sidebar {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
-  font-size: 0.95rem;
-}
-
-.sidebar h2:first-child,
 main > h1:first-child {
   margin-top: 0;
 }
 
-main > h1 {
+/* Title and theme control share the top row. */
+.feed-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 0.5rem;
+}
+
+.feed-head > h1 {
+  margin: 0;
+  scroll-margin-top: 1rem;
   font-size: 1.6rem;
   line-height: 1.3;
 }
 
-.sidebar h2 {
-  font-size: 1.1rem;
-}
-
-.sidebar ul {
-  padding-left: 1.25rem;
-}
-
-.about-link {
-  display: none;
-}
-
-.feed-filters {
-  display: flex;
-  gap: 0.5rem;
-  margin: 0 0 0.5rem;
-}
-
-#feed-filters button {
-  border: 1px solid var(--rule);
-  border-radius: 2px;
-  padding: 0.1rem 0.3rem;
+.feed-filters button {
+  margin: 0;
+  padding: 0;
+  border: 0;
   background: none;
   color: inherit;
   font: inherit;
   cursor: pointer;
-  text-decoration: none;
-}
-
-#feed-filters button:hover {
-  color: var(--accent);
-}
-
-#feed-filters button[aria-pressed="true"] {
-  color: var(--accent);
   text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+.feed-filters button:hover,
+.feed-filters button:focus-visible {
+  color: var(--accent);
   text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 0.15em;
+}
+
+.feed-filters button[aria-pressed="true"] {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 0.12em;
 }
 
 .feed-entry {
@@ -182,9 +160,41 @@ main > h1 {
   scroll-margin-top: 1rem;
 }
 
-.feed-entry,
-.sidebar {
+.feed-entry {
   scroll-margin-top: 1rem;
+}
+
+/* Above the feed: one row of links, then the bio. No headings — the row is
+   part of the furniture, not a section of its own. */
+.feed-intro {
+  padding: 1rem 0 1.6rem;
+  border-top: 1px solid var(--rule);
+}
+
+.feed-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.feed-about {
+  margin-top: 1.1rem;
+}
+
+.feed-links,
+.feed-about {
+  scroll-margin-top: 1rem;
+}
+
+.feed-intro .prose > :first-child {
+  margin-top: 0;
+}
+
+.feed-intro .prose > :last-child {
+  margin-bottom: 0;
 }
 
 .entry-details > summary {
@@ -293,31 +303,24 @@ main > h1 {
 .project-image {
   display: block;
   width: 100%;
-  max-width: 36rem;
+  max-width: 22rem;
   height: auto;
   margin: 1rem 0;
 }
 
-/* A project's image, shown in the collapsed summary: whole for entries that are
-   little more than the image, a faded sliver for entries with more below it. */
+/* A project's image, shown in the collapsed summary: a faded sliver, so every
+   collapsed entry keeps the same rhythm no matter how much text is below. */
 .entry-peek {
   display: block;
   width: 100%;
-  max-width: 36rem;
+  max-width: 22rem;
+  height: 3rem;
   margin-top: 0.9rem;
   border: 1px solid var(--rule);
+  border-bottom: 0;
   box-sizing: border-box;
   object-fit: cover;
   object-position: top;
-}
-
-.entry-peek[data-peek="full"] {
-  height: 11rem;
-}
-
-.entry-peek[data-peek="hint"] {
-  height: 3rem;
-  border-bottom: 0;
   -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
   mask-image: linear-gradient(to bottom, #000 45%, transparent);
 }
@@ -393,7 +396,32 @@ main > h1 {
 }
 
 .theme-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: inherit;
+  font-size: 0.85rem;
   white-space: nowrap;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
+}
+
+.theme-control:hover,
+.theme-control:focus-within {
+  opacity: 1;
+}
+
+.theme-control select {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.theme-control select:hover {
+  color: var(--accent);
 }
 
 .not-found {
@@ -483,22 +511,6 @@ img {
 
 pre {
   overflow-x: auto;
-}
-
-@media (max-width: 48rem) {
-  .page-layout {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .sidebar {
-    border-top: 1px solid var(--rule);
-    padding-top: 1.25rem;
-  }
-
-  .about-link {
-    display: block;
-  }
 }
 
 .prose > * + * {
