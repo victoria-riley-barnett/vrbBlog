@@ -2,11 +2,24 @@
 interface Props {
   src: string;
   title: string;
+  /** CSS height for the viewer, e.g. "40rem". Defaults to a responsive clamp. */
+  height?: string;
 }
 
-const { src, title } = Astro.props;
+const { src, title, height } = Astro.props;
+const hasCaption = Astro.slots.has('default');
 ---
-<div class="pdf-preview">
-  <iframe src={src} title={title} loading="lazy"></iframe>
-  <p><a href={src}>Open the PDF</a> if the preview doesn't work on your device.</p>
-</div>
+<figure class="pdf-preview">
+  <iframe
+    src={src}
+    title={title}
+    loading="lazy"
+    style={height ? `--pdf-preview-height: ${height}` : undefined}
+  ></iframe>
+  <figcaption>
+    {hasCaption && <div class="pdf-preview-caption"><slot /></div>}
+    <p class="pdf-preview-fallback">
+      <a href={src}>Open the PDF</a> if the preview doesn't work on your device.
+    </p>
+  </figcaption>
+</figure>

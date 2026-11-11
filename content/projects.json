@@ -17,12 +17,12 @@
     "slug": "intermediate-ml",
     "title": "CSC 411: Intermediate Machine Learning",
     "repo": "intermediate-ml",
-    "summary": "An interdisciplinary machine learning course being prepared as a public book.",
+    "summary": "The materials for an interdisciplinary machine learning course, being prepared as a public book.",
     "paragraphs": [
       "I designed and teach this course at SF State. The book draws on course materials, including architecture day and its worked examples."
     ],
     "details": {
-      "href": "#post-interdisciplinary-machine-learning",
+      "href": "#post-ml-course",
       "label": "Preview architecture day"
     }
   },
@@ -30,7 +30,7 @@
     "slug": "serialpm",
     "title": "SerialPM",
     "repo": "serialpm",
-    "summary": "The front end of a team project management app, built as an SF State capstone.",
+    "summary": "The front end of a team project management app with a visual timeline, built as an SF State capstone.",
     "paragraphs": [
       "SerialPM covers organisations, projects, tasks, team management, and real-time chat, with a visual timeline at the centre of each project. It was our SF State capstone, and I led the team.",
       "The public repository is a front-end showcase. The backend and database were removed for publication, so screens that load data show empty states; the screenshots were captured against the original backend with demo data."
@@ -44,7 +44,7 @@
     "slug": "alzheimers-screening",
     "title": "Alzheimer’s screening experiment",
     "repo": "r-alzheimers-rf",
-    "summary": "A random forest classifier on clinical data, evaluated with recall in mind.",
+    "summary": "A random forest classifier on clinical data, evaluated for recall because a missed case costs more than a false alarm.",
     "paragraphs": [
       "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
       "In an experimental screening setting, we determined a missed case has a far steeper human cost than the model occasionally suggesting unneeded screenings, and found a recall-optimized model that outperformed our literature review baseline."
@@ -71,7 +71,7 @@
   {
     "slug": "geomat",
     "title": "geomat",
-    "summary": "A historical map with a timeline from late feudalism to the Cold War.",
+    "summary": "A MapLibre GL map of historical borders, with a timeline from late feudalism to the Cold War.",
     "paragraphs": [
       "A MapLibre GL map with historical boundaries and a timeline from late feudalism to the Cold War."
     ],
@@ -106,7 +106,7 @@
     "slug": "d2r-reimagined-mod",
     "title": "Diablo II: Reimagined",
     "repo": "d2r-reimagined-mod",
-    "summary": "A fork of the source for the Reimagined mod for Diablo II: Resurrected."
+    "summary": "A fork of the Reimagined mod’s source for Diablo II: Resurrected."
   },
   {
     "slug": "vrbblog",
