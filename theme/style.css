@@ -182,6 +182,11 @@ main > h1 {
   scroll-margin-top: 1rem;
 }
 
+.feed-entry,
+.sidebar {
+  scroll-margin-top: 1rem;
+}
+
 .entry-details > summary {
   position: relative;
   padding-right: 1.75rem;
@@ -275,17 +280,34 @@ main > h1 {
   margin: 1rem 0;
 }
 
+.pdf-preview {
+  margin: 1rem 0 1.25rem;
+}
+
 .pdf-preview iframe {
   display: block;
   width: 100%;
-  height: clamp(18rem, 55vh, 32rem);
+  height: var(--pdf-preview-height, clamp(18rem, 55vh, 32rem));
   border: 1px solid var(--rule);
   box-sizing: border-box;
 }
 
-.pdf-preview p {
-  margin: 0.5rem 0 1rem;
+.pdf-preview figcaption {
+  margin-top: 0.5rem;
   font-size: 0.9rem;
+}
+
+.pdf-preview-caption {
+  margin-bottom: 0.35rem;
+}
+
+.pdf-preview-caption > * {
+  margin: 0;
+}
+
+.pdf-preview-fallback {
+  margin: 0;
+  opacity: 0.8;
 }
 
 .theme-icon {
