@@ -47,7 +47,7 @@
     "summary": "A random forest classifier on clinical data, evaluated with recall in mind.",
     "paragraphs": [
       "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
-      "In a screening setting a missed case costs far more than a false alarm, so the analysis looks at recall alongside overall accuracy rather than treating accuracy as the whole story."
+      "In a screening setting, we determined a missed case has a far steeper cost than the model occasionally suggesting unneeded screenings."
     ],
     "image": {
       "src": "/assets/projects/alzheimers-rf.jpg",
