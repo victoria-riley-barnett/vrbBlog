@@ -1,0 +1,164 @@
+[
+  {
+    "slug": "koreader-tailscale",
+    "title": "Tailscale for KOReader",
+    "repo": "koreader-tailscale",
+    "summary": "A VPN plugin that lets e-readers sync over a private network.",
+    "paragraphs": [
+      "Many e-reader sync tools only work on a local network, which is awkward when your books live on a server at home. This Lua plugin adds Tailscale VPN support to KOReader on Kindle, Kobo, and PocketBook ARM devices, so the reader can reach your library from anywhere.",
+      "I use it with Syncthing and an iOS shortcut as a small distributed library: send an article or book from a phone and it appears on the reader. It works as an alternative to Calibre and Send to Kindle."
+    ],
+    "image": {
+      "src": "/assets/projects/koreader-tailscale.png",
+      "alt": "Tailscale plugin menu in KOReader on an e-reader"
+    }
+  },
+  {
+    "slug": "intermediate-ml",
+    "title": "CSC 411: Intermediate Machine Learning",
+    "repo": "intermediate-ml",
+    "summary": "An interdisciplinary machine learning course being prepared as a public book.",
+    "paragraphs": [
+      "I designed and teach this course at SF State. The book draws on course materials, including architecture day and its worked examples."
+    ],
+    "details": {
+      "href": "#post-interdisciplinary-machine-learning",
+      "label": "Preview architecture day"
+    }
+  },
+  {
+    "slug": "serialpm",
+    "title": "SerialPM",
+    "repo": "serialpm",
+    "summary": "A project management app built around a visual timeline, developed as an SF State capstone.",
+    "paragraphs": [
+      "SerialPM was our team capstone: a project management app that puts a visual timeline at the center instead of a flat task list. I led a team of five engineers through the full software lifecycle, from requirements to delivery.",
+      "The public repository is a React, Vite, and Tailwind frontend showcase covering task management, the timeline, and chat. The original backend ran on AWS resources that are no longer active, so it has been removed."
+    ],
+    "image": {
+      "src": "/assets/projects/serialpm.jpg",
+      "alt": "SerialPM project timeline view"
+    }
+  },
+  {
+    "slug": "alzheimers-screening",
+    "title": "Alzheimer’s screening experiment",
+    "repo": "r-alzheimers-rf",
+    "summary": "A random forest classifier on clinical data, evaluated with recall in mind.",
+    "paragraphs": [
+      "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
+      "In a screening setting a missed case costs far more than a false alarm, so the analysis looks at recall alongside overall accuracy rather than treating accuracy as the whole story."
+    ],
+    "image": {
+      "src": "/assets/projects/alzheimers-rf.jpg",
+      "alt": "Alzheimer’s screening project visualization"
+    }
+  },
+  {
+    "slug": "auto-child-education",
+    "title": "Auto Child Education",
+    "repo": "autoChildEducation",
+    "summary": "A Europa Universalis V mod that picks each child’s education from their traits.",
+    "paragraphs": [
+      "A mod for Europa Universalis V that removes the tedium of educating every child by hand. It scores each child’s traits and assigns the education that fits their strongest match.",
+      "I implemented the scoring model and tuned it against how it behaved in the game. It has about 25,000 Steam Workshop subscribers."
+    ],
+    "image": {
+      "src": "/assets/projects/auto-child-education.jpg",
+      "alt": "Auto Child Education project README"
+    }
+  },
+  {
+    "slug": "geomat",
+    "title": "geomat",
+    "summary": "A historical map with a timeline from late feudalism to the Cold War.",
+    "paragraphs": [
+      "A MapLibre map with historical boundaries and notes on how geography shaped each era’s political economy."
+    ],
+    "image": {
+      "src": "/assets/projects/geomat.jpg",
+      "alt": "geomat map showing Cold War division, 1980"
+    }
+  },
+  {
+    "slug": "ide-in-development",
+    "title": "Cairn (in development)",
+    "summary": "A desktop IDE and orchestration tool built around a small programming language, graph-backed files, and experimental partial evaluation.",
+    "paragraphs": [
+      "Cairn is inspired by Kernel, Kraken, and Arc. It treats Org-mode documents and live program state as first-class, queryable data, on the argument that dispatch, evaluation, and context-management tools should support workflows that put people first.",
+      "I started with a CEK machine in WebAssembly and a small interpreter in Rust."
+    ],
+    "image": {
+      "src": "/assets/projects/cairn.png",
+      "alt": "Cairn showing an org-style outline note above a command line"
+    }
+  },
+  {
+    "slug": "terminal-quotes",
+    "title": "Terminal quotes",
+    "repo": "Communism",
+    "summary": "A Zsh startup plugin that prints a quote and ASCII art when a terminal opens.",
+    "paragraphs": [
+      "A small Zsh plugin that shows a quote and a piece of ASCII art each time a terminal session starts. It is a lightweight way to personalize a shell with a few lines of configuration."
+    ]
+  },
+  {
+    "slug": "cpp-coursework",
+    "title": "C++ coursework",
+    "repo": "cpp-code",
+    "summary": "Exercises from a C++ course.",
+    "paragraphs": [
+      "Coursework and exercises written while learning C++."
+    ]
+  },
+  {
+    "slug": "critique-of-the-gospel-history",
+    "title": "Critique of the Gospel History of the Synoptics",
+    "repo": "Critique-of-the-Gospel-History-of-the-Synoptics",
+    "summary": "A machine translation of Bruno Bauer’s 1841 work of biblical criticism.",
+    "paragraphs": [
+      "A machine translation of Bruno Bauer’s Kritik der evangelischen Geschichte der Synoptiker, a foundational text in German higher criticism.",
+      "The translation is offered for study and is credited with thanks to Vridar and Neil Godfrey."
+    ]
+  },
+  {
+    "slug": "d2r-reimagined-mod",
+    "title": "Diablo II: Reimagined",
+    "repo": "d2r-reimagined-mod",
+    "summary": "A fork of the source for the Reimagined mod for Diablo II: Resurrected.",
+    "paragraphs": [
+      "A fork of the data and scripts behind Reimagined, a large mod for Diablo II: Resurrected that adds new features and content. Working in it meant reading and modifying the game’s data tables and configuration."
+    ]
+  },
+  {
+    "slug": "dsa-planet-theme",
+    "title": "DSA Planet",
+    "repo": "dsa-planet-theme",
+    "summary": "A fork of a feed aggregator theme that combines many blogs into one site.",
+    "paragraphs": [
+      "A fork of a Planet-style web feed aggregator, adapted from the Planet openSUSE theme. It reads many RSS and Atom feeds from chapters, working groups, and publications and presents them as a single site."
+    ]
+  },
+  {
+    "slug": "mia-reader",
+    "title": "mia-reader",
+    "repo": "mia-reader",
+    "summary": "Selected historical texts formatted for web and mobile reading.",
+    "paragraphs": [
+      "A collection of selected historical texts prepared for comfortable reading on the web and mobile devices."
+    ]
+  },
+  {
+    "slug": "vrbblog",
+    "title": "vrbBlog",
+    "repo": "vrbBlog",
+    "summary": "The source for this site.",
+    "paragraphs": [
+      "The source and content for this site, built with Astro and typeset with a small hand-written stylesheet. Projects and posts are plain files in the repository, and the dev server shows exactly what will be published."
+    ],
+    "image": {
+      "src": "/assets/projects/vrbblog.png",
+      "alt": "The projects and writing page of this site"
+    }
+  }
+]

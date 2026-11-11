@@ -1,47 +1,62 @@
 # vrbBlog
-
-Source for [vb4r.com](https://vb4r.com) — blog, about, résumé, teaching, and work history.
-
-Built with [Astro](https://astro.build), forked from
-[@Charca's astro-blog-template](https://github.com/Charca/astro-blog-template).
-
-Credits: favicons from [favicon.io](https://favicon.io/favicon-generator/), code font
-[Hack](https://sourcefoundry.org/hack/).
-
-## Local development
-
+## Node
 ```bash
 npm install
-npm run dev      # http://localhost:4321
+npm run dev       # http://localhost:4321, shows what will be deployed
+npm run build     # production site in dist/
+npm run check     # Astro and TypeScript diagnostics
+npm run preview   # preview the production build
 ```
 
-## Writing
-
-Blog posts are Markdown files in `src/data/blog-posts/`. They need frontmatter:
+## Frontmatter
+Posts live in `content/posts/` as Markdown or MDX. Post frontmatter:
 
 ```yaml
 ---
-title: 'Post title'      # quote it if it contains a colon
-slug: post-slug          # drives the route: /blog/post-slug
-publishDate: 2026-09-07
-description: One sentence, shown on the index.
-tags: ["optional"]
+title: 'Post title'
+slug: 'post-slug'
+date: '2026-11-06'
+description: 'One sentence for the index and feed.'
+tags: ['optional']
+draft: false
 ---
 ```
 
-The résumé, teaching, and work history sections on `/about` are **not** a content collection —
-they live in `src/content/` and are imported directly as components by `src/pages/about.astro`.
-See `CLAUDE.md` for the details.
+Posts with `draft: true` or missing title, slug, or date are excluded everywhere. Slugs must be
+URL-safe: they become `#post-<slug>` anchors, so avoid `&` and spaces.
 
+## Structure
+The home page is an expandable index of published posts and projects, with the about content and
+links alongside it. Edit `content/pages/about.mdx` for the sidebar and `content/projects.json` for
+project descriptions, repository names, images, and optional detail links. Entries start collapsed
+with a short summary; the first visible entry is given extra emphasis. Open an entry for its
+contents and permalink.
+
+Entries expand without JavaScript. With JavaScript, the filter buttons select Projects or writing,
+and selecting the active button again shows both.
+
+The home page is the whole site. Older URLs redirect to their entries: `/about`, `/blog`,
+`/projects`, `/tags`, `/search`, `/posts`, `/blog/<slug>`, `/tag/<tag>`, and `/projects/<slug>`.
+
+The architecture-day post embeds the handout with the browser's PDF viewer and links it directly
+for devices that cannot display embedded PDFs. The PDF is stored in
+`public/assets/architecture-day/architecture-day.pdf`; the sources live in the `intermediate-ml`
+repository.
+
+The sidebar uses the `ThemePicker` Astro component inside its MDX content. The résumé linked in
+the sidebar is at `public/assets/Victoria-Barnett-Resume.pdf`.
+
+The layout and stylesheet are in `src/layouts/BaseLayout.astro` and `theme/style.css`. The theme
+selector follows the system setting by default and remembers an explicit light or dark choice.
+
+`src/pages/robots.txt.ts` and `@astrojs/sitemap` generate `robots.txt` and `sitemap-index.xml`;
+the sitemap is filtered to the home page because everything else is an anchor on it.
+
+The theme icon is Font Awesome's circle-half-stroke, also available in Nerd Fonts, by Fonticons,
+Inc. ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/);
+[source](https://github.com/FortAwesome/Font-Awesome)).
 ## Deploy
+`npm run build` and publish `dist/` w/ Cloudflare Pages workflow.
 
-Push to `main` — that's the whole deploy. The Cloudflare Pages project is git-connected and
-builds automatically:
-
-```bash
-git push origin main
-```
-
-A failed build leaves the previous deploy live, so a bad push won't take the site down.
-`site` in `astro.config.mjs` is the single source for canonical and Open Graph URLs — set it
-there, not in individual pages.
+Confirm the project's build settings use `npm run build` and `dist` before reconnecting automatic
+deploys.

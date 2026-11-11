@@ -1,0 +1,9 @@
+---
+import projects from '../../../content/projects.json';
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.slug } }));
+}
+
+return Astro.redirect(`/#project-${Astro.params.slug}`, 301);
+---
