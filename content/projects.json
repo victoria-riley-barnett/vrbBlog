@@ -64,8 +64,8 @@
       "I implemented the scoring model and tuned it against how it behaved in the game. It has about 25,000 Steam Workshop subscribers."
     ],
     "image": {
-      "src": "/assets/projects/auto-child-education.jpg",
-      "alt": "Auto Child Education project README"
+      "src": "/assets/projects/auto-child-education.png",
+      "alt": "Auto Child Education on the Steam Workshop, showing the cover art, rating, and subscriber count"
     }
   },
   {
@@ -97,19 +97,13 @@
     "slug": "terminal-quotes",
     "title": "Terminal quotes",
     "repo": "Communism",
-    "summary": "A Zsh startup plugin that prints a quote and ASCII art when a terminal opens.",
-    "paragraphs": [
-      "A small Zsh plugin that shows a quote and a piece of ASCII art each time a terminal session starts. It is a lightweight way to personalize a shell with a few lines of configuration."
-    ]
+    "summary": "A Zsh startup plugin that prints a quote and ASCII art when a terminal opens."
   },
   {
     "slug": "cpp-coursework",
     "title": "C++ coursework",
     "repo": "cpp-code",
-    "summary": "Exercises from a C++ course.",
-    "paragraphs": [
-      "Coursework and exercises written while learning C++."
-    ]
+    "summary": "Exercises from a C++ course."
   },
   {
     "slug": "critique-of-the-gospel-history",
@@ -125,40 +119,24 @@
     "slug": "d2r-reimagined-mod",
     "title": "Diablo II: Reimagined",
     "repo": "d2r-reimagined-mod",
-    "summary": "A fork of the source for the Reimagined mod for Diablo II: Resurrected.",
-    "paragraphs": [
-      "A fork of the data and scripts behind Reimagined, a large mod for Diablo II: Resurrected that adds new features and content. Working in it meant reading and modifying the game’s data tables and configuration."
-    ]
+    "summary": "A fork of the source for the Reimagined mod for Diablo II: Resurrected."
   },
   {
     "slug": "dsa-planet-theme",
     "title": "DSA Planet",
     "repo": "dsa-planet-theme",
-    "summary": "A fork of a feed aggregator theme that combines many blogs into one site.",
-    "paragraphs": [
-      "A fork of a Planet-style web feed aggregator, adapted from the Planet openSUSE theme. It reads many RSS and Atom feeds from chapters, working groups, and publications and presents them as a single site."
-    ]
+    "summary": "A fork of a feed aggregator theme that combines many blogs into one site."
   },
   {
     "slug": "mia-reader",
     "title": "mia-reader",
     "repo": "mia-reader",
-    "summary": "Selected historical texts formatted for web and mobile reading.",
-    "paragraphs": [
-      "A collection of selected historical texts prepared for comfortable reading on the web and mobile devices."
-    ]
+    "summary": "Selected historical texts formatted for web and mobile reading."
   },
   {
     "slug": "vrbblog",
     "title": "vrbBlog",
     "repo": "vrbBlog",
-    "summary": "The source for this site.",
-    "paragraphs": [
-      "The source and content for this site, built with Astro and typeset with a small hand-written stylesheet. Projects and posts are plain files in the repository, and the dev server shows exactly what will be published."
-    ],
-    "image": {
-      "src": "/assets/projects/vrbblog.png",
-      "alt": "The projects and writing page of this site"
-    }
+    "summary": "The source for this site."
   }
 ]

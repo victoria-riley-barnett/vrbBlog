@@ -45,6 +45,17 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
       })}
       {projects.map((project) => {
         const id = `project-${project.slug}`;
+        const repo = project.repo && `https://github.com/victoria-riley-barnett/${project.repo}`;
+        if (!project.paragraphs && !project.image) {
+          return (
+            <article class="feed-entry entry-brief" data-entry-type="project">
+              <span class="entry-anchor" id={id}></span>
+              <p class="entry-meta">Project</p>
+              <h2>{repo ? <a href={repo}>{project.title}</a> : project.title}</h2>
+              <p class="entry-summary">{project.summary}</p>
+            </article>
+          );
+        }
         return (
           <article class="feed-entry" data-entry-type="project">
             <details class="entry-details">
@@ -57,7 +68,7 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
               {project.image && <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />}
               {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
               {project.details && <p><a href={project.details.href}>{project.details.label}</a></p>}
-              {project.repo && <p><a href={`https://github.com/victoria-riley-barnett/${project.repo}`}>View on GitHub</a></p>}
+              {repo && <p><a href={repo}>View on GitHub</a></p>}
               <p class="entry-foot"><a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${project.title}`}>#</a></p>
             </details>
           </article>
@@ -103,7 +114,8 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
       const entry = target?.closest('.feed-entry');
       if (!entry) return false;
       if (entry.hidden) setFilter(null);
-      entry.querySelector('.entry-details').open = true;
+      const details = entry.querySelector('.entry-details');
+      if (details) details.open = true;
       return true;
     }
 
