@@ -13,6 +13,8 @@ export default defineConfig({
     '/search': '/#projects-and-writing',
     '/tags': '/#projects-and-writing',
     '/posts': '/#projects-and-writing',
+    '/projects/mia-reader': '/#projects-and-writing',
+    '/projects/dsa-planet-theme': '/#projects-and-writing',
     '/blog/starting-with-docker': '/#projects-and-writing',
     '/blog/serial-project-management': '/#projects-and-writing',
     '/blog/cpp-exercises': '/#projects-and-writing',

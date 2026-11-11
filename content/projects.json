@@ -109,18 +109,6 @@
     "summary": "A fork of the source for the Reimagined mod for Diablo II: Resurrected."
   },
   {
-    "slug": "dsa-planet-theme",
-    "title": "DSA Planet",
-    "repo": "dsa-planet-theme",
-    "summary": "A feed aggregator forked from Planet openSUSE, collecting posts from DSA chapters, working groups, and publications."
-  },
-  {
-    "slug": "mia-reader",
-    "title": "mia-reader",
-    "repo": "mia-reader",
-    "summary": "Selected works from the marxists.org archive, formatted for web and mobile reading."
-  },
-  {
     "slug": "vrbblog",
     "title": "vrbBlog",
     "repo": "vrbBlog",
