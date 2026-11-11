@@ -280,6 +280,35 @@ main > h1 {
   margin: 1rem 0;
 }
 
+.figure {
+  margin: 1.5rem 0;
+}
+
+.figure-link {
+  display: block;
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  box-sizing: border-box;
+}
+
+.figure-caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.figure-caption > :first-child {
+  margin-top: 0;
+}
+
+.figure-caption > :last-child {
+  margin-bottom: 0;
+}
+
 .pdf-preview {
   margin: 1rem 0 1.25rem;
 }
@@ -325,6 +354,80 @@ main > h1 {
   max-width: 44rem;
   margin: 3rem auto;
   padding: 0 1.5rem;
+}
+
+.page-narrow {
+  max-width: 44rem;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+.page-wide {
+  max-width: 65rem;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+}
+
+.atom {
+  margin: 1.5rem 0;
+}
+
+.atom > :first-child {
+  margin-top: 0;
+}
+
+.atom > :last-child {
+  margin-bottom: 0;
+}
+
+.atom-caption {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.atom-caption > :first-child {
+  margin-top: 0;
+}
+
+.atom-caption > :last-child {
+  margin-bottom: 0;
+}
+
+.atom-missing {
+  padding: 0.75rem;
+  border: 1px dashed var(--rule);
+  font-size: 0.9rem;
+}
+
+.atom-sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.atom-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  background: #f5f5f5;
+  box-sizing: border-box;
+}
+
+.atom-card .atom {
+  margin: 0;
+}
+
+.atom-meta {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  overflow-wrap: anywhere;
+}
+
+.atom-meta code {
+  font-size: 0.8rem;
 }
 
 img {
