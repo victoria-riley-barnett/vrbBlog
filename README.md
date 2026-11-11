@@ -30,7 +30,10 @@ The home page is an expandable index of published posts and projects, with the a
 links alongside it. Edit `content/pages/about.mdx` for the sidebar and `content/projects.json` for
 project descriptions, repository names, images, and optional detail links. Entries start collapsed
 with a short summary; the first visible entry is given extra emphasis. Open an entry for its
-contents and permalink.
+contents, tags, and `#` permalink.
+
+A project with no `paragraphs` and no `image` stays a single row: the title links to its repository
+and nothing expands. That is the right shape for entries with nothing more to say than the summary.
 
 Entries expand without JavaScript. With JavaScript, the filter buttons select Projects or writing,
 and selecting the active button again shows both.

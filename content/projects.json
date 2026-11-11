@@ -81,19 +81,6 @@
     }
   },
   {
-    "slug": "ide-in-development",
-    "title": "Cairn (in development)",
-    "summary": "A desktop IDE and orchestration tool built around a small programming language, graph-backed files, and experimental partial evaluation.",
-    "paragraphs": [
-      "Cairn is inspired by Kernel, Kraken, and Arc. It treats Org-mode documents and live program state as first-class, queryable data, on the argument that dispatch, evaluation, and context-management tools should support workflows that put people first.",
-      "I started with a CEK machine in WebAssembly and a small interpreter in Rust."
-    ],
-    "image": {
-      "src": "/assets/projects/cairn.png",
-      "alt": "Cairn showing an org-style outline note above a command line"
-    }
-  },
-  {
     "slug": "terminal-quotes",
     "title": "Terminal quotes",
     "repo": "Communism",
