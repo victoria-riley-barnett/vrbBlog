@@ -6,7 +6,7 @@
     "summary": "A KOReader plugin that runs Tailscale on the e-reader, so Syncthing, SSH, and OPDS work from any network.",
     "paragraphs": [
       "Many e-reader sync tools only work on a local network, which is awkward when your books live on a server at home. This plugin runs Tailscale inside KOReader, so the reader keeps a permanent Tailscale IP on any Wi-Fi network and Syncthing, SSH, or OPDS keep working.",
-      "Most testing has been on Kindle. The plugin is mostly file paths and service swaps, so other platforms are a matter of small fixes."
+      "My own testing has been on Kindle, but there are many platforms KoReader supports, and often it's only a matter of small file path fixes and library dependencies to get them working. Reported support has grown to include Kobo, Onyx, and Pocketbook."
     ],
     "image": {
       "src": "/assets/projects/koreader-tailscale.png",
@@ -48,7 +48,7 @@
     "summary": "A Europa Universalis V mod that picks each child’s education from their traits.",
     "paragraphs": [
       "A mod for Europa Universalis V that removes the tedium of educating every child by hand. It scores each child’s traits and assigns the education that fits their strongest match.",
-      "I implemented the scoring model and tuned it against how it behaved in the game. It has about 25,000 Steam Workshop subscribers."
+      "I implemented the scoring model and tuned it against in-game behavior, using scripting to check for performance issues deeper into the games timeline (e.g., after 100 years of gameplay, there are *many* more children to manage). It has about 25,000 Steam Workshop subscribers."
     ],
     "image": {
       "src": "/assets/projects/auto-child-education.png",
