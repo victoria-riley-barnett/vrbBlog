@@ -199,17 +199,35 @@ main > h1 {
   position: absolute;
   top: 0.45rem;
   right: 0.5rem;
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
-  opacity: 0.5;
+  opacity: 0.6;
   transform: rotate(45deg);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.entry-details > summary:hover::after,
+.entry-details > summary:focus-visible::after {
+  opacity: 1;
 }
 
 .entry-details[open] > summary::after {
   transform: rotate(225deg);
+}
+
+/* Collapsed entries fade their last line into the page, so there is a soft
+   edge where the entry keeps going instead of a hard cut. */
+.entry-details:not([open]) > summary::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.1rem;
+  left: 0;
+  height: 1.15rem;
+  background: linear-gradient(to bottom, transparent, var(--background));
+  pointer-events: none;
 }
 
 .entry-details > summary::-webkit-details-marker {
@@ -278,6 +296,34 @@ main > h1 {
   max-width: 36rem;
   height: auto;
   margin: 1rem 0;
+}
+
+/* A project's image, shown in the collapsed summary: whole for entries that are
+   little more than the image, a faded sliver for entries with more below it. */
+.entry-peek {
+  display: block;
+  width: 100%;
+  max-width: 36rem;
+  margin-top: 0.9rem;
+  border: 1px solid var(--rule);
+  box-sizing: border-box;
+  object-fit: cover;
+  object-position: top;
+}
+
+.entry-peek[data-peek="full"] {
+  height: 11rem;
+}
+
+.entry-peek[data-peek="hint"] {
+  height: 3rem;
+  border-bottom: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  mask-image: linear-gradient(to bottom, #000 45%, transparent);
+}
+
+.entry-details[open] .entry-peek {
+  display: none;
 }
 
 .figure {

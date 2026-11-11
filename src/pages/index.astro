@@ -64,6 +64,16 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
                 <p class="entry-meta">Project</p>
                 <h2>{project.title}</h2>
                 <p class="entry-summary">{project.summary}</p>
+                {project.image && (
+                  <img
+                    class="entry-peek"
+                    data-peek={project.paragraphs.length > 1 ? 'hint' : 'full'}
+                    src={project.image.src}
+                    alt={project.image.alt}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </summary>
               <span class="entry-anchor" id={id}></span>
               {project.image && <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />}

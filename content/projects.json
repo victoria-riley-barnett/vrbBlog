@@ -19,8 +19,8 @@
     "repo": "serialpm",
     "summary": "The front end of a team project management app with a visual timeline, built as an SF State capstone.",
     "paragraphs": [
-      "SerialPM covers organisations, projects, tasks, team management, and real-time chat, with a visual timeline at the centre of each project. It was our SF State capstone, and I led the team.",
-      "The public repository is a front-end showcase. The backend and database were removed for publication, so screens that load data show empty states; the screenshots were captured against the original backend with demo data."
+      "SerialPM covers organisations, projects, tasks, team management, and real-time chat, with a visual timeline at the centre of each project. Led our team through an entire SDLC exercise, from requirements gathering to deployment, and brought various levels of web developmentabstraction to the other members to facilitate their contributions.",
+      "The public repository is a front-end showcase. The backend and database were built using real AWS resourcing that I've since deprecated."
     ],
     "image": {
       "src": "/assets/projects/serialpm.jpg",
@@ -60,7 +60,7 @@
     "title": "geomat",
     "summary": "A MapLibre GL map of historical borders, with a timeline from late feudalism to the Cold War.",
     "paragraphs": [
-      "A MapLibre GL map with historical boundaries and a timeline from late feudalism to the Cold War."
+      "A MapLibre GL map with historical boundaries and a timeline from late feudalism to the Cold War. I really want a something like pleasure browsing Google Maps but for history & geography, and played with that idea a bit here."
     ],
     "image": {
       "src": "/assets/projects/geomat.jpg",
@@ -93,7 +93,10 @@
     "slug": "d2r-reimagined-mod",
     "title": "Diablo II: Reimagined",
     "repo": "d2r-reimagined-mod",
-    "summary": "A fork of the Reimagined mod’s source for Diablo II: Resurrected."
+    "summary": "Contributed to a mod for Diablo II: Resurrected that exhaustively brought modern ARPG mechanics to a Blizzard classic.",
+    "paragraphs": [
+      "To do so, we worked with extremely old windows tooling and binaries; the lead developer has reverse engineered the game to a remarkable degree. I contributed to the mods item & rarity systems, helped move a 'corruption' mechanic into the mod that dynamically alters item properties (complexity never intended in the original), and maintained a rapid configuration system on the Mod Discord for tech-literate users who wanted to customize their experience without touching legacy tooling. The mod has about 328,000 Nexus Mods downloads & 1,722 endorsements."
+    ]
   },
   {
     "slug": "vrbblog",
