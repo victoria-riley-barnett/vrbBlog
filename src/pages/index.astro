@@ -5,6 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { mdxComponents } from '../lib/mdx-components';
 import { formatDate, getPublishedPosts, postDate, postSlug, postTitle } from '../lib/posts';
 
+const siteHost = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+
 const about = (await getCollection('pages')).find((page) => page.data.slug === 'about');
 if (!about) throw new Error('The about page is missing from content/pages.');
 const { Content: AboutContent } = await render(about);
@@ -78,7 +80,13 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
               <span class="entry-anchor" id={id}></span>
               {project.image && <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />}
               {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-              {repo && <p><a href={repo}>View on GitHub</a></p>}
+              {(repo || project.site) && (
+                <p>
+                  {repo && <a href={repo}>View on GitHub</a>}
+                  {repo && project.site && ' · '}
+                  {project.site && <a href={project.site}>{siteHost(project.site)}</a>}
+                </p>
+              )}
               <p class="entry-foot"><a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${project.title}`}>#</a></p>
             </details>
           </article>

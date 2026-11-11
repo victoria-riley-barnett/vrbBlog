@@ -93,9 +93,10 @@
     "slug": "d2r-reimagined-mod",
     "title": "Diablo II: Reimagined",
     "repo": "d2r-reimagined-mod",
-    "summary": "Contributed to a mod for Diablo II: Resurrected that exhaustively brought modern ARPG mechanics to a Blizzard classic.",
+    "summary": "Contributed to a large community-driven mod for Diablo II: Resurrected that exhaustively brought modern ARPG mechanics to a Blizzard classic.",
+    "site": "https://www.d2r-reimagined.com/",
     "paragraphs": [
-      "To do so, we worked with extremely old windows tooling and binaries; the lead developer has reverse engineered the game to a remarkable degree. I contributed to the mods item & rarity systems, helped move a 'corruption' mechanic into the mod that dynamically alters item properties (complexity never intended in the original), and maintained a rapid configuration system on the Mod Discord for tech-literate users who wanted to customize their experience without touching legacy tooling. The mod has about 328,000 Nexus Mods downloads & 1,722 endorsements."
+      "To do so, we worked with extremely old windows tooling and binaries; the lead developer has reverse engineered the game to a remarkable degree. I contributed to the mods item & rarity systems, helped move a 'corruption' mechanic into the mod that dynamically alters item properties (complexity never intended in the original), and maintained a rapid configuration system on the Discord for tech-literate users who wanted to customize their experience without touching legacy tooling. The mod has about 328,000 Nexus Mods downloads & 1,722 endorsements."
     ]
   },
   {
