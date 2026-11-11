@@ -68,9 +68,12 @@ a {
 }
 
 .page-layout {
+  --pad: clamp(1rem, 3vw, 2rem);
+  --sidebar-width: 17rem;
+  --sidebar-gap: clamp(1.5rem, 3vw, 3rem);
   max-width: 44rem;
   margin: 0 auto;
-  padding: clamp(1rem, 3vw, 2rem);
+  padding: var(--pad);
 }
 
 main > h1:first-child {
@@ -119,6 +122,25 @@ main > h1:first-child {
   text-decoration-thickness: 0.12em;
 }
 
+/* A word and its separator stay together, so a wrap never starts a line with
+   an ampersand. */
+.feed-pair {
+  white-space: nowrap;
+}
+
+/* The title itself stays whole, so a narrow layout breaks before it rather than
+   through it — until the screen is too narrow to hold it beside the theme
+   picker, where an intact title would overflow. */
+.feed-title {
+  white-space: nowrap;
+}
+
+@media (max-width: 23rem) {
+  .feed-title {
+    white-space: normal;
+  }
+}
+
 .feed-entry {
   padding: 1.75rem 0;
   border-top: 1px solid var(--rule);
@@ -164,20 +186,30 @@ main > h1:first-child {
   scroll-margin-top: 1rem;
 }
 
-/* Above the feed: one row of links, then the bio. No headings — the row is
-   part of the furniture, not a section of its own. */
+/* Narrow layouts: the links list, then the bio, above the feed. No headings —
+   the list is part of the furniture, not a section of its own. */
 .feed-intro {
   padding: 1rem 0 1.6rem;
   border-top: 1px solid var(--rule);
 }
 
+/* While a filter runs the intro steps aside; wide layouts show it in the
+   sidebar instead. */
+.feed-intro.is-filtered {
+  display: none;
+}
+
+/* One link per line everywhere, scaled down on narrow layouts so the list
+   stays compact. */
 .feed-links ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem 0.9rem;
   margin: 0;
-  padding: 0;
-  list-style: none;
+  padding-left: 1.1rem;
+  list-style: disc;
+  font-size: 0.9rem;
+}
+
+.feed-links li + li {
+  margin-top: 0.15rem;
 }
 
 .feed-about {
@@ -195,6 +227,49 @@ main > h1:first-child {
 
 .feed-intro .prose > :last-child {
   margin-bottom: 0;
+}
+
+/* Wide layouts put the links and bio in a sidebar beside the feed. */
+@media (min-width: 48rem) {
+  .page-layout {
+    position: relative;
+    max-width: 65rem;
+  }
+
+  .page-layout main {
+    padding-left: calc(var(--sidebar-width) + var(--sidebar-gap));
+  }
+
+  /* The sidebar always shows it here, so drop the title entry. */
+  .feed-jump {
+    display: none;
+  }
+
+  /* Out of flow so a short feed can never stretch the title row. */
+  .feed-intro,
+  .feed-intro.is-filtered {
+    position: absolute;
+    top: var(--pad);
+    left: var(--pad);
+    width: var(--sidebar-width);
+    display: block;
+    padding: 0;
+    border-top: 0;
+    font-size: 0.95rem;
+  }
+
+  .feed-links ul,
+  .feed-about ul {
+    padding-left: 1.25rem;
+  }
+
+  .feed-links ul {
+    font-size: inherit;
+  }
+
+  .feed-about h3 {
+    font-size: 1.05rem;
+  }
 }
 
 .entry-details > summary {
@@ -228,8 +303,9 @@ main > h1:first-child {
 }
 
 /* Collapsed entries fade their last line into the page, so there is a soft
-   edge where the entry keeps going instead of a hard cut. */
-.entry-details:not([open]) > summary::before {
+   edge where the entry keeps going instead of a hard cut. Only entries whose
+   description wraps get it — a one-line description has nothing to fade. */
+.entry-details:not([open]) > summary.entry-fades::before {
   content: "";
   position: absolute;
   right: 0;
@@ -399,29 +475,27 @@ main > h1:first-child {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  color: inherit;
-  font-size: 0.85rem;
-  white-space: nowrap;
-  opacity: 0.65;
-  transition: opacity 0.15s ease;
-}
-
-.theme-control:hover,
-.theme-control:focus-within {
-  opacity: 1;
-}
-
-.theme-control select {
+  margin: 0;
   padding: 0;
   border: 0;
   background: none;
   color: inherit;
   font: inherit;
+  font-size: 0.85rem;
+  white-space: nowrap;
   cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.15s ease;
 }
 
-.theme-control select:hover {
+.theme-control[hidden] {
+  display: none;
+}
+
+.theme-control:hover,
+.theme-control:focus-visible {
   color: var(--accent);
+  opacity: 1;
 }
 
 .not-found {
