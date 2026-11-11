@@ -17,7 +17,7 @@
     "slug": "serialpm",
     "title": "SerialPM",
     "repo": "serialpm",
-    "summary": "The front end of a team project management app with a visual timeline, built as an SF State capstone.",
+    "summary": "A project management app with a visual timeline, built as an SF State capstone.",
     "paragraphs": [
       "SerialPM covers organisations, projects, tasks, team management, and real-time chat, with a visual timeline at the centre of each project. Led our team through an entire SDLC exercise, from requirements gathering to deployment, and brought various levels of web developmentabstraction to the other members to facilitate their contributions.",
       "The public repository is a front-end showcase. The backend and database were built using real AWS resourcing that I've since deprecated."
@@ -80,7 +80,7 @@
     "summary": "CS110B and CS110C coursework: homework, projects, and discussion code."
   },
   {
-    "slug": "critique-of-the-gospel-history",
+    "slug": "critique-of-the-gospel-history", 
     "title": "Critique of the Gospel History of the Synoptics",
     "repo": "Critique-of-the-Gospel-History-of-the-Synoptics",
     "summary": "A machine translation of Bruno Bauer’s 1841 work of biblical criticism.",
