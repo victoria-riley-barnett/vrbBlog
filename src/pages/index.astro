@@ -2,29 +2,47 @@
 import { getCollection, render } from 'astro:content';
 import projects from '../../content/projects.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ThemePicker from '../components/ThemePicker.astro';
 import { mdxComponents } from '../lib/mdx-components';
 import { formatDate, getPublishedPosts, postDate, postSlug, postTitle } from '../lib/posts';
 
 const siteHost = (url: string) => new URL(url).hostname.replace(/^www\./, '');
 
-const about = (await getCollection('pages')).find((page) => page.data.slug === 'about');
+const pages = await getCollection('pages');
+const about = pages.find((page) => page.data.slug === 'about');
+const links = pages.find((page) => page.data.slug === 'links');
 if (!about) throw new Error('The about page is missing from content/pages.');
+if (!links) throw new Error('The links page is missing from content/pages.');
 const { Content: AboutContent } = await render(about);
+const { Content: LinksContent } = await render(links);
 const posts = await Promise.all((await getPublishedPosts()).map(async (post) => ({
   post,
   Content: (await render(post)).Content,
 })));
 ---
-<BaseLayout title="Victoria Barnett" description="Projects and writing by Victoria Barnett.">
-  <a class="skip-link" href="#projects-and-writing">Skip to projects and writing</a>
+<BaseLayout title="Victoria Barnett" description="Links, projects, and writing by Victoria Barnett.">
+  <a class="skip-link" href="#projects-and-writing">Skip to content</a>
   <div class="page-layout">
-    <main id="projects-and-writing">
-      <h1>Projects &amp; writing</h1>
-      <p class="feed-filters" id="feed-filters" hidden>
-        <button type="button" data-filter="project" aria-pressed="false">Projects</button>
-        <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
-      </p>
-      <p class="about-link"><a href="#about">About &amp; links</a></p>
+    <main>
+      <div class="feed-head">
+        <h1 id="projects-and-writing">
+          <span id="feed-heading">Projects &amp; Writing</span>
+          <span class="feed-filters" id="feed-filters" hidden>
+            <button type="button" data-filter="project" aria-pressed="false">Projects</button>
+            <span> &amp; </span>
+            <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
+          </span>
+        </h1>
+        <ThemePicker />
+      </div>
+      <div class="feed-intro">
+        <nav class="feed-links" id="links" aria-label="Links">
+          <div class="prose"><LinksContent components={mdxComponents} /></div>
+        </nav>
+        <section class="feed-about" id="about">
+          <div class="prose"><AboutContent components={mdxComponents} /></div>
+        </section>
+      </div>
       {posts.map(({ post, Content }) => {
         const date = postDate(post);
         const id = `post-${postSlug(post)}`;
@@ -69,7 +87,6 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
                 {project.image && (
                   <img
                     class="entry-peek"
-                    data-peek={project.paragraphs.length > 1 ? 'hint' : 'full'}
                     src={project.image.src}
                     alt={project.image.alt}
                     loading="lazy"
@@ -93,14 +110,11 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
         );
       })}
     </main>
-    <aside class="sidebar" id="about" aria-labelledby="about-heading">
-      <h2 id="about-heading">About</h2>
-      <div class="prose"><AboutContent components={mdxComponents} /></div>
-      <p class="about-link"><a href="#projects-and-writing">Back to projects &amp; writing</a></p>
-    </aside>
   </div>
   <script is:inline>
+    const feedHeading = document.getElementById('feed-heading');
     const feedFilters = document.getElementById('feed-filters');
+    const feedIntro = document.querySelector('.feed-intro');
     const filterButtons = feedFilters.querySelectorAll('button[data-filter]');
     const entries = document.querySelectorAll('.feed-entry[data-entry-type]');
     let activeFilter = null;
@@ -120,6 +134,8 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
       for (const button of filterButtons) {
         button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
       }
+      // The links and bio sit above the feed, so step aside while a filter runs.
+      if (feedIntro) feedIntro.hidden = filter !== null;
     }
 
     for (const button of filterButtons) {
@@ -163,6 +179,7 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
 
     const initialTarget = document.getElementById(location.hash.slice(1));
     if (revealTarget(initialTarget)) scrollToTarget(initialTarget);
+    feedHeading.hidden = true;
     feedFilters.hidden = false;
   </script>
 </BaseLayout>
