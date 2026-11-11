@@ -3,10 +3,10 @@
     "slug": "koreader-tailscale",
     "title": "Tailscale for KOReader",
     "repo": "koreader-tailscale",
-    "summary": "A VPN plugin that lets e-readers sync over a private network.",
+    "summary": "A KOReader plugin that runs Tailscale on the e-reader, so Syncthing, SSH, and OPDS work from any network.",
     "paragraphs": [
-      "Many e-reader sync tools only work on a local network, which is awkward when your books live on a server at home. This Lua plugin adds Tailscale VPN support to KOReader on Kindle, Kobo, and PocketBook ARM devices, so the reader can reach your library from anywhere.",
-      "I use it with Syncthing and an iOS shortcut as a small distributed library: send an article or book from a phone and it appears on the reader. It works as an alternative to Calibre and Send to Kindle."
+      "Many e-reader sync tools only work on a local network, which is awkward when your books live on a server at home. This plugin runs Tailscale inside KOReader, so the reader keeps a permanent Tailscale IP on any Wi-Fi network and Syncthing, SSH, or OPDS keep working.",
+      "Most testing has been on Kindle. The plugin is mostly file paths and service swaps, so other platforms are a matter of small fixes."
     ],
     "image": {
       "src": "/assets/projects/koreader-tailscale.png",
@@ -30,10 +30,10 @@
     "slug": "serialpm",
     "title": "SerialPM",
     "repo": "serialpm",
-    "summary": "A project management app built around a visual timeline, developed as an SF State capstone.",
+    "summary": "The front end of a team project management app, built as an SF State capstone.",
     "paragraphs": [
-      "SerialPM was my SFSU senior capstone: a project management app that composed visual timelines around each project's progress, with a focus on being flexible to many organizational, calendar, and agile structures. I led a team of five engineers through the full software development lifecycle, managed the hosting and deployment, synced with each engineer, and managed various staged levels of abstraction and complexity for engineer onboarding to the codebase.", 
-      "The original backend ran on AWS resources that i've since deprovisioned, but the frontend can be run locally with a mock API to showcase task & organization management, the timeline, and chat."
+      "SerialPM covers organisations, projects, tasks, team management, and real-time chat, with a visual timeline at the centre of each project. It was our SF State capstone, and I led the team.",
+      "The public repository is a front-end showcase. The backend and database were removed for publication, so screens that load data show empty states; the screenshots were captured against the original backend with demo data."
     ],
     "image": {
       "src": "/assets/projects/serialpm.jpg",
@@ -73,7 +73,7 @@
     "title": "geomat",
     "summary": "A historical map with a timeline from late feudalism to the Cold War.",
     "paragraphs": [
-      "A MapLibre map with historical boundaries and notes on how geography shaped each era’s political economy."
+      "A MapLibre GL map with historical boundaries and a timeline from late feudalism to the Cold War."
     ],
     "image": {
       "src": "/assets/projects/geomat.jpg",
@@ -90,7 +90,7 @@
     "slug": "cpp-coursework",
     "title": "C++ coursework",
     "repo": "cpp-code",
-    "summary": "Exercises from a C++ course."
+    "summary": "CS110B and CS110C coursework: homework, projects, and discussion code."
   },
   {
     "slug": "critique-of-the-gospel-history",
@@ -118,7 +118,7 @@
     "slug": "mia-reader",
     "title": "mia-reader",
     "repo": "mia-reader",
-    "summary": "Selected historical texts formatted for web and mobile reading."
+    "summary": "Selected works from the marxists.org archive, formatted for web and mobile reading."
   },
   {
     "slug": "vrbblog",
