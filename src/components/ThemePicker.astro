@@ -1,30 +1,48 @@
-<label id="theme-control" class="theme-control" hidden>
+<button id="theme-control" class="theme-control" type="button" hidden>
   <svg class="theme-icon" viewBox="0 0 512 512" aria-hidden="true"><path d="M448 256c0-106-86-192-192-192l0 384c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"></path></svg>
-  <span class="sr-only">Theme</span>
-  <select id="theme-select">
-    <option value="auto">System</option>
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
-  </select>
-</label>
+  <span id="theme-label">Dark</span>
+</button>
 
 <script>
-  const control = document.querySelector<HTMLLabelElement>('#theme-control');
-  const select = document.querySelector<HTMLSelectElement>('#theme-select');
+  const control = document.querySelector<HTMLButtonElement>('#theme-control');
+  const label = document.querySelector<HTMLElement>('#theme-label');
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  if (control && select) {
-    select.value = document.documentElement.dataset.theme || 'auto';
+  function storedTheme(): 'light' | 'dark' | null {
+    try {
+      const theme = localStorage.getItem('theme');
+      return theme === 'light' || theme === 'dark' ? theme : null;
+    } catch (error) {
+      console.warn('Could not read the theme preference.', error);
+      return null;
+    }
+  }
+
+  // No stored choice means the system preference, which is what the CSS shows.
+  function currentTheme(): 'light' | 'dark' {
+    return storedTheme() ?? (systemDark.matches ? 'dark' : 'light');
+  }
+
+  function render() {
+    if (!control || !label) return;
+    const theme = currentTheme();
+    label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+    control.setAttribute('aria-label', `Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`);
     control.hidden = false;
-    select.addEventListener('change', () => {
-      const theme = select.value;
-      if (theme === 'auto') delete document.documentElement.dataset.theme;
-      else document.documentElement.dataset.theme = theme;
+  }
+
+  if (control) {
+    render();
+    control.addEventListener('click', () => {
+      const theme = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
       try {
-        if (theme === 'auto') localStorage.removeItem('theme');
-        else localStorage.setItem('theme', theme);
+        localStorage.setItem('theme', theme);
       } catch (error) {
         console.warn('Could not save the theme preference.', error);
       }
+      render();
     });
+    systemDark.addEventListener('change', render);
   }
 </script>

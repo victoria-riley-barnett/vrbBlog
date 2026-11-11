@@ -28,21 +28,29 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
         <h1 id="projects-and-writing">
           <span id="feed-heading">Projects &amp; Writing</span>
           <span class="feed-filters" id="feed-filters" hidden>
-            <button type="button" data-filter="project" aria-pressed="false">Projects</button>
-            <span> &amp; </span>
-            <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
+            <span class="feed-pair feed-jump">
+              <button type="button" data-goto="about">About</button>
+              <span>&nbsp;&amp;</span>
+            </span>{' '}
+            <span class="feed-title">
+              <span class="feed-pair">
+                <button type="button" data-filter="project" aria-pressed="false">Projects</button>
+                <span>&nbsp;&amp;</span>
+              </span>{' '}
+              <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
+            </span>
           </span>
         </h1>
         <ThemePicker />
       </div>
-      <div class="feed-intro">
+      <aside class="feed-intro">
         <nav class="feed-links" id="links" aria-label="Links">
           <div class="prose"><LinksContent components={mdxComponents} /></div>
         </nav>
         <section class="feed-about" id="about">
           <div class="prose"><AboutContent components={mdxComponents} /></div>
         </section>
-      </div>
+      </aside>
       {posts.map(({ post, Content }) => {
         const date = postDate(post);
         const id = `post-${postSlug(post)}`;
@@ -117,7 +125,22 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
     const feedIntro = document.querySelector('.feed-intro');
     const filterButtons = feedFilters.querySelectorAll('button[data-filter]');
     const entries = document.querySelectorAll('.feed-entry[data-entry-type]');
+    const summaries = document.querySelectorAll('.entry-details > summary');
     let activeFilter = null;
+
+    // Only a description that wraps to a second line gets the fade-out edge; a
+    // one-line description should read as plain text.
+    function markFades() {
+      for (const summary of summaries) {
+        const description = summary.querySelector('.entry-summary');
+        let wraps = false;
+        if (description) {
+          const lineHeight = parseFloat(getComputedStyle(description).lineHeight);
+          wraps = lineHeight > 0 && description.getBoundingClientRect().height > lineHeight * 1.5;
+        }
+        summary.classList.toggle('entry-fades', wraps);
+      }
+    }
 
     function setFilter(filter) {
       activeFilter = filter;
@@ -134,13 +157,25 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
       for (const button of filterButtons) {
         button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
       }
-      // The links and bio sit above the feed, so step aside while a filter runs.
-      if (feedIntro) feedIntro.hidden = filter !== null;
+      // Narrow layouts show the links and bio above the feed, so they step
+      // aside while a filter runs. Wide layouts keep them in the sidebar.
+      if (feedIntro) feedIntro.classList.toggle('is-filtered', filter !== null);
+      markFades();
     }
 
     for (const button of filterButtons) {
       button.addEventListener('click', () => {
         setFilter(activeFilter === button.dataset.filter ? null : button.dataset.filter);
+      });
+    }
+
+    // Narrow layouts keep the about block in the feed, so the title lists it
+    // too: clearing the filter brings it back into view.
+    for (const button of feedFilters.querySelectorAll('button[data-goto]')) {
+      button.addEventListener('click', () => {
+        setFilter(null);
+        const target = document.getElementById(button.dataset.goto);
+        if (target) scrollToTarget(target);
       });
     }
 
@@ -179,6 +214,8 @@ const posts = await Promise.all((await getPublishedPosts()).map(async (post) => 
 
     const initialTarget = document.getElementById(location.hash.slice(1));
     if (revealTarget(initialTarget)) scrollToTarget(initialTarget);
+    markFades();
+    window.addEventListener('resize', markFades);
     feedHeading.hidden = true;
     feedFilters.hidden = false;
   </script>
