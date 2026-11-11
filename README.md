@@ -46,8 +46,10 @@ for devices that cannot display embedded PDFs. The PDF is stored in
 `public/assets/architecture-day/architecture-day.pdf`; the sources live in the `intermediate-ml`
 repository.
 
-The sidebar uses the `ThemePicker` Astro component inside its MDX content. The résumé linked in
-the sidebar is at `public/assets/Victoria-Barnett-Resume.pdf`.
+The sidebar uses the `ThemePicker` Astro component inside its MDX content. The résumé is at
+`public/assets/Victoria-Barnett-Resume.pdf`, reachable at the short URL `/resume`: `public/_redirects`
+gives Cloudflare Pages a real 301 and the same path is in `astro.config.mjs` so the dev server and
+any other host behave the same way.
 
 The layout and stylesheet are in `src/layouts/BaseLayout.astro` and `theme/style.css`. The theme
 selector follows the system setting by default and remembers an explicit light or dark choice.

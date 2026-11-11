@@ -7,6 +7,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   redirects: {
     '/about': '/#about',
+    '/resume': '/assets/Victoria-Barnett-Resume.pdf',
     '/blog': '/#projects-and-writing',
     '/projects': '/#projects-and-writing',
     '/search': '/#projects-and-writing',
