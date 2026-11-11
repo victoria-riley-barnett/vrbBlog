@@ -31,7 +31,7 @@
     "slug": "alzheimers-screening",
     "title": "Alzheimer’s screening experiment",
     "repo": "r-alzheimers-rf",
-    "summary": "A random forest classifier on clinical data, evaluated for recall because a missed case costs more than a false alarm.",
+    "summary": "A random forest classifier on clinical data to identify likely Alzheimer’s diagnoses, optimized for recall.",
     "paragraphs": [
       "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
       "In an experimental screening setting, we determined a missed case has a far steeper human cost than the model occasionally suggesting unneeded screenings, and found a recall-optimized model that outperformed our literature review baseline."
