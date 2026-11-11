@@ -1,124 +1,132 @@
 ---
+import { getCollection, render } from 'astro:content';
+import projects from '../../content/projects.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import GitHubStats from '../components/GitHubStats.svelte';
-import PostIndexList from '../components/PostIndexList.astro';
-import { getGitHubStats } from '../lib/github.js';
-import { getPublishedPosts } from '../lib/posts.js';
+import { formatDate, getPublishedPosts, postDate, postSlug, postTitle } from '../lib/posts';
 
-const latestPosts = (await getPublishedPosts()).slice(0, 4);
-
-const title = 'Victoria Barnett';
-const description = 'Victoria\'s personal website and blog.';
-const permalink = Astro.site.href;
-
-const githubStats = await getGitHubStats();
+const about = (await getCollection('pages')).find((page) => page.data.slug === 'about');
+if (!about) throw new Error('The about page is missing from content/pages.');
+const { Content: AboutContent } = await render(about);
+const posts = await Promise.all((await getPublishedPosts()).map(async (post) => ({
+  post,
+  Content: (await render(post)).Content,
+})));
 ---
-
-<BaseLayout title={title} description={description} permalink={permalink}>
-  <div class="home-container">
-    <div class="home-copy">
-      <h1>I'm <a href="/about/">Victoria</a></h1>
-      <p>
-        I teach machine learning at San Francisco State University, where I designed the intermediate ML course for the PINC program, and I build open-source tools — mostly for reading, note-taking, and personal infrastructure. Based in San Francisco.
-      </p>
-      <div class="stats-section">
-        <GitHubStats starCount={githubStats.starCount} />
-      </div>
-      <section class="latest-posts">
-        <h2>Latest Thoughts</h2>
-        <PostIndexList posts={latestPosts} />
-      </section>
-    </div>
+<BaseLayout title="Victoria Barnett" description="Projects and writing by Victoria Barnett.">
+  <a class="skip-link" href="#projects-and-writing">Skip to projects and writing</a>
+  <div class="page-layout">
+    <main id="projects-and-writing">
+      <h1>
+        <span id="feed-heading">Projects &amp; writing</span>
+        <span id="feed-filters" hidden><button type="button" data-filter="project" aria-pressed="false">Projects</button> &amp; <button type="button" data-filter="writing" aria-pressed="false">writing</button></span>
+      </h1>
+      <p class="about-link"><a href="#about">About &amp; links</a></p>
+      {posts.map(({ post, Content }) => {
+        const date = postDate(post);
+        const id = `post-${postSlug(post)}`;
+        return (
+          <article class="feed-entry" data-entry-type="writing" data-featured={posts[0]?.post === post || undefined}>
+            <details class="entry-details">
+              <summary>
+                <p class="entry-meta">Writing {date && <>· <time datetime={date.toISOString()}>{formatDate(date)}</time></>}</p>
+                <h2>{postTitle(post)}</h2>
+                {post.data.description && <p class="entry-summary">{post.data.description}</p>}
+              </summary>
+              <span class="entry-anchor" id={id}></span>
+              <div class="prose"><Content /></div>
+              <p class="entry-foot">
+                {post.data.tags && post.data.tags.length > 0 && <span>{post.data.tags.join(' · ')}</span>}
+                <a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${postTitle(post)}`}>#</a>
+              </p>
+            </details>
+          </article>
+        );
+      })}
+      {projects.map((project) => {
+        const id = `project-${project.slug}`;
+        return (
+          <article class="feed-entry" data-entry-type="project">
+            <details class="entry-details">
+              <summary>
+                <p class="entry-meta">Project</p>
+                <h2>{project.title}</h2>
+                <p class="entry-summary">{project.summary}</p>
+              </summary>
+              <span class="entry-anchor" id={id}></span>
+              {project.image && <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />}
+              {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+              {project.details && <p><a href={project.details.href}>{project.details.label}</a></p>}
+              {project.repo && <p><a href={`https://github.com/victoria-riley-barnett/${project.repo}`}>View on GitHub</a></p>}
+              <p class="entry-foot"><a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${project.title}`}>#</a></p>
+            </details>
+          </article>
+        );
+      })}
+    </main>
+    <aside class="sidebar" id="about" aria-labelledby="about-heading">
+      <h2 id="about-heading">About</h2>
+      <div class="prose"><AboutContent /></div>
+      <p class="about-link"><a href="#projects-and-writing">Back to projects &amp; writing</a></p>
+    </aside>
   </div>
+  <script is:inline>
+    const feedHeading = document.getElementById('feed-heading');
+    const feedFilters = document.getElementById('feed-filters');
+    const filterButtons = feedFilters.querySelectorAll('button[data-filter]');
+    const entries = document.querySelectorAll('.feed-entry[data-entry-type]');
+    let activeFilter = null;
+
+    function setFilter(filter) {
+      activeFilter = filter;
+      let firstVisible = true;
+      for (const entry of entries) {
+        entry.hidden = filter !== null && entry.dataset.entryType !== filter;
+        if (!entry.hidden && firstVisible) {
+          entry.dataset.featured = '';
+          firstVisible = false;
+        } else {
+          delete entry.dataset.featured;
+        }
+      }
+      for (const button of filterButtons) {
+        button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
+      }
+    }
+
+    for (const button of filterButtons) {
+      button.addEventListener('click', () => {
+        setFilter(activeFilter === button.dataset.filter ? null : button.dataset.filter);
+      });
+    }
+
+    function revealTarget(target) {
+      const entry = target?.closest('.feed-entry');
+      if (!entry) return false;
+      if (entry.hidden) setFilter(null);
+      entry.querySelector('.entry-details').open = true;
+      return true;
+    }
+
+    function scrollToTarget(target) {
+      const destination = target.classList.contains('entry-anchor') ? target.closest('.feed-entry') : target;
+      destination.scrollIntoView();
+    }
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+      const target = document.getElementById(link.getAttribute('href').slice(1));
+      revealTarget(target);
+    });
+
+    window.addEventListener('hashchange', () => {
+      const target = document.getElementById(location.hash.slice(1));
+      if (revealTarget(target)) scrollToTarget(target);
+    });
+
+    const initialTarget = document.getElementById(location.hash.slice(1));
+    if (revealTarget(initialTarget)) scrollToTarget(initialTarget);
+    feedHeading.hidden = true;
+    feedFilters.hidden = false;
+  </script>
 </BaseLayout>
-
-<style>
-  .home-container {
-    display: flex;
-    flex: 1;
-    margin: 2em 0;
-    min-height: 400px;
-  }
-
-  .home-copy {
-    flex: 1;
-    padding: 0 1em;
-    max-width: 800px;
-  }
-
-  .home-copy h1 {
-    font-weight: 700;
-    margin-bottom: 0.5em;
-    line-height: 1.3;
-  }
-
-  .home-copy p {
-    font-size: 1.4em;
-    margin-bottom: 1.5em;
-  }
-
-  .stats-section {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-
-  .hero-image-container {
-    margin: 0 1em;
-    text-align: center;
-  }
-
-  .hero-image-container picture {
-    display: block;
-    min-height: 250px;
-  }
-
-  .caption {
-    font-size: .8em;
-    font-style: italic;
-    text-align: left;
-  }
-
-  .hero-image {
-    width: 100%;
-    max-width: 550px;
-    margin-bottom: 1em;
-  }
-
-  @media (max-width: 1200px) {
-    p {
-      font-size: 1.2em;
-    }
-
-    .hero-image {
-      max-width: 400px;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .home-container {
-      flex-direction: column;
-    }
-
-    .home-copy {
-      flex: 0;
-      padding-bottom: 2em;
-      text-align: center;
-    }
-  }
-
-  /* Latest Posts Section */
-  .latest-posts {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--theme-code-inline-bg);
-  }
-
-  .latest-posts h2 {
-    font-family: var(--font-family-sans);
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-main);
-    text-align: center;
-  }
-</style>

@@ -1,0 +1,12 @@
+---
+interface Props {
+  src: string;
+  title: string;
+}
+
+const { src, title } = Astro.props;
+---
+<div class="pdf-preview">
+  <iframe src={src} title={title} loading="lazy"></iframe>
+  <p><a href={src}>Open the PDF</a> if the preview doesn't work on your device.</p>
+</div>

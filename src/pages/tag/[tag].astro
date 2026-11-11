@@ -1,0 +1,11 @@
+---
+import { getPublishedPosts, tagSlug } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  const tags = new Set(posts.flatMap((post) => (post.data.tags || []).map(tagSlug)));
+  return [...tags].map((tag) => ({ params: { tag } }));
+}
+
+return Astro.redirect('/#projects-and-writing', 301);
+---

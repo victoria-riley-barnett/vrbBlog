@@ -1,58 +1,9 @@
 ---
-import { render } from 'astro:content'
-import readingTime from 'reading-time'
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Bio from '../../components/Bio.astro';
-import { getPublishedPosts } from '../../lib/posts.js';
+import { getPublishedPosts, postSlug } from '../../lib/posts';
 
 export async function getStaticPaths() {
-	const posts = await getPublishedPosts()
-  return posts.map(p => ({
-    params: { slug: p.data.slug },
-    props: { post: p },
-  }));
+  return (await getPublishedPosts()).map((post) => ({ params: { slug: postSlug(post) } }));
 }
 
-const { post } = Astro.props
-const { title, slug, description, publishDate } = post.data;
-const readingTimeEstimate = readingTime(post.body).text
-const permalink = `${Astro.site.href}blog/${slug}`;
-const { Content } = await render(post)
+return Astro.redirect(`/#post-${Astro.params.slug}`, 301);
 ---
-
-<BaseLayout title={title} description={description} permalink={permalink}>
-  <header>
-    <p>{publishDate} ~ {readingTimeEstimate}</p>
-    <h1>{title}</h1>
-    <hr />
-  </header>
-  <div class="container">
-    <article class="content">
-      <Content />
-    </article>
-    <hr />
-    <Bio />
-  </div>
-</BaseLayout>
-
-<style>
-  header {
-    text-align: center;
-  }
-
-  header h1 {
-    margin-bottom: 0.7em;
-  }
-
-  header p {
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    font-family: var(--font-family-sans);
-    font-weight: 600;
-  }
-
-  header hr {
-    min-width: 100px;
-    width: 30%;
-  }
-</style>
