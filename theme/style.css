@@ -587,6 +587,41 @@ pre {
   overflow-x: auto;
 }
 
+pre.astro-code {
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+pre.astro-code code {
+  font-size: inherit;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+/* Dual Shiki themes emit --shiki-light/--shiki-dark; pick one from the same
+   signal the palette uses (explicit data-theme, else the system preference). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) pre.astro-code {
+    background-color: var(--shiki-dark-bg) !important;
+  }
+  :root:not([data-theme]) pre.astro-code span {
+    color: var(--shiki-dark) !important;
+  }
+}
+
+:root[data-theme='dark'] pre.astro-code {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+:root[data-theme='dark'] pre.astro-code span {
+  color: var(--shiki-dark) !important;
+}
+
 .prose > * + * {
   margin-top: 0.9rem;
 }
@@ -617,4 +652,45 @@ pre {
 
 .prose code {
   font-size: 0.9em;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.35em;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font-size: 0.88em;
+  background: color-mix(in srgb, var(--rule) 22%, transparent);
+}
+
+/* Footnotes: technical posts cite spans, so the marker and the list have to
+   read as part of the prose rather than as an appendix. */
+.prose .footnotes {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+
+.prose .footnotes ol {
+  padding-left: 1.25rem;
+}
+
+.prose sup {
+  line-height: 0;
+}
+
+.prose sup a,
+.prose [data-footnote-backref] {
+  text-decoration: none;
+}
+
+.prose [data-footnote-backref] {
+  margin-left: 0.25rem;
+}
+
+/* Long display equations scroll instead of widening the column. */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.35rem 0;
 }

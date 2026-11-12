@@ -10,6 +10,7 @@ const postSchema = z.object({
     description: z.string().optional(),
     tags: z.array(z.string()).optional(),
     draft: z.boolean().optional(),
+    garden: z.string().optional(),
   });
 
 const posts = defineCollection({

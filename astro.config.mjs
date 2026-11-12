@@ -1,10 +1,19 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
   site: 'https://vb4r.com',
   devToolbar: { enabled: false },
+  markdown: {
+    // Dual themes emit --shiki-light/--shiki-dark per token; theme/style.css
+    // picks one from the same signal as the rest of the palette.
+    shikiConfig: { themes: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' } },
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+  },
   redirects: {
     '/about': '/#about',
     '/resume': '/assets/Victoria-Barnett-Resume.pdf',

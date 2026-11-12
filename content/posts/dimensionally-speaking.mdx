@@ -1,0 +1,107 @@
+---
+title: 'dimensionally speaking'
+slug: 'dimensionally-speaking'
+date: '2026-11-11'
+description: 'Machine learning uses "dimension" for three different things, and the ambiguity lets a representation choice read as a fact about the world.'
+tags: ['machine learning', 'representation', 'attention']
+draft: true
+garden: 'doc-dimensionally-speaking-78d410480b0d'
+---
+
+{/*
+PROVENANCE (review this first, it is the point of the exercise)
+
+Grounded in her writing and cited by block id:
+  - Garden `dimensionally speaking` (doc-dimensionally-speaking-78d410480b0d):
+    block-57ae787b, block-b9462455, block-cc6f93ce, block-787c3181,
+    block-d2a35eb9, block-a9fe464e, block-f14c8ae7 ... block-1cd3badc
+  - Writing `Sequences`, `Making a cut`, Garden `CEL` (footnotes 5, 7)
+  - 411 course book, quoted exactly (footnotes 1-3, 5)
+
+Model-authored connective prose: 5 passages, each wrapped in [[gen: ...]].
+Dispose of them one at a time: delete, replace with a span, or rewrite in
+your own words. Do not accept them by default.
+
+FRAMING CLAIM THAT IS MINE, NOT HERS: the three-way split of "dimension"
+into (1) coordinate slot, (2) chosen basis, (3) analytic domain bridged.
+Her notes contain the pieces (the Hilbert complaint, "attention is literally
+domain bridging"); the taxonomy is my organization of them. Either own it or
+cut it, but it should not go out as though it were already hers.
+
+KNOWN GAPS: footnote 6 has no source for the tool-call contrast; footnote 7
+requires re-checking the CpG derivation, and no numbers are quoted for that
+reason.
+*/}
+
+There's something wrong with how machine learning talks about dimensions. Not imprecise — three different claims wearing one word, so that a choice you made comes out sounding like a fact you found.
+
+## A dimension is a slot
+
+When a paper says a model works in 768 dimensions, the claim that is actually load-bearing is this: each position in a sequence is a list of 768 numbers. It is a shape.
+
+Take a sequence as a matrix $X$ of shape $n \times d$: $n$ positions, each a row of $d$ features. Attention replaces each row by a mixture of all the rows, and the result has the same width — "same width, same units, and no growth with $n$."[^1] The coordinate count is the least interesting fact about a representation.
+
+[[gen: What the count does not tell you is what any coordinate means. Two models can both be 768-dimensional and mean completely different things by coordinate 41, which is the first hint that "dimension" is standing in for something else.]]
+
+## A basis is a choice, and the choice is the work
+
+The second meaning shows up as soon as anything is learned. Give each position three projections:
+
+$$
+Q = XW_Q, \qquad K = XW_K, \qquad V = XW_V
+$$
+
+Scores come from $Q$ and $K$; the mixture is taken over $V$.[^2] The query is what a position is looking for, the key is what a position advertises, and the value is what it hands over.
+
+Why three matrices and not one? With one shared matrix the score is $x_i^\top WW^\top x_j$ — still symmetric, so “$i$ finds $j$ relevant” and “$j$ finds $i$ relevant” are the same event. With separate $W_Q$ and $W_K$ the score is $x_i^\top W_Q W_K^\top x_j$, asymmetric whenever $W_QW_K^\top \ne W_KW_Q^\top$.[^2]
+
+[[gen: That asymmetry is the point. Nothing about the raw rows changed; the space the comparison happens in changed.]]
+
+The raw alternative makes this visible by failing: a dot product over the input rows measures alignment "in a space that was built for something else," and a fixed comparison can't be improved by training.[^3] So when someone says a model operates in a high-dimensional space and leaves it there, they have skipped the only step that mattered — which basis, chosen by what, optimizing what.
+
+## Hilbert space is a structure, not a soup
+
+"Hilbert space" gets used as a synonym for "lots of dimensions, who knows what's in there." It isn't that. A Hilbert space is an inner product space that is also complete[^4] — the completeness is what makes limits behave.
+
+Here is what the computation actually uses. An inner product, to score $Q$ against $K$. And a weighted average where the weights are non-negative and sum to one, which makes the output "a weighted average, so it is a vector of the same kind as the inputs."[^1] That second fact has teeth: no output entry can leave the range of the values it mixes.[^5] The geometry in play is bounded, and you can check it.
+
+[[gen: Completeness is doing no work in that sentence. It matters for the theorems, and it is genuinely the right setting for the theory. It is not what makes a forward pass succeed, and dressing a forward pass in it is how "Hilbert space" becomes a word that stops you asking which structure is load-bearing.]]
+
+## The third meaning: attention is domain bridging
+
+This is the one I care about. Relevance is computed in the $Q$–$K$ space; the content that gets moved lives in the $V$ space. Those are different spaces, with different learned maps into them. A position can therefore advertise one thing and deliver another.
+
+That separation *is* a bridge between domains, and attention is doing it on every forward pass.
+
+The place it becomes obvious is tool use. A bash invocation is a function application with operative parameters: the arguments determine what runs. A model's tool call is not that — it is a selection inside a learned space, emitted as a token sequence that something outside then interprets. The same surface syntax, two different objects.[^6]
+
+[[gen: That gap is where the interesting failure modes live, and it is also where most of the current discourse goes quiet, because "the model decided to call a function" sounds like it settles a question it has only restated.]]
+
+## What the lab shows "dimension" buys
+
+I teach this with CG pairs, which are a nice case because they are real: structural features like CpG islands are empirical effects that we have recorded a rate for.[^7] The label we use for them is not the effect. It is a model of the effect — a conformance to a GC percentage and an observed-to-expected ratio.[^5]
+
+So when a student asked me why he could be sure my true labels were true, given that the dataset was synthetic, he had found the actual seam. The generator encodes the function. Whatever the network learns, it learns from a function I wrote.
+
+[[gen: The dimension that mattered there was never 2, present or absent. It was the derivation that produced the label, and that derivation was a model wearing the costume of a measurement.]]
+
+## So what are they on about
+
+Put the three meanings back together and a loop appears:
+
+- Let's represent something to model it.
+- Let's represent that something more dynamically.
+- We can now perfectly attend to a QKV of it.
+- But because of that, we flattened something, so we have to get that back out — mech interp.
+
+And knowing how to get something back out is relatively close to knowing how to put it back in, which means representing it more dynamically again. There is no exit condition. It only accrues.
+
+Is machine learning trivial? Yes, in one sense. Strictly no in another.
+
+[^1]: *Attention as a weighted average*, CSC 411 course book: `src/content/pages/attention-as-averaging.mdx`, [intermediate-ml](https://github.com/victoria-riley-barnett/intermediate-ml).
+[^2]: *Queries, keys and values*, course book: `src/content/pages/queries-keys-values.mdx`.
+[^3]: *Scoring relevance with a dot product*, course book: `src/content/pages/dot-product-scores.mdx`.
+[^4]: Hilbert space, definition and completeness: [nLab](https://ncatlab.org/nlab/show/Hilbert+space).
+[^5]: *One attention head, worked through*, course book: `src/content/pages/one-head-worked.mdx`.
+[^6]: **Unattributed — needs a source.** The function-application/tool-call contrast is from my notes (Garden `dimensionally speaking`, block-d2a35eb9); it needs a citation or a worked example before this goes out.
+[^7]: *Making a cut* (draft), and *CEL* (Garden). CpG-island figures must be re-checked against the Wikipedia derivation before publication; no numbers are quoted here for that reason.
