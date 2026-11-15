@@ -15,10 +15,6 @@ export function postTitle(post: Post) {
   return post.data.title || postSlug(post);
 }
 
-export function isDraft(post: Post) {
-  return !!post.data.draft || !post.data.title || !post.data.slug || !postDate(post);
-}
-
 export function tagSlug(tag: string) {
   return tag.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
@@ -31,18 +27,19 @@ export async function getPublishedPosts() {
     if (slugs.has(slug)) throw new Error(`Duplicate post slug: ${slug}`);
     slugs.add(slug);
     const date = postDate(post);
-    if (date && Number.isNaN(date.valueOf())) throw new Error(`Invalid date for post: ${slug}`);
+    if (!post.data.title || !post.data.slug || !date) {
+      throw new Error(`Post ${slug} needs a title, slug, and date; work in progress belongs in drafts/.`);
+    }
+    if (Number.isNaN(date.valueOf())) throw new Error(`Invalid date for post: ${slug}`);
   }
-  return posts
-    .filter((post) => !isDraft(post))
-    .sort((a, b) => (postDate(b)?.valueOf() || 0) - (postDate(a)?.valueOf() || 0) || postSlug(a).localeCompare(postSlug(b)));
+  return posts.sort(
+    (a, b) => (postDate(b)?.valueOf() || 0) - (postDate(a)?.valueOf() || 0) || postSlug(a).localeCompare(postSlug(b))
+  );
 }
 
 export async function getDraftPosts() {
-  const posts: Post[] = await getCollection('posts');
-  return posts
-    .filter((post) => isDraft(post))
-    .sort((a, b) => postSlug(a).localeCompare(postSlug(b)));
+  const posts = (await getCollection('drafts')) as unknown as Post[];
+  return posts.sort((a, b) => postSlug(a).localeCompare(postSlug(b)));
 }
 
 export function formatDate(date: Date) {

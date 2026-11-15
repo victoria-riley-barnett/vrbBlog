@@ -1,9 +1,37 @@
 ---
-import { getPublishedPosts, postSlug } from '../../lib/posts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostArticle from '../../components/PostArticle.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getPublishedPosts, postSlug, postTitle, type Post } from '../../lib/posts';
 
-export async function getStaticPaths() {
-  return (await getPublishedPosts()).map((post) => ({ params: { slug: postSlug(post) } }));
+interface Props {
+  post: Post;
 }
 
-return Astro.redirect(`/#post-${Astro.params.slug}`, 301);
+export async function getStaticPaths() {
+  return (await getPublishedPosts()).map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const tags = post.data.tags || [];
 ---
+<BaseLayout title={postTitle(post)} description={post.data.description || ''}>
+  <main class="page-narrow">
+    <SiteHeader />
+    <Breadcrumbs
+      trail={[
+        { label: 'Home', href: '/' },
+        { label: 'Writing', href: '/#projects-and-writing' },
+        { label: postTitle(post) },
+      ]}
+    />
+    <article>
+      <PostArticle post={post} />
+      {tags.length > 0 && <p class="entry-meta">{tags.join(' · ')}</p>}
+    </article>
+  </main>
+</BaseLayout>

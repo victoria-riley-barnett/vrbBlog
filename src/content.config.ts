@@ -9,12 +9,17 @@ const postSchema = z.object({
     publishDate: z.union([z.string(), z.date()]).optional(),
     description: z.string().optional(),
     tags: z.array(z.string()).optional(),
-    draft: z.boolean().optional(),
+    order: z.number().optional(),
     garden: z.string().optional(),
   });
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './content/posts' }),
+  schema: postSchema,
+});
+
+const drafts = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './drafts' }),
   schema: postSchema,
 });
 
@@ -27,4 +32,14 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, pages };
+const reports = defineCollection({
+  loader: glob({ pattern: '*.md', base: './content/reports' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    project: z.string(),
+    source: z.string().optional(),
+  }),
+});
+
+export const collections = { posts, drafts, pages, reports };

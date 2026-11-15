@@ -1,0 +1,24 @@
+---
+import { formatDate, postDate, postSlug, postTitle, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+  featured?: boolean;
+}
+
+const { post, featured = false } = Astro.props;
+const date = postDate(post);
+const slug = postSlug(post);
+---
+<article
+  class="feed-entry"
+  id={`post-${slug}`}
+  data-entry-type="writing"
+  data-featured={featured || undefined}
+>
+  <p class="entry-meta">
+    Writing {date && <>· <time datetime={date.toISOString()}>{formatDate(date)}</time></>}
+  </p>
+  <h2><a href={`/blog/${slug}/`}>{postTitle(post)}</a></h2>
+  {post.data.description && <p class="entry-summary">{post.data.description}</p>}
+</article>

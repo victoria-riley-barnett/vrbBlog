@@ -1,0 +1,17 @@
+---
+import { render } from 'astro:content';
+import { mdxComponents } from '../lib/mdx-components';
+import { formatDate, postDate, postTitle, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const date = postDate(post);
+---
+<h1>{postTitle(post)}</h1>
+{date && <p class="entry-meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>}
+{post.data.description && <p class="entry-summary">{post.data.description}</p>}
+<div class="prose"><Content components={mdxComponents} /></div>

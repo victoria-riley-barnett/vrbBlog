@@ -1,12 +1,13 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { mdxComponents } from '../../lib/mdx-components';
-import { formatDate, getDraftPosts, postDate, postSlug, postTitle } from '../../lib/posts';
+import PostArticle from '../../components/PostArticle.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getDraftPosts, postSlug, postTitle, type Post } from '../../lib/posts';
 import { ATOMS_SLUG, atoms, type Atom as AtomData } from '../../lib/atoms';
 
 interface Props {
-  post?: CollectionEntry<'posts'>;
+  post?: Post;
   sheet?: AtomData[];
 }
 
@@ -21,8 +22,9 @@ export async function getStaticPaths() {
 }
 
 const { post, sheet } = Astro.props;
-const Content = post ? (await render(post)).Content : null;
-const date = post ? postDate(post) : undefined;
+const trail = post
+  ? [{ label: 'Home', href: '/' }, { label: 'Draft preview' }, { label: postTitle(post) }]
+  : [{ label: 'Home', href: '/' }, { label: 'Atoms' }];
 ---
 <BaseLayout
   title={post ? `Draft · ${postTitle(post)}` : 'Atoms'}
@@ -30,7 +32,8 @@ const date = post ? postDate(post) : undefined;
   noindex
 >
   <main class={sheet ? 'page-wide' : 'page-narrow'}>
-    <p class="entry-meta">Draft preview · <a href="/">back to the feed</a></p>
+    <SiteHeader />
+    <Breadcrumbs trail={trail} />
     {sheet ? (
       <>
         <h1>Atoms</h1>
@@ -48,13 +51,8 @@ const date = post ? postDate(post) : undefined;
           ))}
         </ul>
       </>
-    ) : post && Content ? (
-      <>
-        <h1>{postTitle(post)}</h1>
-        {date && <p class="entry-meta"><time datetime={date.toISOString()}>{formatDate(date)}</time></p>}
-        {post.data.description && <p class="entry-summary">{post.data.description}</p>}
-        <div class="prose"><Content components={mdxComponents} /></div>
-      </>
+    ) : post ? (
+      <PostArticle post={post} />
     ) : null}
   </main>
 </BaseLayout>

@@ -8,12 +8,12 @@ export async function GET(context: APIContext) {
     title: 'Victoria Barnett',
     description: 'Notes and essays.',
     site: context.site!,
-    trailingSlash: false,
+    trailingSlash: true,
     items: posts.map((post) => ({
       title: postTitle(post),
       description: post.data.description || '',
       pubDate: postDate(post),
-      link: `/#post-${postSlug(post)}`,
+      link: `/blog/${postSlug(post)}/`,
     })),
   });
 }

@@ -1,0 +1,29 @@
+---
+import { isBrief, projectHref, projectRepo, type Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  featured?: boolean;
+}
+
+const { project, featured = false } = Astro.props;
+const brief = isBrief(project);
+const href = brief ? (projectRepo(project) ?? project.site) : projectHref(project);
+---
+<article class="feed-entry" id={`project-${project.slug}`} data-entry-type="project" data-featured={featured || undefined}>
+  <p class="entry-meta">Project</p>
+  <h2>
+    {href ? <a href={href}>{project.title}</a> : project.title}
+  </h2>
+  <p class="entry-summary">{project.summary}</p>
+  {!brief && project.image && (
+    <img
+      class="entry-figure"
+      src={project.image.src}
+      alt={project.image.alt}
+      data-fit={project.image.fit}
+      loading="lazy"
+      decoding="async"
+    />
+  )}
+</article>

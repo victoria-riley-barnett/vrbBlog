@@ -28,8 +28,15 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--text);
+  font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.entry-meta,
+.site-links,
+.chip {
   font-family: system-ui, sans-serif;
-  line-height: 1.55;
 }
 
 a {
@@ -80,144 +87,162 @@ main > h1:first-child {
   margin-top: 0;
 }
 
-/* Title and theme control share the top row. */
-.feed-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
+.hero {
+  padding-bottom: 1.75rem;
 }
 
-.feed-head > h1 {
+.hero h1 {
   margin: 0;
-  scroll-margin-top: 1rem;
-  font-size: 1.6rem;
-  line-height: 1.3;
+  font-size: 2rem;
+  line-height: 1.2;
 }
 
-.feed-filters button {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-decoration-thickness: 0.06em;
-  text-underline-offset: 0.12em;
-}
-
-.feed-filters button:hover,
-.feed-filters button:focus-visible {
-  color: var(--accent);
-  text-decoration-color: var(--accent);
-}
-
-.feed-filters button[aria-pressed="true"] {
-  color: var(--accent);
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 0.12em;
-}
-
-/* A word and its separator stay together, so a wrap never starts a line with
-   an ampersand. */
-.feed-pair {
-  white-space: nowrap;
-}
-
-/* The title itself stays whole, so a narrow layout breaks before it rather than
-   through it — until the screen is too narrow to hold it beside the theme
-   picker, where an intact title would overflow. */
-.feed-title {
-  white-space: nowrap;
-}
-
-@media (max-width: 23rem) {
-  .feed-title {
-    white-space: normal;
-  }
-}
-
-.feed-entry {
-  padding: 1.75rem 0;
-  border-top: 1px solid var(--rule);
-}
-
-.feed-entry[data-featured] {
-  padding: 2rem 0;
-}
-
-.entry-brief {
-  padding: 1.1rem 0;
-}
-
-.entry-brief h2 {
-  margin-bottom: 0.15rem;
+.hero-tagline {
+  margin: 0.2rem 0 0.9rem;
   font-size: 1.15rem;
 }
 
-.entry-brief h2 a {
+.hero-lede {
+  margin: 0 0 0.9rem;
+}
+
+.site-links {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.hero .site-links {
+  margin-bottom: 0.5rem;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header-name {
   color: inherit;
+  font-weight: 600;
   text-decoration: none;
 }
 
-.entry-brief h2 a:hover,
-.entry-brief h2 a:focus-visible {
+.site-header-name:hover,
+.site-header-name:focus-visible {
   color: var(--accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.15em;
 }
 
-.entry-brief .entry-summary {
-  margin: 0;
-  font-size: 0.95rem;
+.site-header-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
 }
 
-.entry-anchor {
-  display: block;
+.breadcrumbs {
+  margin: 0 0 1.5rem;
+  font-family: system-ui, sans-serif;
+  font-size: 0.85rem;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumbs li + li::before {
+  content: "/";
+  margin-right: 0.6rem;
+  opacity: 0.45;
+}
+
+.breadcrumbs [aria-current='page'] {
+  opacity: 0.75;
+}
+
+.hero-now {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.feed-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.feed-head > h2 {
+  margin: 0;
   scroll-margin-top: 1rem;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.feed-entry {
+  padding: 1.5rem 0;
+}
+
+.entry-figure {
+  display: block;
+  width: 100%;
+  height: clamp(7rem, 17vw, 10rem);
+  margin-top: 1.1rem;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 3px;
+  background: var(--rule);
+}
+
+.entry-figure[data-fit="contain"] {
+  object-fit: contain;
+  background: none;
+}
+
+.feed-entry[data-featured] {
+  padding: 2rem 0;
+}
+
+.feed-entry h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.feed-entry h2 a:hover,
+.feed-entry h2 a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
 }
 
 .feed-entry {
   scroll-margin-top: 1rem;
 }
 
-/* Narrow layouts: the links list, then the bio, above the feed. No headings —
-   the list is part of the furniture, not a section of its own. */
 .feed-intro {
   padding: 1rem 0 1.6rem;
   border-top: 1px solid var(--rule);
 }
 
-/* While a filter runs the intro steps aside; wide layouts show it in the
-   sidebar instead. */
-.feed-intro.is-filtered {
-  display: none;
-}
-
-/* One link per line everywhere, scaled down on narrow layouts so the list
-   stays compact. */
-.feed-links ul {
-  margin: 0;
-  padding-left: 1.1rem;
-  list-style: disc;
-  font-size: 0.9rem;
-}
-
-.feed-links li + li {
-  margin-top: 0.15rem;
-}
-
 .feed-about {
   margin-top: 1.1rem;
-}
-
-.feed-links,
-.feed-about {
   scroll-margin-top: 1rem;
 }
 
@@ -229,7 +254,6 @@ main > h1:first-child {
   margin-bottom: 0;
 }
 
-/* Wide layouts put the links and bio in a sidebar beside the feed. */
 @media (min-width: 48rem) {
   .page-layout {
     position: relative;
@@ -240,14 +264,7 @@ main > h1:first-child {
     padding-left: calc(var(--sidebar-width) + var(--sidebar-gap));
   }
 
-  /* The sidebar always shows it here, so drop the title entry. */
-  .feed-jump {
-    display: none;
-  }
-
-  /* Out of flow so a short feed can never stretch the title row. */
-  .feed-intro,
-  .feed-intro.is-filtered {
+  .feed-intro {
     position: absolute;
     top: var(--pad);
     left: var(--pad);
@@ -258,66 +275,13 @@ main > h1:first-child {
     font-size: 0.95rem;
   }
 
-  .feed-links ul,
   .feed-about ul {
     padding-left: 1.25rem;
-  }
-
-  .feed-links ul {
-    font-size: inherit;
   }
 
   .feed-about h3 {
     font-size: 1.05rem;
   }
-}
-
-.entry-details > summary {
-  position: relative;
-  padding-right: 1.75rem;
-  cursor: pointer;
-  list-style: none;
-}
-
-.entry-details > summary::after {
-  content: "";
-  position: absolute;
-  top: 0.45rem;
-  right: 0.5rem;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  opacity: 0.6;
-  transform: rotate(45deg);
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.entry-details > summary:hover::after,
-.entry-details > summary:focus-visible::after {
-  opacity: 1;
-}
-
-.entry-details[open] > summary::after {
-  transform: rotate(225deg);
-}
-
-/* Collapsed entries fade their last line into the page, so there is a soft
-   edge where the entry keeps going instead of a hard cut. Only entries whose
-   description wraps get it — a one-line description has nothing to fade. */
-.entry-details:not([open]) > summary.entry-fades::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: -0.1rem;
-  left: 0;
-  height: 1.15rem;
-  background: linear-gradient(to bottom, transparent, var(--background));
-  pointer-events: none;
-}
-
-.entry-details > summary::-webkit-details-marker {
-  display: none;
 }
 
 .feed-entry h2 {
@@ -328,13 +292,6 @@ main > h1:first-child {
 
 .feed-entry[data-featured] h2 {
   font-size: 1.7rem;
-}
-
-.entry-details > summary:hover h2 {
-  color: var(--accent);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.15em;
 }
 
 .entry-meta {
@@ -351,58 +308,36 @@ main > h1:first-child {
   font-size: 1.1rem;
 }
 
-.entry-details > .prose,
-.entry-details > .project-image {
-  margin-top: 1.5rem;
-}
-
-.entry-foot {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0;
-  font-size: 0.85rem;
-}
-
-.entry-hash {
-  color: inherit;
-  text-decoration: none;
-  opacity: 0.45;
-}
-
-.entry-hash:hover,
-.entry-hash:focus-visible {
-  color: var(--accent);
-  opacity: 1;
-}
-
 .project-image {
   display: block;
   width: 100%;
   max-width: 22rem;
   height: auto;
-  margin: 1rem 0;
+  margin: 1.25rem 0;
 }
 
-/* A project's image, shown in the collapsed summary: a faded sliver, so every
-   collapsed entry keeps the same rhythm no matter how much text is below. */
-.entry-peek {
-  display: block;
-  width: 100%;
-  max-width: 22rem;
-  height: 3rem;
-  margin-top: 0.9rem;
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.25rem 0 0;
+}
+
+.chip {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
   border: 1px solid var(--rule);
-  border-bottom: 0;
-  box-sizing: border-box;
-  object-fit: cover;
-  object-position: top;
-  -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
-  mask-image: linear-gradient(to bottom, #000 45%, transparent);
+  border-radius: 999px;
+  color: inherit;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  text-decoration: none;
 }
 
-.entry-details[open] .entry-peek {
-  display: none;
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .figure {
@@ -603,8 +538,7 @@ pre.astro-code code {
   background: none;
 }
 
-/* Dual Shiki themes emit --shiki-light/--shiki-dark; pick one from the same
-   signal the palette uses (explicit data-theme, else the system preference). */
+/* Dual Shiki themes: light tokens by default, dark ones on a dark theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) pre.astro-code {
     background-color: var(--shiki-dark-bg) !important;
@@ -624,6 +558,23 @@ pre.astro-code code {
 
 .prose > * + * {
   margin-top: 0.9rem;
+}
+
+.prose h2 {
+  margin: 2.2rem 0 0;
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+
+.prose h3 {
+  margin: 1.7rem 0 0;
+  font-size: 1.12rem;
+}
+
+.prose h4 {
+  margin: 1.4rem 0 0;
+  font-size: 1rem;
+  font-style: italic;
 }
 
 .prose table {
@@ -654,6 +605,40 @@ pre.astro-code code {
   font-size: 0.9em;
 }
 
+.post-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 1.75rem 0 1rem;
+  overflow: visible;
+}
+
+.post-chart .bar-baseline {
+  fill: currentColor;
+  opacity: 0.3;
+}
+
+.post-chart .bar-optimized {
+  fill: currentColor;
+}
+
+.post-chart .chart-text {
+  fill: currentColor;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+}
+
+.post-chart .chart-value {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+.post-chart .chart-grid line {
+  stroke: currentColor;
+  stroke-width: 1;
+  opacity: 0.16;
+}
+
 :not(pre) > code {
   padding: 0.1em 0.35em;
   border: 1px solid var(--rule);
@@ -662,8 +647,6 @@ pre.astro-code code {
   background: color-mix(in srgb, var(--rule) 22%, transparent);
 }
 
-/* Footnotes: technical posts cite spans, so the marker and the list have to
-   read as part of the prose rather than as an appendix. */
 .prose .footnotes {
   margin-top: 2.5rem;
   padding-top: 1rem;
@@ -688,7 +671,6 @@ pre.astro-code code {
   margin-left: 0.25rem;
 }
 
-/* Long display equations scroll instead of widening the column. */
 .katex-display {
   overflow-x: auto;
   overflow-y: hidden;

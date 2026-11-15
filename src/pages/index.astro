@@ -1,222 +1,57 @@
 ---
 import { getCollection, render } from 'astro:content';
-import projects from '../../content/projects.json';
+import { projects } from '../lib/projects';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ThemePicker from '../components/ThemePicker.astro';
+import FeedPost from '../components/FeedPost.astro';
+import FeedProject from '../components/FeedProject.astro';
+import SiteLinks from '../components/SiteLinks.astro';
 import { mdxComponents } from '../lib/mdx-components';
-import { formatDate, getPublishedPosts, postDate, postSlug, postTitle } from '../lib/posts';
-
-const siteHost = (url: string) => new URL(url).hostname.replace(/^www\./, '');
+import { getPublishedPosts } from '../lib/posts';
 
 const pages = await getCollection('pages');
 const about = pages.find((page) => page.data.slug === 'about');
-const links = pages.find((page) => page.data.slug === 'links');
 if (!about) throw new Error('The about page is missing from content/pages.');
-if (!links) throw new Error('The links page is missing from content/pages.');
 const { Content: AboutContent } = await render(about);
-const { Content: LinksContent } = await render(links);
-const posts = await Promise.all((await getPublishedPosts()).map(async (post) => ({
-  post,
-  Content: (await render(post)).Content,
-})));
+const entries = [
+  ...(await getPublishedPosts()).map((post) => ({ kind: 'post' as const, order: post.data.order, post })),
+  ...projects.map((project) => ({ kind: 'project' as const, order: project.order, project })),
+].sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
 ---
 <BaseLayout title="Victoria Barnett" description="Links, projects, and writing by Victoria Barnett.">
   <a class="skip-link" href="#projects-and-writing">Skip to content</a>
   <div class="page-layout">
     <main>
+      <header class="hero">
+        <h1>Victoria Barnett</h1>
+        <p class="hero-tagline">ML, data operations, teaching.</p>
+        <p class="hero-lede">
+          CS lecturer at SF State. I've run multi-site data-collection operations for a physical-AI
+          company, debugged hardware and telemetry pipelines, and teach students to build transformers
+          from scratch in PyTorch.
+        </p>
+        <SiteLinks />
+        <p class="hero-now">
+          Currently teaching CSC 411 at SF State through December 2026. Looking for full-time ML/DataOps
+          roles in San Francisco.
+        </p>
+      </header>
       <div class="feed-head">
-        <h1 id="projects-and-writing">
-          <span id="feed-heading">Projects &amp; Writing</span>
-          <span class="feed-filters" id="feed-filters" hidden>
-            <span class="feed-pair feed-jump">
-              <button type="button" data-goto="about">About</button>
-              <span>&nbsp;&amp;</span>
-            </span>{' '}
-            <span class="feed-title">
-              <span class="feed-pair">
-                <button type="button" data-filter="project" aria-pressed="false">Projects</button>
-                <span>&nbsp;&amp;</span>
-              </span>{' '}
-              <button type="button" data-filter="writing" aria-pressed="false">Writing</button>
-            </span>
-          </span>
-        </h1>
+        <h2 id="projects-and-writing">Projects &amp; Writing</h2>
         <ThemePicker />
       </div>
       <aside class="feed-intro">
-        <nav class="feed-links" id="links" aria-label="Links">
-          <div class="prose"><LinksContent components={mdxComponents} /></div>
-        </nav>
         <section class="feed-about" id="about">
           <div class="prose"><AboutContent components={mdxComponents} /></div>
         </section>
       </aside>
-      {posts.map(({ post, Content }) => {
-        const date = postDate(post);
-        const id = `post-${postSlug(post)}`;
-        return (
-          <article class="feed-entry" data-entry-type="writing" data-featured={posts[0]?.post === post || undefined}>
-            <details class="entry-details">
-              <summary>
-                <p class="entry-meta">Writing {date && <>· <time datetime={date.toISOString()}>{formatDate(date)}</time></>}</p>
-                <h2>{postTitle(post)}</h2>
-                {post.data.description && <p class="entry-summary">{post.data.description}</p>}
-              </summary>
-              <span class="entry-anchor" id={id}></span>
-              <div class="prose"><Content components={mdxComponents} /></div>
-              <p class="entry-foot">
-                {post.data.tags && post.data.tags.length > 0 && <span>{post.data.tags.join(' · ')}</span>}
-                <a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${postTitle(post)}`}>#</a>
-              </p>
-            </details>
-          </article>
-        );
-      })}
-      {projects.map((project) => {
-        const id = `project-${project.slug}`;
-        const repo = project.repo && `https://github.com/victoria-riley-barnett/${project.repo}`;
-        if (!project.paragraphs && !project.image) {
-          return (
-            <article class="feed-entry entry-brief" data-entry-type="project">
-              <span class="entry-anchor" id={id}></span>
-              <p class="entry-meta">Project</p>
-              <h2>{repo ? <a href={repo}>{project.title}</a> : project.title}</h2>
-              <p class="entry-summary">{project.summary}</p>
-            </article>
-          );
-        }
-        return (
-          <article class="feed-entry" data-entry-type="project">
-            <details class="entry-details">
-              <summary>
-                <p class="entry-meta">Project</p>
-                <h2>{project.title}</h2>
-                <p class="entry-summary">{project.summary}</p>
-                {project.image && (
-                  <img
-                    class="entry-peek"
-                    src={project.image.src}
-                    alt={project.image.alt}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                )}
-              </summary>
-              <span class="entry-anchor" id={id}></span>
-              {project.image && <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />}
-              {project.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
-              {(repo || project.site) && (
-                <p>
-                  {repo && <a href={repo}>View on GitHub</a>}
-                  {repo && project.site && ' · '}
-                  {project.site && <a href={project.site}>{siteHost(project.site)}</a>}
-                </p>
-              )}
-              <p class="entry-foot"><a class="entry-hash" href={`#${id}`} aria-label={`Permalink to ${project.title}`}>#</a></p>
-            </details>
-          </article>
-        );
-      })}
+      {entries.map((entry, index) => (
+        entry.kind === 'post' ? (
+          <FeedPost post={entry.post} featured={index === 0} />
+        ) : (
+          <FeedProject project={entry.project} featured={index === 0} />
+        )
+      ))}
     </main>
   </div>
-  <script is:inline>
-    const feedHeading = document.getElementById('feed-heading');
-    const feedFilters = document.getElementById('feed-filters');
-    const feedIntro = document.querySelector('.feed-intro');
-    const filterButtons = feedFilters.querySelectorAll('button[data-filter]');
-    const entries = document.querySelectorAll('.feed-entry[data-entry-type]');
-    const summaries = document.querySelectorAll('.entry-details > summary');
-    let activeFilter = null;
-
-    // Only a description that wraps to a second line gets the fade-out edge; a
-    // one-line description should read as plain text.
-    function markFades() {
-      for (const summary of summaries) {
-        const description = summary.querySelector('.entry-summary');
-        let wraps = false;
-        if (description) {
-          const lineHeight = parseFloat(getComputedStyle(description).lineHeight);
-          wraps = lineHeight > 0 && description.getBoundingClientRect().height > lineHeight * 1.5;
-        }
-        summary.classList.toggle('entry-fades', wraps);
-      }
-    }
-
-    function setFilter(filter) {
-      activeFilter = filter;
-      let firstVisible = true;
-      for (const entry of entries) {
-        entry.hidden = filter !== null && entry.dataset.entryType !== filter;
-        if (!entry.hidden && firstVisible) {
-          entry.dataset.featured = '';
-          firstVisible = false;
-        } else {
-          delete entry.dataset.featured;
-        }
-      }
-      for (const button of filterButtons) {
-        button.setAttribute('aria-pressed', String(button.dataset.filter === filter));
-      }
-      // Narrow layouts show the links and bio above the feed, so they step
-      // aside while a filter runs. Wide layouts keep them in the sidebar.
-      if (feedIntro) feedIntro.classList.toggle('is-filtered', filter !== null);
-      markFades();
-    }
-
-    for (const button of filterButtons) {
-      button.addEventListener('click', () => {
-        setFilter(activeFilter === button.dataset.filter ? null : button.dataset.filter);
-      });
-    }
-
-    // Narrow layouts keep the about block in the feed, so the title lists it
-    // too: clearing the filter brings it back into view.
-    for (const button of feedFilters.querySelectorAll('button[data-goto]')) {
-      button.addEventListener('click', () => {
-        setFilter(null);
-        const target = document.getElementById(button.dataset.goto);
-        if (target) scrollToTarget(target);
-      });
-    }
-
-    function revealTarget(target) {
-      const entry = target?.closest('.feed-entry');
-      if (!entry) return false;
-      if (entry.hidden) setFilter(null);
-      const details = entry.querySelector('.entry-details');
-      if (details) details.open = true;
-      return true;
-    }
-
-    function scrollToTarget(target) {
-      const destination = target.classList.contains('entry-anchor') ? target.closest('.feed-entry') : target;
-      destination.scrollIntoView();
-    }
-
-    document.addEventListener('click', (event) => {
-      const link = event.target.closest('a[href^="#"]');
-      if (!link || link.classList.contains('skip-link')) return;
-      const id = link.getAttribute('href').slice(1);
-      const target = document.getElementById(id);
-      if (!target) return;
-      // Navigate explicitly: the hash may already match, in which case the
-      // browser does nothing and the link appears dead on narrow layouts.
-      event.preventDefault();
-      revealTarget(target);
-      scrollToTarget(target);
-      history.replaceState(null, '', `#${id}`);
-    });
-
-    window.addEventListener('hashchange', () => {
-      const target = document.getElementById(location.hash.slice(1));
-      if (revealTarget(target)) scrollToTarget(target);
-    });
-
-    const initialTarget = document.getElementById(location.hash.slice(1));
-    if (revealTarget(initialTarget)) scrollToTarget(initialTarget);
-    markFades();
-    window.addEventListener('resize', markFades);
-    feedHeading.hidden = true;
-    feedFilters.hidden = false;
-  </script>
 </BaseLayout>

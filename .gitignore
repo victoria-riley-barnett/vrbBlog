@@ -29,3 +29,7 @@ pnpm-debug.log*
 # agent artifacts
 .github/copilot-instructions.md
 CONSIDERATIONS.md
+
+# drafts stay local
+drafts/*
+!drafts/.gitkeep

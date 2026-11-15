@@ -1,9 +1,10 @@
 [
   {
     "slug": "koreader-tailscale",
+    "order": 3,
     "title": "Tailscale for KOReader",
     "repo": "koreader-tailscale",
-    "summary": "A KOReader plugin that runs Tailscale on the e-reader, so Syncthing, SSH, and OPDS work from any network.",
+    "summary": "A KOReader plugin that runs a full Tailscale node inside the e-reader’s embedded runtime, so Syncthing, SSH, and OPDS keep working across networks.",
     "paragraphs": [
       "Many e-reader sync tools only work on a local network, which is awkward when your books live on a server at home. This plugin runs Tailscale inside KOReader, so the reader keeps a permanent Tailscale IP on any Wi-Fi network and Syncthing, SSH, or OPDS keep working.",
       "My own testing has been on Kindle, but there are many platforms KoReader supports, and often it's only a matter of small file path fixes and library dependencies to get them working. Reported support has grown to include Kobo, Onyx, and Pocketbook."
@@ -15,6 +16,7 @@
   },
   {
     "slug": "serialpm",
+    "order": 8,
     "title": "SerialPM",
     "repo": "serialpm",
     "summary": "A project management app with a visual timeline, built as an SF State capstone.",
@@ -29,20 +31,23 @@
   },
   {
     "slug": "alzheimers-screening",
+    "order": 4,
     "title": "Alzheimer’s screening experiment",
     "repo": "r-alzheimers-rf",
-    "summary": "A random forest classifier on clinical data to identify likely Alzheimer’s diagnoses, optimized for recall.",
+    "summary": "A random forest classifier that cut missed Alzheimer’s diagnoses from 51 to 16 (68% fewer) by shifting the decision threshold, for about half a point of accuracy.",
     "paragraphs": [
       "An experiment in R that trains a random forest on clinical data to identify likely Alzheimer’s diagnoses.",
       "In an experimental screening setting, we determined a missed case has a far steeper human cost than the model occasionally suggesting unneeded screenings, and found a recall-optimized model that outperformed our literature review baseline."
     ],
     "image": {
-      "src": "/assets/projects/alzheimers-rf.jpg",
-      "alt": "Alzheimer’s screening project visualization"
+      "src": "/assets/projects/alzheimers-rf.png",
+      "alt": "Out-of-bag confusion matrix at the 0.7 / 0.3 cutoff: 16 missed diagnoses, 97 healthy records flagged, 94.7% accuracy",
+      "fit": "contain"
     }
   },
   {
     "slug": "auto-child-education",
+    "order": 6,
     "title": "Auto Child Education",
     "repo": "autoChildEducation",
     "summary": "A Europa Universalis V mod that picks each child’s education from their traits.",
@@ -57,6 +62,7 @@
   },
   {
     "slug": "geomat",
+    "order": 5,
     "title": "geomat",
     "summary": "A MapLibre GL map of historical borders, with a timeline from late feudalism to the Cold War.",
     "paragraphs": [
@@ -69,18 +75,21 @@
   },
   {
     "slug": "terminal-quotes",
+    "order": 9,
     "title": "Terminal quotes",
     "repo": "Communism",
     "summary": "A Zsh startup plugin that prints a quote and ASCII art when a terminal opens."
   },
   {
     "slug": "cpp-coursework",
+    "order": 10,
     "title": "C++ coursework",
     "repo": "cpp-code",
     "summary": "CS110B and CS110C coursework: homework, projects, and discussion code."
   },
   {
-    "slug": "critique-of-the-gospel-history", 
+    "slug": "critique-of-the-gospel-history",
+    "order": 11,
     "title": "Critique of the Gospel History of the Synoptics",
     "repo": "Critique-of-the-Gospel-History-of-the-Synoptics",
     "summary": "A machine translation of Bruno Bauer’s 1841 work of biblical criticism.",
@@ -91,6 +100,7 @@
   },
   {
     "slug": "d2r-reimagined-mod",
+    "order": 12,
     "title": "Diablo II: Reimagined",
     "repo": "d2r-reimagined-mod",
     "summary": "Contributed to a large community-driven mod for Diablo II: Resurrected that exhaustively brought modern ARPG mechanics to a Blizzard classic.",
@@ -101,6 +111,7 @@
   },
   {
     "slug": "vrbblog",
+    "order": 13,
     "title": "vrbBlog",
     "repo": "vrbBlog",
     "summary": "The source for this site."

@@ -1,9 +1,59 @@
 ---
-import projects from '../../../content/projects.json';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { mdxComponents } from '../../lib/mdx-components';
+import { isBrief, projectRepo, projects, siteHost, type Project } from '../../lib/projects';
 
-export function getStaticPaths() {
-  return projects.map((project) => ({ params: { slug: project.slug } }));
+interface Props {
+  project: Project;
 }
 
-return Astro.redirect(`/#project-${Astro.params.slug}`, 301);
+export function getStaticPaths() {
+  return projects
+    .filter((project) => !isBrief(project))
+    .map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const repo = projectRepo(project);
+
+const report = (await getCollection('reports')).find((entry) => entry.data.project === project.slug);
+const ReportContent = report ? (await render(report)).Content : null;
 ---
+<BaseLayout title={project.title} description={report?.data.description ?? project.summary}>
+  <main class="page-narrow">
+    <SiteHeader />
+    <Breadcrumbs
+      trail={[
+        { label: 'Home', href: '/' },
+        { label: 'Work', href: '/#projects-and-writing' },
+        { label: project.title },
+      ]}
+    />
+    <article>
+      <h1>{project.title}</h1>
+      {report && ReportContent ? (
+        <div class="prose"><ReportContent components={mdxComponents} /></div>
+      ) : (
+        <>
+          <p class="entry-summary">{project.summary}</p>
+          {project.image && (
+            <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />
+          )}
+          <div class="prose">
+            {project.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+        </>
+      )}
+      {(report?.data.source || repo || project.site) && (
+        <p class="chips">
+          {report?.data.source && <a class="chip" href={report.data.source}>Full report</a>}
+          {repo && <a class="chip" href={repo}>GitHub</a>}
+          {project.site && <a class="chip" href={project.site}>{siteHost(project.site)}</a>}
+        </p>
+      )}
+    </article>
+  </main>
+</BaseLayout>

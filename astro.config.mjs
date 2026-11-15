@@ -3,13 +3,13 @@ import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://vb4r.com',
   devToolbar: { enabled: false },
+  adapter: cloudflare({}),
   markdown: {
-    // Dual themes emit --shiki-light/--shiki-dark per token; theme/style.css
-    // picks one from the same signal as the rest of the palette.
     shikiConfig: { themes: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' } },
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
@@ -24,12 +24,18 @@ export default defineConfig({
     '/posts': '/#projects-and-writing',
     '/projects/mia-reader': '/#projects-and-writing',
     '/projects/dsa-planet-theme': '/#projects-and-writing',
+    // Old post URLs land on the entry they were about.
     '/blog/starting-with-docker': '/#projects-and-writing',
-    '/blog/serial-project-management': '/#projects-and-writing',
-    '/blog/cpp-exercises': '/#projects-and-writing',
-    '/blog/alzheimers-screening-recall-optimization': '/#projects-and-writing',
+    '/blog/serial-project-management': '/#project-serialpm',
+    '/blog/cpp-exercises': '/#project-cpp-coursework',
+    '/blog/alzheimers-screening-recall-optimization': '/#project-alzheimers-screening',
     '/blog/metablogging': '/#projects-and-writing',
-    '/blog/tailscale-koreader-plugin': '/#projects-and-writing',
+    '/blog/tailscale-koreader-plugin': '/#project-koreader-tailscale',
   },
-  integrations: [mdx(), sitemap({ filter: (page) => new URL(page).pathname === '/' })],
+  integrations: [mdx(), sitemap({
+    filter: (page) => {
+      const { pathname } = new URL(page);
+      return pathname === '/' || pathname.startsWith('/blog/') || pathname.startsWith('/projects/');
+    },
+  })],
 });
