@@ -3,20 +3,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostArticle from '../../components/PostArticle.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EntryNav from '../../components/EntryNav.astro';
 import { getPublishedPosts, postSlug, postTitle, type Post } from '../../lib/posts';
 
 interface Props {
   post: Post;
+  newer?: Post;
+  older?: Post;
 }
 
 export async function getStaticPaths() {
-  return (await getPublishedPosts()).map((post) => ({
+  const posts = await getPublishedPosts();
+  return posts.map((post, index) => ({
     params: { slug: postSlug(post) },
-    props: { post },
+    props: { post, newer: posts[index - 1], older: posts[index + 1] },
   }));
 }
 
-const { post } = Astro.props;
+const { post, newer, older } = Astro.props;
 const tags = post.data.tags || [];
 ---
 <BaseLayout title={postTitle(post)} description={post.data.description || ''}>
@@ -25,13 +29,19 @@ const tags = post.data.tags || [];
     <Breadcrumbs
       trail={[
         { label: 'Home', href: '/' },
-        { label: 'Writing', href: '/#projects-and-writing' },
+        { label: 'Projects & Writing', href: '/#projects-and-writing' },
         { label: postTitle(post) },
       ]}
     />
     <article>
       <PostArticle post={post} />
       {tags.length > 0 && <p class="entry-meta">{tags.join(' · ')}</p>}
+      <EntryNav
+        back={{ label: 'Projects & Writing', href: '/#projects-and-writing' }}
+        prev={older && { label: `Older: ${postTitle(older)}`, href: `/blog/${postSlug(older)}/` }}
+        next={newer && { label: `Newer: ${postTitle(newer)}`, href: `/blog/${postSlug(newer)}/` }}
+      />
     </article>
   </main>
 </BaseLayout>
+

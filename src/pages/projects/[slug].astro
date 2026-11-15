@@ -3,20 +3,25 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import EntryNav from '../../components/EntryNav.astro';
 import { mdxComponents } from '../../lib/mdx-components';
-import { isBrief, projectRepo, projects, siteHost, type Project } from '../../lib/projects';
+import { isBrief, projectHref, projectRepo, projects, siteHost, type Project } from '../../lib/projects';
 
 interface Props {
   project: Project;
+  prev?: Project;
+  next?: Project;
 }
 
 export function getStaticPaths() {
-  return projects
-    .filter((project) => !isBrief(project))
-    .map((project) => ({ params: { slug: project.slug }, props: { project } }));
+  const detailed = projects.filter((project) => !isBrief(project)).sort((a, b) => a.order - b.order);
+  return detailed.map((project, index) => ({
+    params: { slug: project.slug },
+    props: { project, prev: detailed[index - 1], next: detailed[index + 1] },
+  }));
 }
 
-const { project } = Astro.props;
+const { project, prev, next } = Astro.props;
 const repo = projectRepo(project);
 
 const report = (await getCollection('reports')).find((entry) => entry.data.project === project.slug);
@@ -28,7 +33,7 @@ const ReportContent = report ? (await render(report)).Content : null;
     <Breadcrumbs
       trail={[
         { label: 'Home', href: '/' },
-        { label: 'Work', href: '/#projects-and-writing' },
+        { label: 'Projects & Writing', href: '/#projects-and-writing' },
         { label: project.title },
       ]}
     />
@@ -58,6 +63,11 @@ const ReportContent = report ? (await render(report)).Content : null;
           {project.site && <a class="chip" href={project.site}>{siteHost(project.site)}</a>}
         </p>
       )}
+      <EntryNav
+        back={{ label: 'Projects & Writing', href: '/#projects-and-writing' }}
+        prev={prev && { label: `Previous: ${prev.title}`, href: projectHref(prev) }}
+        next={next && { label: `Next: ${next.title}`, href: projectHref(next) }}
+      />
     </article>
   </main>
 </BaseLayout>

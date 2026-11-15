@@ -29,6 +29,10 @@ export default defineConfig({
     '/blog/alzheimers-screening-recall-optimization': '/#project-alzheimers-screening',
     '/blog/metablogging': '/#projects-and-writing',
     '/blog/tailscale-koreader-plugin': '/#project-koreader-tailscale',
+    // Projects without their own page still have an anchor in the feed.
+    '/projects/terminal-quotes': '/#project-terminal-quotes',
+    '/projects/cpp-coursework': '/#project-cpp-coursework',
+    '/projects/vrbblog': '/#project-vrbblog',
   },
   integrations: [mdx(), sitemap({
     filter: (page) => {

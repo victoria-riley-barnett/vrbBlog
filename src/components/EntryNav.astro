@@ -1,0 +1,23 @@
+---
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  back: NavLink;
+  prev?: NavLink;
+  next?: NavLink;
+}
+
+const { back, prev, next } = Astro.props;
+---
+<nav class="entry-nav" aria-label="More">
+  {(prev || next) && (
+    <ul class="entry-nav-pages">
+      {prev && <li class="is-prev"><a rel="prev" href={prev.href}>← {prev.label}</a></li>}
+      {next && <li class="is-next"><a rel="next" href={next.href}>{next.label} →</a></li>}
+    </ul>
+  )}
+  <p class="entry-nav-back"><a href={back.href}>{back.label}</a> · <a href="/feed.xml">Feed</a></p>
+</nav>

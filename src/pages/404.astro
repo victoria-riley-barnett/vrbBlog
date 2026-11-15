@@ -1,9 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 ---
 <BaseLayout title="Not found | Victoria Barnett" description="Page not found." noindex>
-  <main class="not-found">
+  <main class="page-narrow">
+    <SiteHeader />
     <h1>Page not found</h1>
-    <p>That page could not be found. <a href="/">Return to projects and writing</a>.</p>
+    <p>
+      That page isn't here. Try <a href="/#projects-and-writing">projects &amp; writing</a>, the
+      <a href="/feed.xml">feed</a>, or <a href="/">the top</a>.
+    </p>
   </main>
 </BaseLayout>
