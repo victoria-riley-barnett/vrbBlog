@@ -1,18 +1,16 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
+import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
   site: 'https://vb4r.com',
   devToolbar: { enabled: false },
-  adapter: cloudflare({}),
   markdown: {
     shikiConfig: { themes: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' } },
-    remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    processor: unified({ remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] }),
   },
   redirects: {
     '/about': '/#about',

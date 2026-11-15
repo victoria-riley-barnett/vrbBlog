@@ -1,58 +1,40 @@
 ---
+import 'katex/dist/katex.min.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostArticle from '../../components/PostArticle.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { getDraftPosts, postSlug, postTitle, type Post } from '../../lib/posts';
-import { ATOMS_SLUG, atoms, type Atom as AtomData } from '../../lib/atoms';
 
 interface Props {
-  post?: Post;
-  sheet?: AtomData[];
+  post: Post;
 }
 
 export async function getStaticPaths() {
   // Drafts are a local editing surface: nothing is emitted for them in a production build.
   if (!import.meta.env.DEV) return [];
-  const drafts = (await getDraftPosts()).map((post) => ({
+  return (await getDraftPosts()).map((post) => ({
     params: { slug: postSlug(post) },
     props: { post },
   }));
-  return [{ params: { slug: ATOMS_SLUG }, props: { sheet: atoms } }, ...drafts];
 }
 
-const { post, sheet } = Astro.props;
-const trail = post
-  ? [{ label: 'Home', href: '/' }, { label: 'Draft preview' }, { label: postTitle(post) }]
-  : [{ label: 'Home', href: '/' }, { label: 'Atoms' }];
+const { post } = Astro.props;
 ---
 <BaseLayout
-  title={post ? `Draft · ${postTitle(post)}` : 'Atoms'}
-  description={post?.data.description || 'Draft preview.'}
+  title={`Draft · ${postTitle(post)}`}
+  description={post.data.description || 'Draft preview.'}
   noindex
 >
-  <main class={sheet ? 'page-wide' : 'page-narrow'}>
+  <main class="page-narrow">
     <SiteHeader />
-    <Breadcrumbs trail={trail} />
-    {sheet ? (
-      <>
-        <h1>Atoms</h1>
-        <p>
-          {sheet.length} HTML fragment{sheet.length === 1 ? '' : 's'} in <code>src/atoms</code>. Nothing
-          here is curated by hand — drop in a new file from the tooling and reload.
-        </p>
-        <ul class="atom-sheet">
-          {sheet.map((atom) => (
-            <li class="atom-card">
-              <div class="atom"><Fragment set:html={atom.html} /></div>
-              <p class="atom-meta"><code>src/atoms/{atom.name}.html</code></p>
-              <p class="atom-meta"><code>&lt;Atom name="{atom.name}" /&gt;</code></p>
-            </li>
-          ))}
-        </ul>
-      </>
-    ) : post ? (
-      <PostArticle post={post} />
-    ) : null}
+    <Breadcrumbs
+      trail={[
+        { label: 'Home', href: '/' },
+        { label: 'Draft preview' },
+        { label: postTitle(post) },
+      ]}
+    />
+    <PostArticle post={post} />
   </main>
 </BaseLayout>

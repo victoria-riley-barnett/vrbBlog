@@ -34,18 +34,22 @@ const ReportContent = report ? (await render(report)).Content : null;
     />
     <article>
       <h1>{project.title}</h1>
+      <p class="entry-summary">{project.summary}</p>
+      {project.image && (
+        <img
+          class="project-image"
+          src={project.image.src}
+          alt={project.image.alt}
+          loading="lazy"
+          decoding="async"
+        />
+      )}
       {report && ReportContent ? (
         <div class="prose"><ReportContent components={mdxComponents} /></div>
       ) : (
-        <>
-          <p class="entry-summary">{project.summary}</p>
-          {project.image && (
-            <img class="project-image" src={project.image.src} alt={project.image.alt} loading="lazy" />
-          )}
-          <div class="prose">
-            {project.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
-          </div>
-        </>
+        <div class="prose">
+          {project.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
       )}
       {(report?.data.source || repo || project.site) && (
         <p class="chips">
